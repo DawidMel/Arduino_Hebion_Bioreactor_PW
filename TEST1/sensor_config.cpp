@@ -1,5 +1,5 @@
 #include <string.h>
-#include "test.hpp"
+#include "eeprom_menager.hpp"
 #include "sensor_config.hpp"
 
 
@@ -7,9 +7,9 @@ Sensor setup_termometer_sensors(Memory_menager &menager1)  //tutaj cała magia w
 {
   //termometr
   Sensor_config termometer_zero_shift(menager1);
-  //termometer_zero_shift.get_config_value();
+  termometer_zero_shift.get_config_value();
   Sensor_config termometer_linear(menager1);
-  //termometer_linear.get_config_value();
+  termometer_linear.get_config_value();
   Sensor termometer(termometer_zero_shift, termometer_linear);
   return termometer;
 }
@@ -19,9 +19,9 @@ Sensor setup_ph_sensors(Memory_menager &menager1)  //tutaj cała magia w ustawia
 {
  // ph-meter
   Sensor_config ph_zero_shift(menager1);
-  //ph_zero_shift.get_config_value();
+  ph_zero_shift.get_config_value();
   Sensor_config ph_linear(menager1);
-  //ph_linear.get_config_value();
+  ph_linear.get_config_value();
   Sensor ph_meter(ph_zero_shift, ph_linear);
   return ph_meter;
 }
@@ -31,44 +31,44 @@ Sensor setup_oxygen_sensors(Memory_menager &menager1)  //tutaj cała magia w ust
 {
   //sonda stezenia tlenu
   Sensor_config oxygen_zero_shift(menager1);
-  //oxygen_zero_shift.get_config_value();
+  oxygen_zero_shift.get_config_value();
   Sensor_config oxygen_linear(menager1);
-  //oxygen_linear.get_config_value();
+  oxygen_linear.get_config_value();
   Sensor oxygen_meter(oxygen_zero_shift, oxygen_linear);
   return oxygen_meter;
 }
 
-void test_sensor(Sensor& termometr, float value_new, String sensor_name = "Sensor")  //TODO zmienić nazwę tej zmiennej
+void test_sensor(Sensor& sensor, float value_new, String sensor_name = "Sensor")  //TODO zmienić nazwę tej zmiennej
 {
   delay(2000);
 
   Serial.print("wartosc przesuniecia_zera (po inicjalizacji) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.zero_shift.get_value());
+  Serial.println(sensor.zero_shift.get_value());
 
 
-  termometr.zero_shift.get_config_value();
+  sensor.zero_shift.get_config_value();
 
 
   Serial.print("wartosc przesuniecia_zera (po odczytaniu wartosci z eeprom) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.zero_shift.get_value());
+  Serial.println(sensor.zero_shift.get_value());
 
   Serial.print("adres w pamieci dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.zero_shift.get_addr());
+  Serial.println(sensor.zero_shift.get_addr());
 
 
-  termometr.zero_shift.change_config_value(value_new);
+  sensor.zero_shift.change_config_value(value_new);
 
 
   Serial.print("wartosc przesuniecia_zera (po zmianie na ustawiona wartosc) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.zero_shift.get_value());
+  Serial.println(sensor.zero_shift.get_value());
   Serial.println("----------------------------------------------------------------------------------------");
 
 
@@ -76,38 +76,47 @@ void test_sensor(Sensor& termometr, float value_new, String sensor_name = "Senso
   Serial.print("wartosc wspolczynnika linowego (po inicjalizacji) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.linear.get_value());
+  Serial.println(sensor.linear.get_value());
 
 
-  termometr.linear.get_config_value();
+  sensor.linear.get_config_value();
 
 
   Serial.print("wartosc wspolczynnika linowego (po odczytaniu wartosci z eeprom) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.linear.get_value());
+  Serial.println(sensor.linear.get_value());
 
   Serial.print("adres w pamieci dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.linear.get_addr());
+  Serial.println(sensor.linear.get_addr());
 
 
-  termometr.linear.change_config_value(value_new);
+  sensor.linear.change_config_value(value_new);
 
 
   Serial.print("wartosc wspolczynnika linowego (po zmianie na ustawiona wartosc) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.linear.get_value());
+  Serial.println(sensor.linear.get_value());
   Serial.println("-----------------------------------------------------------------------------------------");
 
 
 
-  Serial.print("finalna wartosc odczytana z czujnika ");
+  Serial.print("wartosc odczytana (po uwzględnieniu wspolczynników) z czujnika ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(termometr.get_value());
+  Serial.println(sensor.get_value());
+
+
+  sensor.collect_value(value_new);
+  Serial.print("wartosc odczytana (po wstawieniu nowej wartosci) z czujnika ");
+  Serial.print(sensor_name);
+  Serial.print(": ");
+  Serial.println(sensor.get_value());
+
+
   Serial.println("-----------------------------------------------------------------------------------------");
   delay(2000);
 }

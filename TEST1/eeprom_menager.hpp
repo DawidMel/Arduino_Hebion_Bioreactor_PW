@@ -1,9 +1,7 @@
 // dołączanie biblotek
-#include <Vector.h>
 #include <EEPROM.h>
 
 
-// własna przestrzeń adresowa
 #ifndef TEST
 #define TEST
 
@@ -17,7 +15,7 @@ class Memory_menager
 
   public:
   Memory_menager(int arg_memory_start, int arg_memory_lenght);
-  int give_memory(int require_memoty);
+  int give_memory(int require_memory);
 };
 
 
@@ -50,8 +48,9 @@ class Sensor
 
 
 
-  Sensor(Sensor_config& szs, Sensor_config& lin);
+  Sensor(Sensor_config& zero_shift, Sensor_config& linear_factor);
   float get_value();
+  void collect_value(float arg_value);
 };
 
 

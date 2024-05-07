@@ -1,9 +1,5 @@
-#include "HardwareSerial.h"
-#include <Vector.h> //należy doinstalować przez "zarządzaj bibliotekami" w ustaiwniach (dla arduino ide)
 #include <EEPROM.h>
-
-
-#include "test.hpp"
+#include "eeprom_menager.hpp"
 
 
 
@@ -33,14 +29,6 @@ int Memory_menager::give_memory(int arg_require_memoty)
 Sensor_config::Sensor_config(Memory_menager & mem_man):
   memory_addr(mem_man.give_memory(4))  //float ma 4 bajty  TODO poprawić by mogło zaalokować dowolną wielkość i typ danych
 {
-  Serial.println();
-  Serial.println();
-
-  Serial.println(memory_addr);
-
-  Serial.println();
-  Serial.println();
- 
 }   //Konsstruktor
 
 // sensor config
@@ -66,15 +54,20 @@ int Sensor_config::get_config_value(void)
     return memory_addr;
   }
 
-  Sensor::Sensor(Sensor_config& szs,  Sensor_config& lin):
-  zero_shift(szs),
-  linear(lin)
+  Sensor::Sensor(Sensor_config& zero_shift,  Sensor_config& linear_factor):
+  zero_shift(zero_shift),
+  linear(linear_factor)
   {
   }
 
   float Sensor::get_value()
   {
     return value*linear.get_value()+zero_shift.get_value();
+  }
+
+  void Sensor::collect_value(float arg_value)
+  {
+    value = arg_value;
   }
 
 

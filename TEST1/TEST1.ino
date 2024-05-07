@@ -1,13 +1,8 @@
-#include "my_eeprom.hpp"
-#include "test.hpp"
-#include "sensor_config.hpp"
-
-
 #include <EEPROM.h>
-//debug
-
-
-
+#include <Arduino.h>
+#include "eeprom_menager.hpp"
+#include "sensor_config.hpp"
+#include "utility.hpp"
 
 
 
@@ -19,15 +14,16 @@ void setup()
   delay(2000);
 
 
+
   Memory_menager menager1(0,500);
   Sensor termometr = setup_termometer_sensors(menager1);
   Sensor ph_meter = setup_ph_sensors(menager1);
   Sensor oxygen_meter = setup_oxygen_sensors(menager1);
 
-  //testy sensorow
-  test_sensor(termometr,20,"termometr");
-  test_sensor(ph_meter,20,"ph_meter");
-  test_sensor(oxygen_meter,20,"oxygen_meter");
+  /////////////////////testy sensorow///////////////////////////
+  //test_sensor(termometr,20,"termometr");
+  //test_sensor(ph_meter,20,"ph_meter");
+  //test_sensor(oxygen_meter,20,"oxygen_meter");
 
   
 }

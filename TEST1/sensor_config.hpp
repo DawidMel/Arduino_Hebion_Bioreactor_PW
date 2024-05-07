@@ -1,4 +1,5 @@
-#include "test.hpp"
+#include "eeprom_menager.hpp"
+#include <Arduino.h>
 
 #ifndef MY_SC
 #define MY_SC
