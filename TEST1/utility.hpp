@@ -33,6 +33,7 @@ private:
 public:
     TimerLowPriority();
     bool activate(int time_to_activate);
+    void reset();
 };
 
 

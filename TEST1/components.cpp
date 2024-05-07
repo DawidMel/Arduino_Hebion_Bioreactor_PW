@@ -30,19 +30,24 @@ int Peristaltic_pump::GetCurrentSpeed() {return currentPwmValue;}
 Component::Component(int arg_read_pin):
 read_pin(arg_read_pin)
 {}
-int Component::get_value() {return 20;} //TODO
+int Component::get_value() {return 10;} //TODO
 
 
 Component_termometr::Component_termometr(int arg_read_pin):
 Component(arg_read_pin)
 {}
-int Component_termometr::get_value() {return 50;} //TODO
+int Component_termometr::get_value() 
+{
+  static int a = 10;
+  a+=1;
+  return a;
+  } //TODO
 
 
 Component_ph_meter::Component_ph_meter(int arg_read_pin):
 Component(arg_read_pin)
 {}
-int Component_ph_meter::get_value(){return 30;} //TODO
+int Component_ph_meter::get_value(){return 10;} //TODO
 
 
 Component_oxygenmeter::Component_oxygenmeter(int arg_read_pin):

@@ -32,8 +32,8 @@ float mesure_arr::get_average()  //TODO vectorization but not need now
 
 
 TimerLowPriority::TimerLowPriority():
-start_time(0),
-end_time(0)
+start_time(millis()),
+end_time(millis())
 {}
 
 bool TimerLowPriority::activate(int time_to_activate)
@@ -47,7 +47,11 @@ bool TimerLowPriority::activate(int time_to_activate)
     }
 }
 
-
+void TimerLowPriority::reset()
+{
+  start_time = millis();
+  end_time = millis();
+}
 
 
 /*
