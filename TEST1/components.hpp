@@ -21,6 +21,16 @@ class Peristaltic_pump
 
 
 
+class Component
+{
+  private:
+  const int read_pin;
+  int value; //sprawdzić co zwraca termometr TODO na razi zaloze int
+
+  public:
+  Component(int arg_read_pin);
+  get_value();
+};
 
 
 

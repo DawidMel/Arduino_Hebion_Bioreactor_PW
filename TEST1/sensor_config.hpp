@@ -1,5 +1,7 @@
 #include "eeprom_menager.hpp"
 #include <Arduino.h>
+#include "components.hpp"
+#include "bioreactor_defined_const.hpp"
 
 #ifndef MY_SC
 #define MY_SC

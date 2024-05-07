@@ -27,3 +27,17 @@ int Peristaltic_pump::GetCurrentSpeed() {return currentPwmValue;}
 
 
 
+Component::Component(int arg_read_pin):
+read_pin(arg_read_pin)
+{
+
+}
+
+int Component::get_value()
+{
+  //procedura pomiarowa TODO
+  //na razie zwraca 21,37
+  static float a = 21.37;
+  a +=1;
+  return a;
+}

@@ -10,7 +10,10 @@ Sensor setup_termometer_sensors(Memory_menager &menager1)  //tutaj cała magia w
   termometer_zero_shift.get_config_value();
   Sensor_config termometer_linear(menager1);
   termometer_linear.get_config_value();
-  Sensor termometer(termometer_zero_shift, termometer_linear);
+
+  Component c_termometer(TERMOMETHERPIN);
+
+  Sensor termometer(c_termometer,termometer_zero_shift, termometer_linear);
   return termometer;
 }
 
@@ -22,7 +25,10 @@ Sensor setup_ph_sensors(Memory_menager &menager1)  //tutaj cała magia w ustawia
   ph_zero_shift.get_config_value();
   Sensor_config ph_linear(menager1);
   ph_linear.get_config_value();
-  Sensor ph_meter(ph_zero_shift, ph_linear);
+
+  Component c_ph_meter(PHMETERPIN);
+
+  Sensor ph_meter(c_ph_meter, ph_zero_shift, ph_linear);
   return ph_meter;
 }
   
@@ -34,7 +40,10 @@ Sensor setup_oxygen_sensors(Memory_menager &menager1)  //tutaj cała magia w ust
   oxygen_zero_shift.get_config_value();
   Sensor_config oxygen_linear(menager1);
   oxygen_linear.get_config_value();
-  Sensor oxygen_meter(oxygen_zero_shift, oxygen_linear);
+
+  Component c_oxygen_meter(OXYGENMETERPIN);
+
+  Sensor oxygen_meter(c_oxygen_meter,oxygen_zero_shift, oxygen_linear);
   return oxygen_meter;
 }
 

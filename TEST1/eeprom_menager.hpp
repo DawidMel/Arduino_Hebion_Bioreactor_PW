@@ -1,6 +1,6 @@
 // dołączanie biblotek
 #include <EEPROM.h>
-
+#include "components.hpp"
 
 #ifndef TEST
 #define TEST
@@ -45,10 +45,10 @@ class Sensor
 
   public: //bad pratice in free time try to change to private
   Sensor_config zero_shift, linear;
-
+  Component comp;
 
   public:
-  Sensor(Sensor_config& zero_shift, Sensor_config& linear_factor);
+  Sensor(Component& comp, Sensor_config& zero_shift, Sensor_config& linear_factor);
   float get_value();
   void collect_value(float arg_value);
 };

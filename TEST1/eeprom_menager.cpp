@@ -44,12 +44,17 @@ int Sensor_config::get_addr() {return memory_addr;}
 
 
 //Sensor
-Sensor::Sensor(Sensor_config& zero_shift,  Sensor_config& linear_factor):
+Sensor::Sensor(Component& comp, Sensor_config& zero_shift,  Sensor_config& linear_factor):
 zero_shift(zero_shift),
-linear(linear_factor)
+linear(linear_factor),
+comp(comp)
 {}
 
-float Sensor::get_value() {return value*linear.get_value()+zero_shift.get_value();}
+float Sensor::get_value()
+{
+  value = comp.get_value();
+  return value*linear.get_value()+zero_shift.get_value();
+}
 void Sensor::collect_value(float arg_value) {value = arg_value;}
 
 

@@ -5,9 +5,14 @@
 #include "eeprom_menager.hpp"
 #include "sensor_config.hpp"
 #include "utility.hpp"
-#include "Unit_tests.hpp"
+
+//#include "Unit_tests.hpp" //uncoment before tests
 
 
+Memory_menager menager1(0,500);
+Sensor termometr = setup_termometer_sensors(menager1);
+Sensor ph_meter = setup_ph_sensors(menager1);
+Sensor oxygen_meter = setup_oxygen_sensors(menager1);
 
 
 void setup() 
@@ -15,14 +20,6 @@ void setup()
 
   Serial.begin(9600);  /*Inicjalizacja transmisji szeregowej z prędkością 9600 bitów na sekundę ~ 1200 znaków*/
   delay(2000);
-
-  mesure_arr m1(20);
-
-
-  Memory_menager menager1(0,500);
-  Sensor termometr = setup_termometer_sensors(menager1);
-  Sensor ph_meter = setup_ph_sensors(menager1);
-  Sensor oxygen_meter = setup_oxygen_sensors(menager1);
 
   /////////////////////testy sensorow///////////////////////////
   //test_sensor(termometr,20,"termometr");
@@ -36,8 +33,12 @@ void loop()
 {
 //testy jednostkowe
 
-aunit::TestRunner::run();
+//aunit::TestRunner::run();
 
 /////////////////////
+
+delay(3000);
+Serial.println(termometr.get_value());
+
 
 }
