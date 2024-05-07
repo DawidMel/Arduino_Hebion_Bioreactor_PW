@@ -7,7 +7,7 @@
 int dumb_func() {return 1;}
 
 
-mesure_arr m1(10),m2(3);
+mesure_arr m1(10),m2(3);  //10 ; 3
 
 
 float test_mes_arry(mesure_arr& ma)

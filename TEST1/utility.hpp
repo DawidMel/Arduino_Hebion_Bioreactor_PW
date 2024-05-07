@@ -25,7 +25,18 @@ class mesure_arr  //DOPRACOWAĆ
 
 
 
+class TimerLowPriority {
+private:
+    unsigned long start_time;
+    unsigned long end_time;
 
+public:
+    TimerLowPriority();
+    bool activate(int time_to_activate);
+};
+
+
+//TODO high piority timer
 
 
 

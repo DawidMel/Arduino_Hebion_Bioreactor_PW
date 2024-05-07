@@ -20,12 +20,11 @@ class Peristaltic_pump
 };
 
 
-
-class Component  //TODO jak okaze sie ze zbieranie i interpretacja wynikow bedzie inna zastosowac dziedziczenie i indywidualne metody
+class Component
 {
   private:
   const int read_pin;
-  int value; //sprawdzić co zwraca termometr TODO na razi zaloze int
+  int value; //sprawdzić co zwraca termometr TODO na razi zaloze int dopisac zmiane pola przy dziedziczeniu
 
   public:
   Component(int arg_read_pin);

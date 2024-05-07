@@ -41,8 +41,6 @@ float Sensor_config::get_value() {return value;}
 int Sensor_config::get_addr() {return memory_addr;}
 
 
-
-
 //Sensor
 Sensor::Sensor(Component* c, Sensor_config& zero_shift,  Sensor_config& linear_factor):
 zero_shift(zero_shift),
