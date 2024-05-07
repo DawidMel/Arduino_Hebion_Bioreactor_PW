@@ -38,7 +38,7 @@ Sensor setup_oxygen_sensors(Memory_menager &menager1)  //tutaj cała magia w ust
   return oxygen_meter;
 }
 
-void test_sensor(Sensor& sensor, float value_new, String sensor_name = "Sensor")  //TODO zmienić nazwę tej zmiennej
+void test_sensor(Sensor& sensor, float value_new, String sensor_name = "Sensor")
 {
   delay(2000);
 

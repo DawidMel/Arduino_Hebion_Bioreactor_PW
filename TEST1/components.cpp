@@ -23,10 +23,7 @@ void Peristaltic_pump::setPumpSpeed(int value)   //możliwe że będzie trzeba z
     analogWrite(pwmPin, abs(currentPwmValue));
 }
 
-int Peristaltic_pump::GetCurrentSpeed() 
-{
-  return currentPwmValue;
-}
+int Peristaltic_pump::GetCurrentSpeed() {return currentPwmValue;}
 
 
 

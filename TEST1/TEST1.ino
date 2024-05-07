@@ -1,8 +1,12 @@
 #include <EEPROM.h>
 #include <Arduino.h>
+#include <AUnit.h>
+
 #include "eeprom_menager.hpp"
 #include "sensor_config.hpp"
 #include "utility.hpp"
+#include "Unit_tests.hpp"
+
 
 
 
@@ -10,9 +14,9 @@ void setup()
 {
 
   Serial.begin(9600);  /*Inicjalizacja transmisji szeregowej z prędkością 9600 bitów na sekundę ~ 1200 znaków*/
-
   delay(2000);
 
+  mesure_arr m1(20);
 
 
   Memory_menager menager1(0,500);
@@ -30,5 +34,10 @@ void setup()
 
 void loop() 
 {
+//testy jednostkowe
+
+aunit::TestRunner::run();
+
+/////////////////////
 
 }

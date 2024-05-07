@@ -22,7 +22,7 @@ class Memory_menager
 
 class Sensor_config   //rename sensor_parameter
 {
-  public:             //zmienić na private
+  private:
   int memory_addr;
   float value = -21.37;
 
@@ -40,14 +40,14 @@ class Sensor_config   //rename sensor_parameter
 
 class Sensor
 {
-  public:
-  
+  private:
   float value = 10;
 
+  public: //bad pratice in free time try to change to private
   Sensor_config zero_shift, linear;
 
 
-
+  public:
   Sensor(Sensor_config& zero_shift, Sensor_config& linear_factor);
   float get_value();
   void collect_value(float arg_value);

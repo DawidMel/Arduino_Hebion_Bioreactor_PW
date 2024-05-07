@@ -10,14 +10,17 @@ class mesure_arr  //DOPRACOWAĆ
   const char array_size; //max 256 ale wtedy może nie starczyć pamięci
   float* mesurment; // Tablica wskaźników, zostanie zainicjowana w konstruktorze
   int memory_cursor = 0;
-  char arey_full = 0;
+
+  char are_full = 0;
+  float oldest_mesure;
+
 
   public:
-
   mesure_arr(int size);
   void add_mesure(float value);
   float read_mesure(char index);
   float get_average();
+  float get_average_fast();
 };
 
 
