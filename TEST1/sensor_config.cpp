@@ -11,7 +11,7 @@ Sensor setup_termometer_sensors(Memory_menager &menager1)  //tutaj cała magia w
   Sensor_config termometer_linear(menager1);
   termometer_linear.get_config_value();
 
-  Component c_termometer(TERMOMETHERPIN);
+  Component_termometr* c_termometer = new Component_termometr(TERMOMETHERPIN);
 
   Sensor termometer(c_termometer,termometer_zero_shift, termometer_linear);
   return termometer;
@@ -26,7 +26,7 @@ Sensor setup_ph_sensors(Memory_menager &menager1)  //tutaj cała magia w ustawia
   Sensor_config ph_linear(menager1);
   ph_linear.get_config_value();
 
-  Component c_ph_meter(PHMETERPIN);
+  Component_ph_meter* c_ph_meter = new Component_ph_meter(PHMETERPIN);
 
   Sensor ph_meter(c_ph_meter, ph_zero_shift, ph_linear);
   return ph_meter;
@@ -41,11 +41,15 @@ Sensor setup_oxygen_sensors(Memory_menager &menager1)  //tutaj cała magia w ust
   Sensor_config oxygen_linear(menager1);
   oxygen_linear.get_config_value();
 
-  Component c_oxygen_meter(OXYGENMETERPIN);
+  Component_oxygenmeter* c_oxygen_meter = new Component_oxygenmeter(OXYGENMETERPIN);
 
   Sensor oxygen_meter(c_oxygen_meter,oxygen_zero_shift, oxygen_linear);
   return oxygen_meter;
 }
+
+
+
+
 
 void test_sensor(Sensor& sensor, float value_new, String sensor_name = "Sensor")
 {

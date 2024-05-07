@@ -32,16 +32,30 @@ class Component  //TODO jak okaze sie ze zbieranie i interpretacja wynikow bedzi
   virtual int get_value();
 };
 
-class term1 : Component
+
+
+class Component_termometr : public Component
 {
-  int get_value() override 
-  {
-    static int a = 60;
-    a+=1;
-    return a;
-  }
+  public:
+  Component_termometr(int arg_read_pin);
+  int get_value() override;
 };
 
+
+class Component_ph_meter : public Component
+{
+  public:
+  Component_ph_meter(int arg_read_pin);
+  int get_value() override;
+};
+
+
+class Component_oxygenmeter : public Component
+{
+  public:
+  Component_oxygenmeter(int arg_read_pin);
+  int get_value() override;
+};
 
 
 #endif //BIOREACTOR_COMPONENTS

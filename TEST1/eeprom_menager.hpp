@@ -45,10 +45,10 @@ class Sensor
 
   public: //bad pratice in free time try to change to private
   Sensor_config zero_shift, linear;
-  Component comp;
+  Component* comp;
 
   public:
-  Sensor(Component& comp, Sensor_config& zero_shift, Sensor_config& linear_factor);
+  Sensor(Component* c, Sensor_config& zero_shift, Sensor_config& linear_factor);
   float get_value();
   void collect_value(float arg_value);
 };
