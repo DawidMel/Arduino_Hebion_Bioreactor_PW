@@ -21,7 +21,7 @@ class Peristaltic_pump
 
 
 
-class Component
+class Component  //TODO jak okaze sie ze zbieranie i interpretacja wynikow bedzie inna zastosowac dziedziczenie i indywidualne metody
 {
   private:
   const int read_pin;
@@ -29,9 +29,18 @@ class Component
 
   public:
   Component(int arg_read_pin);
-  get_value();
+  virtual int get_value();
 };
 
+class term1 : Component
+{
+  int get_value() override 
+  {
+    static int a = 60;
+    a+=1;
+    return a;
+  }
+};
 
 
 

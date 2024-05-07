@@ -38,7 +38,15 @@ void loop()
 /////////////////////
 
 delay(3000);
+Serial.print("termometr value: ");
 Serial.println(termometr.get_value());
+
+//Serial.print("ph_meter value: ");
+//Serial.println(ph_meter.get_value());
+
+//Serial.print("oxygen_meter value: ");
+//Serial.println(oxygen_meter.get_value());
+
 
 
 }
