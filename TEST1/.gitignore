@@ -1,0 +1,8 @@
+##ubuntu
+.vscode/
+build/
+
+
+##windows
+.vscode\
+build\

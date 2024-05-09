@@ -69,14 +69,14 @@ if(mesurment==1)
 
 if (display==1)
 {
-Serial.print("termometr avr value: ");
-Serial.println(temp_arr.get_average());
+  Serial.print("termometr avr value: ");
+  Serial.println(temp_arr.get_average());
 
-Serial.print("ph_meter avr value: ");
-Serial.println(ph_arr.get_average());
+  Serial.print("ph_meter avr value: ");
+  Serial.println(ph_arr.get_average());
 
-Serial.print("oxygen_meter avr value: ");
-Serial.println(oxygen_arr.get_average());
+  Serial.print("oxygen_meter avr value: ");
+  Serial.println(oxygen_arr.get_average());
 }
 
 }
