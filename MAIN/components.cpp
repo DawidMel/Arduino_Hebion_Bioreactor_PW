@@ -6,7 +6,7 @@ dir1Pin(arg_Dir1Pin),
 dir2Pin(arg_Dir2Pin)
 {}
 
-void Peristaltic_pump::setPumpSpeed(int value)   //możliwe że będzie trzeba zdefinować alternatywną metodę dla pompy :)
+void Peristaltic_pump::setPumpSpeed(int value)   //probably need to define an alternative method for the pump
 {
     if (value >= 0)
     {
@@ -33,10 +33,10 @@ read_pin(arg_read_pin)
 int Component::get_value() {return 10;} //TODO
 
 
-Component_termometr::Component_termometr(int arg_read_pin):
+ComponentThermometer::ComponentThermometer(int arg_read_pin):
 Component(arg_read_pin)
 {}
-int Component_termometr::get_value() 
+int ComponentThermometer::get_value() 
 {
   static int a = 10;
   a+=1;

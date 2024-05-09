@@ -5,18 +5,20 @@
 #include "eeprom_menager.hpp"
 #include "sensor_config.hpp"
 #include "utility.hpp"
-//#include "Unit_tests.hpp"   //tylko do testów
+#include "lcd_display.hpp"
+#include "my_encoder.hpp"
+//#include "Unit_tests.hpp"   //only for tests
 
 
-//zmeinne globalne
-Memory_menager menager1(0,500);
-Sensor termometr = setup_termometer_sensors(menager1);
-Sensor ph_meter = setup_ph_sensors(menager1);
-Sensor oxygen_meter = setup_oxygen_sensors(menager1);
+//global variable
+MemoryManager manager1(0,500);
+Sensor thermometer = setup_thermometer_sensors(manager1);
+Sensor ph_meter = setup_ph_sensors(manager1);
+Sensor oxygen_meter = setup_oxygen_sensors(manager1);
 
 
 //tablice na dane pomiarowe
-mesure_arr temp_arr(10), ph_arr(40), oxygen_arr(50);
+mesure_arr temp_arr(30), ph_arr(40), oxygen_arr(50); //TODO zastanowić się nad nazwą
 
 ////timery
 TimerLowPriority mesure_timer, display_timer;
@@ -34,7 +36,7 @@ void setup()
 
  
   /////////////////////testy sensorow///////////////////////////
-  test_sensor(termometr,1,"termometr");
+  test_sensor(thermometer,1,"thermometer");
   test_sensor(ph_meter,1,"ph_meter");
   test_sensor(oxygen_meter,1,"oxygen_meter");
 
@@ -61,7 +63,7 @@ display = display_timer.activate(10000);
 
 if(mesurment==1)
 {
-  temp_arr.add_mesure(termometr.get_value());
+  temp_arr.add_mesure(thermometer.get_value());
   ph_arr.add_mesure(ph_meter.get_value());
   oxygen_arr.add_mesure(oxygen_meter.get_value());
 }
@@ -69,7 +71,7 @@ if(mesurment==1)
 
 if (display==1)
 {
-  Serial.print("termometr avr value: ");
+  Serial.print("thermometer avr value: ");
   Serial.println(temp_arr.get_average());
 
   Serial.print("ph_meter avr value: ");
@@ -80,3 +82,23 @@ if (display==1)
 }
 
 }
+/*
+Kod umożliwiający reakcje na zmianę (załączanie pomp) jeśli ph odbiegnie od ustalonej wartości
+odchyłki do ok 0.5 będą akceptowalne większe wymagają interwencji 
+bioreaktor może zachowywać się jak BUFOR!!!  jednak roztwór będzie mieszany
+
+ustalenie temeratury nie jest kwestią 1 rzędną (to jest załatwiane przez łaźnie parową)
+
+
+Kwestia akwizycji danych:
+fajny bajer na razie nie jest pioprytetem!
+
+
+Rzeczy które ogarnia bioreaktor
+pompa do kwasu (regulacja ph)
+pompa do zasady (regulacja ph)
+pompa do pobrania próbki z reaktora
+ph
+stężenie tlenu
+
+*/

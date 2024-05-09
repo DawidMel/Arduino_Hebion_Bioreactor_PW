@@ -3,14 +3,14 @@
 
 
 
-// Memory_menager
-Memory_menager::Memory_menager(int arg_memory_start, int arg_memory_size):  //lista inicjalizacyjna
+// MemoryManager
+MemoryManager::MemoryManager(int arg_memory_start, int arg_memory_size):  //lista inicjalizacyjna
 memory_start(arg_memory_start),
 memory_size(arg_memory_size),
 memory_pointer(arg_memory_start)
 {}
 
-int Memory_menager::give_memory(int arg_require_memoty)
+int MemoryManager::give_memory(int arg_require_memoty)
 {
   int memory_max = memory_start+memory_size;
 
@@ -26,7 +26,7 @@ int Memory_menager::give_memory(int arg_require_memoty)
 
 
 // sensor config
-Sensor_config::Sensor_config(Memory_menager & mem_man):
+Sensor_config::Sensor_config(MemoryManager & mem_man):
   memory_addr(mem_man.give_memory(4))  //float ma 4 bajty  TODO poprawić by mogło zaalokować dowolną wielkość i typ danych
 {}
 

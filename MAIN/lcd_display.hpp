@@ -2,7 +2,7 @@
 #define LCD_DISPLAY_BR
 
 
-void LCD_init();
+LiquidCrystal_I2C LCD_init();
 void Print_message();
 
 

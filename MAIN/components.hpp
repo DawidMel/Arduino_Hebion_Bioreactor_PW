@@ -33,10 +33,10 @@ class Component
 
 
 
-class Component_termometr : public Component
+class ComponentThermometer : public Component
 {
   public:
-  Component_termometr(int arg_read_pin);
+  ComponentThermometer(int arg_read_pin);
   int get_value() override;
 };
 

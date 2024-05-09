@@ -5,7 +5,7 @@
 #ifndef TEST
 #define TEST
 
-class Memory_menager
+class MemoryManager
 {
   private:
   const int memory_start;
@@ -14,7 +14,7 @@ class Memory_menager
 
 
   public:
-  Memory_menager(int arg_memory_start, int arg_memory_lenght);
+  MemoryManager(int arg_memory_start, int arg_memory_lenght);
   int give_memory(int require_memory);
 };
 
@@ -28,7 +28,7 @@ class Sensor_config   //rename sensor_parameter
 
 
   public:
-  Sensor_config(Memory_menager& mem_manager);
+  Sensor_config(MemoryManager& mem_manager);
   int change_config_value(float value);
   int get_config_value(void);
   float get_value();
