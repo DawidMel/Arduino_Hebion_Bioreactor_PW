@@ -4,21 +4,21 @@
 
 
 
-class measure_arr  //DOPRACOWAĆ
+class MeasureArray  //TODO is not good enough make it better
 {
   private:
-  const char array_size; //max 256 ale wtedy może nie starczyć pamięci
-  float* mesurment; // Tablica wskaźników, zostanie zainicjowana w konstruktorze
+  const char array_size; //max 256 (but not recommended to use more than 100)
+  float* measurement; // Pointer array, will be initialized in constructor  
   int memory_cursor = 0;
 
   char are_full = 0;
-  float oldest_mesure;
+  float oldest_measure;
 
 
   public:
-  measure_arr(int size);
+  MeasureArray(int size);
   void add_measure(float value);
-  float read_mesure(char index);
+  float read_measure(char index);
   float get_average();
   float get_average_fast();
 };
@@ -37,7 +37,7 @@ public:
 };
 
 
-//TODO high piority timer
+//TODO high priority timer
 
 
 

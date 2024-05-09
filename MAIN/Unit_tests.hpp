@@ -7,10 +7,10 @@
 int dumb_func() {return 1;}
 
 
-measure_arr m1(10),m2(3);  //10 ; 3
+MeasureArray m1(10),m2(3);  //10 ; 3
 
 
-float test_mes_arry(measure_arr& ma)
+float test_mes_array(MeasureArray& ma)
 {
   ma.add_measure(20);
   ma.add_measure(10);
@@ -20,24 +20,24 @@ float test_mes_arry(measure_arr& ma)
   return (ma.get_average());
 }
 
-float test_mes_arry2(measure_arr& ma)
+float test_mes_array2(MeasureArray& ma)
 {
   ma.add_measure(20);
   ma.add_measure(10);
   ma.add_measure(2137);
 
-  return ma.read_mesure(2); 
+  return ma.read_measure(2); 
 }
 
 
-test(test_mes_arryTest)
+test(test_mes_arrayTest)
 {
-  assertEqual(test_mes_arry(m1),10.0);
+  assertEqual(test_mes_array(m1),10.0);
 }
 
-test(test_mes_arry2Test)
+test(test_mes_array2Test)
 {
-  assertEqual(test_mes_arry2(m2),2137.0);
+  assertEqual(test_mes_array2(m2),2137.0);
 }
 
 

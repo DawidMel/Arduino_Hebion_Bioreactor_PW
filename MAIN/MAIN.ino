@@ -18,7 +18,7 @@ Sensor oxygen_meter = setup_oxygen_sensors(manager1);
 
 
 //arrays for measures
-measure_arr temp_arr(30), ph_arr(40), oxygen_arr(50); //TODO think about this variable name
+MeasureArray temp_arr(30), ph_arr(40), oxygen_arr(50); //TODO think about this variable name
 
 ////timers
 TimerLowPriority measure_timer, display_timer;

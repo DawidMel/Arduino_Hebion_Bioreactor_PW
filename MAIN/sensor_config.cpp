@@ -3,20 +3,20 @@
 #include "sensor_config.hpp"
 
 
-Sensor setup_thermometer_sensors(MemoryManager &manager)  //tutaj cała magia w ustawianiu sensorów 
+Sensor setup_thermometer_sensors(MemoryManager &manager)  //setup the sensor 
 {
   //thermometer
-  Sensor_config termometer_zero_shift(manager);
-  termometer_zero_shift.get_config_value();
-  Sensor_config termometer_linear(manager);
-  termometer_linear.get_config_value();
-  ComponentThermometer* c_termometer = new ComponentThermometer(TERMOMETHERPIN);
-  Sensor termometer(c_termometer,termometer_zero_shift, termometer_linear);
-  return termometer;
+  Sensor_config thermometer_zero_shift(manager);
+  thermometer_zero_shift.get_config_value();
+  Sensor_config thermometer_linear(manager);
+  thermometer_linear.get_config_value();
+  ComponentThermometer* c_thermometer = new ComponentThermometer(TERMOMETHERPIN);
+  Sensor thermometer(c_thermometer,thermometer_zero_shift, thermometer_linear);
+  return thermometer;
 }
 
 
-Sensor setup_ph_sensors(MemoryManager &manager)  //tutaj cała magia w ustawianiu sensorów 
+Sensor setup_ph_sensors(MemoryManager &manager)  //setup the sensor  
 {
   // ph-meter
   Sensor_config ph_zero_shift(manager);
@@ -29,9 +29,9 @@ Sensor setup_ph_sensors(MemoryManager &manager)  //tutaj cała magia w ustawiani
 }
   
 
-Sensor setup_oxygen_sensors(MemoryManager &manager)  //tutaj cała magia w ustawianiu sensorów 
+Sensor setup_oxygen_sensors(MemoryManager &manager)  //setup the sensor 
 {
-   //sonda stezenia tlenu
+   //oxygen meter 
   Sensor_config oxygen_zero_shift(manager);
   oxygen_zero_shift.get_config_value();
   Sensor_config oxygen_linear(manager);
