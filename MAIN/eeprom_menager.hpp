@@ -1,4 +1,3 @@
-// dołączanie biblotek
 #include <EEPROM.h>
 #include "components.hpp"
 
@@ -14,7 +13,7 @@ class MemoryManager
 
 
   public:
-  MemoryManager(int arg_memory_start, int arg_memory_lenght);
+  MemoryManager(int arg_memory_start, int arg_memory_length);
   int give_memory(int require_memory);
 };
 
@@ -43,7 +42,7 @@ class Sensor
   private:
   float value = 10;
 
-  public: //bad pratice in free time try to change to private
+  public: //bad practice TODO in free time try to change to private
   Sensor_config zero_shift, linear;
   Component* comp;
 

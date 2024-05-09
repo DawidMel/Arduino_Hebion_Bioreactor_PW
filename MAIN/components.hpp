@@ -24,7 +24,7 @@ class Component
 {
   private:
   const int read_pin;
-  int value; //sprawdzić co zwraca termometr TODO na razi zaloze int dopisac zmiane pola przy dziedziczeniu
+  int value; //check what sensors return  TODO for now int ; but probably will be change in inheritance 
 
   public:
   Component(int arg_read_pin);

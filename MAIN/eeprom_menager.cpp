@@ -4,20 +4,20 @@
 
 
 // MemoryManager
-MemoryManager::MemoryManager(int arg_memory_start, int arg_memory_size):  //lista inicjalizacyjna
+MemoryManager::MemoryManager(int arg_memory_start, int arg_memory_size):
 memory_start(arg_memory_start),
 memory_size(arg_memory_size),
 memory_pointer(arg_memory_start)
 {}
 
-int MemoryManager::give_memory(int arg_require_memoty)
+int MemoryManager::give_memory(int arg_require_memory)
 {
   int memory_max = memory_start+memory_size;
 
-  if(arg_require_memoty<=memory_max-memory_pointer)
+  if(arg_require_memory<=memory_max-memory_pointer)
   {
     int ret_val = memory_pointer;
-    memory_pointer+=arg_require_memoty; 
+    memory_pointer+=arg_require_memory; 
     return ret_val;
   }
   return -1; 
@@ -27,7 +27,7 @@ int MemoryManager::give_memory(int arg_require_memoty)
 
 // sensor config
 Sensor_config::Sensor_config(MemoryManager & mem_man):
-  memory_addr(mem_man.give_memory(4))  //float ma 4 bajty  TODO poprawić by mogło zaalokować dowolną wielkość i typ danych
+  memory_addr(mem_man.give_memory(4))  //float is 4 byte  TODO change code to support any data structure (very low priority)
 {}
 
 Sensor_config::change_config_value(float arg_value)

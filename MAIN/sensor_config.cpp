@@ -3,12 +3,12 @@
 #include "sensor_config.hpp"
 
 
-Sensor setup_thermometer_sensors(MemoryManager &menager1)  //tutaj cała magia w ustawianiu sensorów 
+Sensor setup_thermometer_sensors(MemoryManager &manager)  //tutaj cała magia w ustawianiu sensorów 
 {
   //thermometer
-  Sensor_config termometer_zero_shift(menager1);
+  Sensor_config termometer_zero_shift(manager);
   termometer_zero_shift.get_config_value();
-  Sensor_config termometer_linear(menager1);
+  Sensor_config termometer_linear(manager);
   termometer_linear.get_config_value();
   ComponentThermometer* c_termometer = new ComponentThermometer(TERMOMETHERPIN);
   Sensor termometer(c_termometer,termometer_zero_shift, termometer_linear);
@@ -16,12 +16,12 @@ Sensor setup_thermometer_sensors(MemoryManager &menager1)  //tutaj cała magia w
 }
 
 
-Sensor setup_ph_sensors(MemoryManager &menager1)  //tutaj cała magia w ustawianiu sensorów 
+Sensor setup_ph_sensors(MemoryManager &manager)  //tutaj cała magia w ustawianiu sensorów 
 {
   // ph-meter
-  Sensor_config ph_zero_shift(menager1);
+  Sensor_config ph_zero_shift(manager);
   ph_zero_shift.get_config_value();
-  Sensor_config ph_linear(menager1);
+  Sensor_config ph_linear(manager);
   ph_linear.get_config_value();
   Component_ph_meter* c_ph_meter = new Component_ph_meter(PHMETERPIN);
   Sensor ph_meter(c_ph_meter, ph_zero_shift, ph_linear);
@@ -29,12 +29,12 @@ Sensor setup_ph_sensors(MemoryManager &menager1)  //tutaj cała magia w ustawian
 }
   
 
-Sensor setup_oxygen_sensors(MemoryManager &menager1)  //tutaj cała magia w ustawianiu sensorów 
+Sensor setup_oxygen_sensors(MemoryManager &manager)  //tutaj cała magia w ustawianiu sensorów 
 {
    //sonda stezenia tlenu
-  Sensor_config oxygen_zero_shift(menager1);
+  Sensor_config oxygen_zero_shift(manager);
   oxygen_zero_shift.get_config_value();
-  Sensor_config oxygen_linear(menager1);
+  Sensor_config oxygen_linear(manager);
   oxygen_linear.get_config_value();
   Component_oxygenmeter* c_oxygen_meter = new Component_oxygenmeter(OXYGENMETERPIN);
   Sensor oxygen_meter(c_oxygen_meter,oxygen_zero_shift, oxygen_linear);
