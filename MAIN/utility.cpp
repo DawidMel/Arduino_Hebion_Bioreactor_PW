@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "utility.hpp"
 
-mesure_arr::mesure_arr(int size):
+measure_arr::measure_arr(int size):
 array_size(size) 
 {
   mesurment = new float[array_size]; // Dynamiczne utworzenie tablicy
@@ -10,7 +10,7 @@ array_size(size)
   }
 }
 
-void mesure_arr::add_mesure(float value)
+void measure_arr::add_measure(float value)
 {
   //oldest_mesure=mesurment[memory_cursor];  //TODO zakomentować jeśli nie używa się fasr
   mesurment[memory_cursor] = value;
@@ -18,10 +18,10 @@ void mesure_arr::add_mesure(float value)
   memory_cursor %= array_size;
 }
 
-float mesure_arr::read_mesure(char index) {return mesurment[index];}
+float measure_arr::read_mesure(char index) {return mesurment[index];}
 
 
-float mesure_arr::get_average()  //TODO vectorization but not need now
+float measure_arr::get_average()  //TODO vectorization but not need now
 {
   float sum =0;
   for(int i; i<=array_size; i++) {sum+=mesurment[i];}
@@ -55,7 +55,7 @@ void TimerLowPriority::reset()
 
 
 /*
-float mesure_arr::get_average_fast() //LOOK OUT much faster but you need make sure if it is called at least before erray will be completly changed not recomended to use if not need
+float measure_arr::get_average_fast() //LOOK OUT much faster but you need make sure if it is called at least before erray will be completly changed not recomended to use if not need
                                     // change value of average (old mesurment inside) if not called every mesurment UNTESTED!
 {
   static int iteration = 0;

@@ -4,7 +4,7 @@
 
 
 
-class mesure_arr  //DOPRACOWAĆ
+class measure_arr  //DOPRACOWAĆ
 {
   private:
   const char array_size; //max 256 ale wtedy może nie starczyć pamięci
@@ -16,8 +16,8 @@ class mesure_arr  //DOPRACOWAĆ
 
 
   public:
-  mesure_arr(int size);
-  void add_mesure(float value);
+  measure_arr(int size);
+  void add_measure(float value);
   float read_mesure(char index);
   float get_average();
   float get_average_fast();

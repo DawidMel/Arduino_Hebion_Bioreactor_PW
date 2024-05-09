@@ -7,24 +7,24 @@
 int dumb_func() {return 1;}
 
 
-mesure_arr m1(10),m2(3);  //10 ; 3
+measure_arr m1(10),m2(3);  //10 ; 3
 
 
-float test_mes_arry(mesure_arr& ma)
+float test_mes_arry(measure_arr& ma)
 {
-  ma.add_mesure(20);
-  ma.add_mesure(10);
-  ma.add_mesure(5);
-  ma.add_mesure(5);
-  ma.add_mesure(60);
+  ma.add_measure(20);
+  ma.add_measure(10);
+  ma.add_measure(5);
+  ma.add_measure(5);
+  ma.add_measure(60);
   return (ma.get_average());
 }
 
-float test_mes_arry2(mesure_arr& ma)
+float test_mes_arry2(measure_arr& ma)
 {
-  ma.add_mesure(20);
-  ma.add_mesure(10);
-  ma.add_mesure(2137);
+  ma.add_measure(20);
+  ma.add_measure(10);
+  ma.add_measure(2137);
 
   return ma.read_mesure(2); 
 }
