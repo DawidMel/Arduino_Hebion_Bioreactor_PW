@@ -17,9 +17,9 @@
 #define OXYGENMETERPIN A3
 
 
-#define PhSensorPin A0 // pH meter Analog output to Arduino Analog Input 0
-#define samplingInterval 20 //Unit!
-#define printInterval 800 //Unit!
+#define PHSENSORPIN A0 // pH meter Analog output to Arduino Analog Input 0
+#define SAMPLINGINTERVAL 20 //Unit!
+#define PRINTINTERVAL 800 //Unit!
 
 
 

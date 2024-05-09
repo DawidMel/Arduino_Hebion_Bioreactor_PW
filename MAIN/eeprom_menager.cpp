@@ -26,33 +26,31 @@ int MemoryManager::give_memory(int arg_require_memory)
 
 
 // sensor config
-Sensor_config::Sensor_config(MemoryManager & mem_man):
+ConfigurationVariable::ConfigurationVariable(MemoryManager & mem_man):
   memory_addr(mem_man.give_memory(4))  //float is 4 byte  TODO change code to support any data structure (very low priority)
 {}
 
-Sensor_config::change_config_value(float arg_value)
+ConfigurationVariable::change_config_value(float arg_value)
 {
   value = arg_value;
   EEPROM.put(memory_addr, value);
 }
 
-int Sensor_config::get_config_value(void) {EEPROM.get(memory_addr, value);}
-float Sensor_config::get_value() {return value;}
-int Sensor_config::get_addr() {return memory_addr;}
+int ConfigurationVariable::retrieve_config_values_from_eeprom(void) {EEPROM.get(memory_addr, value);}
+float ConfigurationVariable::return_config_value() {return value;}
+int ConfigurationVariable::get_addr() {return memory_addr;}
 
 
 //Sensor
-Sensor::Sensor(Component* c, Sensor_config& zero_shift,  Sensor_config& linear_factor):
+Sensor::Sensor(MeasuringDevice* measuring_dev, ConfigurationVariable& zero_shift,  ConfigurationVariable& linear_factor):
 zero_shift(zero_shift),
-linear(linear_factor),
-comp(c)
+linear_factor(linear_factor),
+measuring_device(measuring_dev)
 {}
 
 float Sensor::get_value()
 {
-  value = comp->get_value();
-  return value*linear.get_value()+zero_shift.get_value();
+  value = measuring_device->get_value();
+  return value*linear_factor.return_config_value()+zero_shift.return_config_value();
 }
-void Sensor::collect_value(float arg_value) {value = arg_value;}
-
 

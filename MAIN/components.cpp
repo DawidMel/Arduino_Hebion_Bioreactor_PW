@@ -1,12 +1,12 @@
 #include "components.hpp"
 
-Peristaltic_pump::Peristaltic_pump(int arg_PwmPin, int arg_Dir1Pin, int arg_Dir2Pin):
+PeristalticPump::PeristalticPump(int arg_PwmPin, int arg_Dir1Pin, int arg_Dir2Pin):
 pwmPin(arg_PwmPin),
 dir1Pin(arg_Dir1Pin),
 dir2Pin(arg_Dir2Pin)
 {}
 
-void Peristaltic_pump::setPumpSpeed(int value)   //probably need to define an alternative method for the pump
+void PeristalticPump::setPumpSpeed(int value)   //probably need to define an alternative method for the pump
 {
     if (value >= 0)
     {
@@ -19,38 +19,43 @@ void Peristaltic_pump::setPumpSpeed(int value)   //probably need to define an al
       digitalWrite(dir2Pin, HIGH);
     }
 
-    currentPwmValue = (value, -100, 100, -255, 255);
+    currentPwmValue = map(value, -100, 100, -255, 255);
     analogWrite(pwmPin, abs(currentPwmValue));
 }
-
-int Peristaltic_pump::GetCurrentSpeed() {return currentPwmValue;}
-
+const long PeristalticPump::GetCurrentSpeed() {return currentPwmValue;}
 
 
-Component::Component(int arg_read_pin):
+
+MeasuringDevice::MeasuringDevice(int arg_read_pin):
 read_pin(arg_read_pin)
 {}
-int Component::get_value() {return 10;} //TODO
+int MeasuringDevice::get_value() {return 10;} //TODO
 
 
-ComponentThermometer::ComponentThermometer(int arg_read_pin):
-Component(arg_read_pin)
+
+Thermometer::Thermometer(int arg_read_pin):
+MeasuringDevice(arg_read_pin)
 {}
-int ComponentThermometer::get_value() 
+
+int Thermometer::get_value() 
 {
   static int a = 10;
   a+=1;
   return a;
-  } //TODO
+  } //TODO use real measure function
 
 
-Component_ph_meter::Component_ph_meter(int arg_read_pin):
-Component(arg_read_pin)
+
+PhMeter::PhMeter(int arg_read_pin):
+MeasuringDevice(arg_read_pin)
 {}
-int Component_ph_meter::get_value(){return 10;} //TODO
+
+int PhMeter::get_value(){return 10;} //TODO use real measure function
 
 
-Component_oxygenmeter::Component_oxygenmeter(int arg_read_pin):
-Component(arg_read_pin)
+
+OxygenMeter::OxygenMeter(int arg_read_pin):
+MeasuringDevice(arg_read_pin)
 {}
-int Component_oxygenmeter::get_value() {return 10;}
+
+int OxygenMeter::get_value() {return 10;} //TODO use real measure function

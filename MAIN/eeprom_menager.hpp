@@ -19,7 +19,7 @@ class MemoryManager
 
 
 
-class Sensor_config   //rename sensor_parameter
+class ConfigurationVariable   //rename sensor_parameter
 {
   private:
   int memory_addr;
@@ -27,10 +27,10 @@ class Sensor_config   //rename sensor_parameter
 
 
   public:
-  Sensor_config(MemoryManager& mem_manager);
+  ConfigurationVariable(MemoryManager& mem_manager);
   int change_config_value(float value);
-  int get_config_value(void);
-  float get_value();
+  int retrieve_config_values_from_eeprom(void);
+  float return_config_value();
   int get_addr();
 
 };
@@ -43,13 +43,12 @@ class Sensor
   float value = 10;
 
   public: //bad practice TODO in free time try to change to private
-  Sensor_config zero_shift, linear;
-  Component* comp;
+  ConfigurationVariable zero_shift, linear_factor;
+  MeasuringDevice* measuring_device;
 
   public:
-  Sensor(Component* c, Sensor_config& zero_shift, Sensor_config& linear_factor);
+  Sensor(MeasuringDevice* measuring_dev, ConfigurationVariable& zero_shift, ConfigurationVariable& linear_factor);
   float get_value();
-  void collect_value(float arg_value);
 };
 
 

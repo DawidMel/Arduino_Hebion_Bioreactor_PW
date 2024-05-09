@@ -5,7 +5,7 @@
 #ifndef BIOREACTOR_COMPONENTS
 #define BIOREACTOR_COMPONENTS
 
-class Peristaltic_pump
+class PeristalticPump
 {
   private:
   const int pwmPin;
@@ -14,45 +14,45 @@ class Peristaltic_pump
   long currentPwmValue;
 
   public:
-  Peristaltic_pump(int arg_PwmPin, int arg_Dir1Pin, int arg_Dir2Pin);
+  PeristalticPump(int arg_PwmPin, int arg_Dir1Pin, int arg_Dir2Pin);
   void setPumpSpeed(int value);  //from -100 (max reverse speed) to 100 (max forward speed)
-  int GetCurrentSpeed();
+  const long GetCurrentSpeed();
 };
 
 
-class Component
+class MeasuringDevice
 {
   private:
   const int read_pin;
   int value; //check what sensors return  TODO for now int ; but probably will be change in inheritance 
 
   public:
-  Component(int arg_read_pin);
+  MeasuringDevice(int arg_read_pin);
   virtual int get_value();
 };
 
 
 
-class ComponentThermometer : public Component
+class Thermometer : public MeasuringDevice
 {
   public:
-  ComponentThermometer(int arg_read_pin);
+  Thermometer(int arg_read_pin);
   int get_value() override;
 };
 
 
-class Component_ph_meter : public Component
+class PhMeter : public MeasuringDevice
 {
   public:
-  Component_ph_meter(int arg_read_pin);
+  PhMeter(int arg_read_pin);
   int get_value() override;
 };
 
 
-class Component_oxygenmeter : public Component
+class OxygenMeter : public MeasuringDevice
 {
   public:
-  Component_oxygenmeter(int arg_read_pin);
+  OxygenMeter(int arg_read_pin);
   int get_value() override;
 };
 

@@ -6,11 +6,11 @@
 Sensor setup_thermometer_sensors(MemoryManager &manager)  //setup the sensor 
 {
   //thermometer
-  Sensor_config thermometer_zero_shift(manager);
-  thermometer_zero_shift.get_config_value();
-  Sensor_config thermometer_linear(manager);
-  thermometer_linear.get_config_value();
-  ComponentThermometer* c_thermometer = new ComponentThermometer(TERMOMETHERPIN);
+  ConfigurationVariable thermometer_zero_shift(manager); //constructor use manager method give_memory and assigns the result to an object memory_addr variable 
+  thermometer_zero_shift.retrieve_config_values_from_eeprom();
+  ConfigurationVariable thermometer_linear(manager);
+  thermometer_linear.retrieve_config_values_from_eeprom();
+  Thermometer* c_thermometer = new Thermometer(TERMOMETHERPIN);
   Sensor thermometer(c_thermometer,thermometer_zero_shift, thermometer_linear);
   return thermometer;
 }
@@ -19,11 +19,11 @@ Sensor setup_thermometer_sensors(MemoryManager &manager)  //setup the sensor
 Sensor setup_ph_sensors(MemoryManager &manager)  //setup the sensor  
 {
   // ph-meter
-  Sensor_config ph_zero_shift(manager);
-  ph_zero_shift.get_config_value();
-  Sensor_config ph_linear(manager);
-  ph_linear.get_config_value();
-  Component_ph_meter* c_ph_meter = new Component_ph_meter(PHMETERPIN);
+  ConfigurationVariable ph_zero_shift(manager);
+  ph_zero_shift.retrieve_config_values_from_eeprom();
+  ConfigurationVariable ph_linear(manager);
+  ph_linear.retrieve_config_values_from_eeprom();
+  PhMeter* c_ph_meter = new PhMeter(PHMETERPIN);
   Sensor ph_meter(c_ph_meter, ph_zero_shift, ph_linear);
   return ph_meter;
 }
@@ -32,11 +32,11 @@ Sensor setup_ph_sensors(MemoryManager &manager)  //setup the sensor
 Sensor setup_oxygen_sensors(MemoryManager &manager)  //setup the sensor 
 {
    //oxygen meter 
-  Sensor_config oxygen_zero_shift(manager);
-  oxygen_zero_shift.get_config_value();
-  Sensor_config oxygen_linear(manager);
-  oxygen_linear.get_config_value();
-  Component_oxygenmeter* c_oxygen_meter = new Component_oxygenmeter(OXYGENMETERPIN);
+  ConfigurationVariable oxygen_zero_shift(manager);
+  oxygen_zero_shift.retrieve_config_values_from_eeprom();
+  ConfigurationVariable oxygen_linear(manager);
+  oxygen_linear.retrieve_config_values_from_eeprom();
+  OxygenMeter* c_oxygen_meter = new OxygenMeter(OXYGENMETERPIN);
   Sensor oxygen_meter(c_oxygen_meter,oxygen_zero_shift, oxygen_linear);
   return oxygen_meter;
 }
@@ -52,14 +52,16 @@ void test_sensor(Sensor& sensor, float value_new, String sensor_name = "Sensor")
   Serial.print("wartosc przesuniecia_zera (po inicjalizacji) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(sensor.zero_shift.get_value());
+  Serial.println(sensor.zero_shift.return_config_value());
 
 
-  sensor.zero_shift.get_config_value();
+  sensor.zero_shift.retrieve_config_values_from_eeprom();
+  delay(20);
   Serial.print("wartosc przesuniecia_zera (po odczytaniu wartosci z eeprom) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(sensor.zero_shift.get_value());
+  Serial.println(sensor.zero_shift.return_config_value());
+
 
 
   Serial.print("adres w pamieci dla ");
@@ -68,40 +70,56 @@ void test_sensor(Sensor& sensor, float value_new, String sensor_name = "Sensor")
   Serial.println(sensor.zero_shift.get_addr());
 
 
+
   sensor.zero_shift.change_config_value(value_new);
+  delay(20);
   Serial.print("wartosc przesuniecia_zera (po zmianie na ustawiona wartosc) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(sensor.zero_shift.get_value());
+  Serial.println(sensor.zero_shift.return_config_value());
   Serial.println("----------------------------------------------------------------------------------------");
 
+  
 
   Serial.print("wartosc wspolczynnika linowego (po inicjalizacji) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(sensor.linear.get_value());
+  Serial.println(sensor.linear_factor.return_config_value());
 
 
-  sensor.linear.get_config_value();
+
+  sensor.linear_factor.retrieve_config_values_from_eeprom();
+  delay(20);
   Serial.print("wartosc wspolczynnika linowego (po odczytaniu wartosci z eeprom) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(sensor.linear.get_value());
+  Serial.println(sensor.linear_factor.return_config_value());
 
+  
 
   Serial.print("adres w pamieci dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(sensor.linear.get_addr());
+  Serial.println(sensor.linear_factor.get_addr());
 
 
-  sensor.linear.change_config_value(value_new);
+
+  sensor.linear_factor.change_config_value(value_new);
+  delay(20);
   Serial.print("wartosc wspolczynnika linowego (po zmianie na ustawiona wartosc) dla ");
   Serial.print(sensor_name);
   Serial.print(": ");
-  Serial.println(sensor.linear.get_value());
+  Serial.println(sensor.linear_factor.return_config_value());
   Serial.println("-----------------------------------------------------------------------------------------");
 
+  delay(20);
+
+  Serial.print("wartosc odczytana (wprost) z czujnika ");
+  Serial.print(sensor_name);
+  Serial.print(": ");
+  Serial.println(sensor.measuring_device->get_value());
+
+  delay(20);
 
   Serial.print("wartosc odczytana (po uwzględnieniu wspolczynników) z czujnika ");
   Serial.print(sensor_name);
@@ -109,11 +127,7 @@ void test_sensor(Sensor& sensor, float value_new, String sensor_name = "Sensor")
   Serial.println(sensor.get_value());
 
 
-  sensor.collect_value(value_new);
-  Serial.print("wartosc odczytana (po wstawieniu nowej wartosci) z czujnika ");
-  Serial.print(sensor_name);
-  Serial.print(": ");
-  Serial.println(sensor.get_value());
+  
 
 
   Serial.println("-----------------------------------------------------------------------------------------");

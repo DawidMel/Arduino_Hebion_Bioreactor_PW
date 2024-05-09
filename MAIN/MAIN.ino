@@ -11,10 +11,10 @@
 
 
 //global variable
-MemoryManager manager1(0,500);
-Sensor thermometer = setup_thermometer_sensors(manager1);
-Sensor ph_meter = setup_ph_sensors(manager1);
-Sensor oxygen_meter = setup_oxygen_sensors(manager1);
+MemoryManager mem_manager(0,500);
+Sensor thermometer = setup_thermometer_sensors(mem_manager);
+Sensor ph_meter = setup_ph_sensors(mem_manager);
+Sensor oxygen_meter = setup_oxygen_sensors(mem_manager);
 
 
 //arrays for measures
@@ -36,9 +36,9 @@ void setup()
 
  
   /////////////////////sensors tests///////////////////////////
-  test_sensor(thermometer,1,"thermometer");
-  test_sensor(ph_meter,1,"ph_meter");
-  test_sensor(oxygen_meter,1,"oxygen_meter");
+  test_sensor(thermometer,5,"thermometer");
+  test_sensor(ph_meter,5,"ph_meter");
+  test_sensor(oxygen_meter,5,"oxygen_meter");
 
 
   //timers reset
