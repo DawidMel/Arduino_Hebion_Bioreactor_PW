@@ -7,13 +7,13 @@
 class PeristalticPump
 {
   private:
-    const int pwmPin;
-    const int dir1Pin;
-    const int dir2Pin;
-    long currentPwmValue;
+    const int m_pwmPin;
+    const int m_dir1Pin;
+    const int m_dir2Pin;
+    long m_currentPwmValue;
 
   public:
-    PeristalticPump(int arg_PwmPin, int arg_Dir1Pin, int arg_Dir2Pin);
+    PeristalticPump(int PwmPin, int Dir1Pin, int Dir2Pin);
     void setPumpSpeed(int value); // from -100 (max reverse speed) to 100 (max forward speed)
     long getCurrentSpeed() const;
 };
@@ -21,32 +21,32 @@ class PeristalticPump
 class MeasuringDevice
 {
   private:
-    const int read_pin;
-    int value; // check what sensors return  TODO for now int ; but probably will be change in inheritance
+    const int m_read_pin;
+    int m_value; // check what sensors return  TODO for now int ; but probably will be change in inheritance
 
   public:
-    MeasuringDevice(int arg_read_pin);
+    MeasuringDevice(int read_pin);
     virtual int get_value() const;
 };
 
 class Thermometer : public MeasuringDevice
 {
   public:
-    Thermometer(int arg_read_pin);
+    Thermometer(int read_pin);
     int get_value() const override;
 };
 
 class PhMeter : public MeasuringDevice
 {
   public:
-    PhMeter(int arg_read_pin);
+    PhMeter(int read_pin);
     int get_value() const override;
 };
 
 class OxygenMeter : public MeasuringDevice
 {
   public:
-    OxygenMeter(int arg_read_pin);
+    OxygenMeter(int read_pin);
     int get_value() const override;
 };
 
