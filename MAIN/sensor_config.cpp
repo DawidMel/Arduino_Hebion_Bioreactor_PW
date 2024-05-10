@@ -2,13 +2,13 @@
 #include "eeprom_menager.hpp"
 #include <string.h>
 
-//TODO in free time change "manual" initialization to function
+// TODO in free time change "manual" initialization to function
 
 Sensor setup_thermometer_sensors(MemoryManager &manager) // setup the sensor
 {
     // thermometer
-    ConfigurationVariable thermometer_zero_shift(
-        manager); // constructor use manager method give_memory and assigns the result to an object m_memory_addr variable
+    ConfigurationVariable thermometer_zero_shift(manager); // constructor use manager method give_memory and assigns the
+                                                           // result to an object m_memory_addr variable
     thermometer_zero_shift.retrieve_config_values_from_eeprom();
     ConfigurationVariable thermometer_linear_factor(manager);
     thermometer_linear_factor.retrieve_config_values_from_eeprom();

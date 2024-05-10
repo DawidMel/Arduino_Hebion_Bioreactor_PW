@@ -5,7 +5,7 @@ class MeasureArray // TODO is not good enough make it better
 {
   private:
     const char m_array_size; // max 256 (but                not recommended to use more than 100)
-    float *measurement;    // Pointer array, will be initialized              in constructor
+    float *measurement;      // Pointer array, will be initialized              in constructor
     int m_memory_cursor = 0;
     float m_oldest_measure;
 

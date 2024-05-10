@@ -28,7 +28,6 @@ class ConfigurationVariable // rename sensor_parameter
     float return_config_value() const;
     int retrieve_config_values_from_eeprom();
     void change_config_value(float value);
-    
 };
 
 class Sensor

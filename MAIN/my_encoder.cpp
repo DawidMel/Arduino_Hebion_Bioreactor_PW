@@ -1,6 +1,6 @@
 #include "my_encoder.hpp"
 
-//not refactored
+// not refactored
 
 int get_position()
 {

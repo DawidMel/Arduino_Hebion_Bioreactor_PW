@@ -33,9 +33,9 @@ void setup()
     delay(2000);
 
     /////////////////////sensors tests///////////////////////////
-    // test_sensor(thermometer, 5, "thermometer");
-    // test_sensor(ph_meter, 5, "ph_meter");
-    // test_sensor(oxygen_meter, 5, "oxygen_meter");
+    test_sensor(thermometer, 5, "thermometer");
+    test_sensor(ph_meter, 5, "ph_meter");
+    test_sensor(oxygen_meter, 5, "oxygen_meter");
 
     // initial array value is from measurement
     temperature_measurements_array.init(thermometer.get_value());

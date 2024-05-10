@@ -10,7 +10,7 @@ void MeasureArray::init(float initial_value)
 {
     for (int i = 0; i < m_array_size; i++)
     {
-        measurement[i] = initial_value;        
+        measurement[i] = initial_value;
     }
 }
 

@@ -1,7 +1,7 @@
 #ifndef MY_ENCODER
 #define MY_ENCODER
 
-//not refactored
+// not refactored
 
 int get_position();
 
