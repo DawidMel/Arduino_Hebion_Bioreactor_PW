@@ -10,13 +10,14 @@
 // #include "Unit_tests.hpp"   //only for tests
 
 // global variable
-MemoryManager mem_manager(0, 500);
-Sensor thermometer = setup_thermometer_sensors(mem_manager);
-Sensor ph_meter = setup_ph_sensors(mem_manager);
-Sensor oxygen_meter = setup_oxygen_sensors(mem_manager);
+MemoryManager memory_manager(0, 500);
+Sensor thermometer = setup_thermometer_sensors(memory_manager);
+Sensor ph_meter = setup_ph_sensors(memory_manager);
+Sensor oxygen_meter = setup_oxygen_sensors(memory_manager);
 
 // arrays for measures
-MeasureArray temp_arr(30), ph_arr(40), oxygen_arr(50); // TODO think about this variable name
+MeasureArray temperature_measurements_array(40), ph_measurements_array(40),
+    oxygen_measurements_array(40); // TODO think about this variable name
 
 ////timers
 TimerLowPriority measure_timer, display_timer;
@@ -32,18 +33,14 @@ void setup()
     delay(2000);
 
     /////////////////////sensors tests///////////////////////////
-    test_sensor(thermometer, 5, "thermometer");
-    test_sensor(ph_meter, 5, "ph_meter");
-    test_sensor(oxygen_meter, 5, "oxygen_meter");
+    // test_sensor(thermometer, 5, "thermometer");
+    // test_sensor(ph_meter, 5, "ph_meter");
+    // test_sensor(oxygen_meter, 5, "oxygen_meter");
 
-    //initial array value is from measurement
-    temp_arr.init(0);
-    ph_arr.init(0);
-    oxygen_arr.init(0);
-
-    temp_arr.init(thermometer.get_value());
-    ph_arr.init(ph_meter.get_value());
-    oxygen_arr.init(oxygen_meter.get_value());
+    // initial array value is from measurement
+    temperature_measurements_array.init(thermometer.get_value());
+    ph_measurements_array.init(ph_meter.get_value());
+    oxygen_measurements_array.init(oxygen_meter.get_value());
 
     // timers reset
     measure_timer.reset();
@@ -65,21 +62,21 @@ void loop()
     // if flag is set to 1 make action
     if (measurement == 1)
     {
-        temp_arr.add_measure(thermometer.get_value());
-        ph_arr.add_measure(ph_meter.get_value());
-        oxygen_arr.add_measure(oxygen_meter.get_value());
+        temperature_measurements_array.add_measure(thermometer.get_value());
+        ph_measurements_array.add_measure(ph_meter.get_value());
+        oxygen_measurements_array.add_measure(oxygen_meter.get_value());
     }
 
     if (display == 1)
     {
-        Serial.print("thermometer avr value: ");
-        Serial.println(temp_arr.get_average());
+        Serial.print(F("thermometer avr value: "));
+        Serial.println(temperature_measurements_array.get_average());
 
-        Serial.print("ph_meter avr value: ");
-        Serial.println(ph_arr.get_average());
+        Serial.print(F("ph_meter avr value: "));
+        Serial.println(ph_measurements_array.get_average());
 
-        Serial.print("oxygen_meter avr value: ");
-        Serial.println(oxygen_arr.get_average());
+        Serial.print(F("oxygen_meter avr value: "));
+        Serial.println(oxygen_measurements_array.get_average());
     }
 }
 /*
