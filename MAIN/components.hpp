@@ -14,8 +14,8 @@ class PeristalticPump
 
   public:
     PeristalticPump(int PwmPin, int Dir1Pin, int Dir2Pin);
-    void setPumpSpeed(int value); // from -100 (max reverse speed) to 100 (max forward speed)
-    long getCurrentSpeed() const;
+    void set_pump_speed(int value); // from -100 (max reverse speed) to 100 (max forward speed)
+    long get_current_speed() const;
 };
 
 class MeasuringDevice

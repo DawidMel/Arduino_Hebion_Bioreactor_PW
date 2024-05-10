@@ -2,6 +2,8 @@
 #include "eeprom_menager.hpp"
 #include <string.h>
 
+//TODO in free time change "manual" initialization to function
+
 Sensor setup_thermometer_sensors(MemoryManager &manager) // setup the sensor
 {
     // thermometer

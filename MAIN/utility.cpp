@@ -1,21 +1,24 @@
 #include "utility.hpp"
 #include <Arduino.h>
 
-MeasureArray::MeasureArray(int size) : array_size(size)
+MeasureArray::MeasureArray(int size) : m_array_size(size)
 {
-    measurement = new float[array_size]; // Dynamic create of array
-    for (int i = 0; i < array_size; i++)
+    measurement = new float[m_array_size]; // Dynamic create of array
+}
+
+void MeasureArray::init(float initial_value)
+{
+    for (int i = 0; i < m_array_size; i++)
     {
-        measurement[i] =
-            0; // Set every array element to zero TODO make measurement and use this value to initialize table!
+        measurement[i] = initial_value;        
     }
 }
 
 void MeasureArray::add_measure(float value)
 {
-    measurement[memory_cursor] = value;
-    memory_cursor += 1;
-    memory_cursor %= array_size;
+    measurement[m_memory_cursor] = value;
+    m_memory_cursor += 1;
+    m_memory_cursor %= m_array_size;
 }
 
 float MeasureArray::read_measure(char index)
@@ -26,23 +29,23 @@ float MeasureArray::read_measure(char index)
 float MeasureArray::get_average() // TODO vectorization but not need now
 {
     float sum = 0;
-    for (int i = 0; i <= array_size; i++)
+    for (int i = 0; i <= m_array_size; i++)
     {
         sum += measurement[i];
     }
-    return (sum / array_size);
+    return sum / m_array_size;
 }
 
-TimerLowPriority::TimerLowPriority() : start_time(millis()), end_time(millis())
+TimerLowPriority::TimerLowPriority() : m_start_time(millis()), m_end_time(millis())
 {
 }
 
 bool TimerLowPriority::activate(int time_to_activate)
 {
-    if (millis() >= end_time)
+    if (millis() >= m_end_time)
     {
-        start_time = end_time;
-        end_time = start_time + time_to_activate;
+        m_start_time = m_end_time;
+        m_end_time = m_start_time + time_to_activate;
         return true;
     }
     else
@@ -53,6 +56,6 @@ bool TimerLowPriority::activate(int time_to_activate)
 
 void TimerLowPriority::reset()
 {
-    start_time = millis();
-    end_time = millis();
+    m_start_time = millis();
+    m_end_time = millis();
 }
