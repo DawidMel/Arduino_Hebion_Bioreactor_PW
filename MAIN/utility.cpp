@@ -29,7 +29,7 @@ float MeasureArray::read_measure(char index)
 float MeasureArray::get_average() // TODO vectorization but not need now
 {
     float sum = 0;
-    for (int i = 0; i <= m_array_size; i++)
+    for (int i = 0; i < m_array_size; i++)
     {
         sum += measurement[i];
     }

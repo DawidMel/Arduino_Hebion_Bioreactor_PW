@@ -28,7 +28,7 @@ char display = 0;
 void setup()
 {
 
-    Serial.begin(57600); // Serial port monitor initialization
+    Serial.begin(115200); // Serial port monitor initialization
     delay(2000);
 
     /////////////////////sensors tests///////////////////////////
@@ -72,17 +72,14 @@ void loop()
 
     if (display == 1)
     {
-        float a = temp_arr.get_average();
-        float b = ph_arr.get_average();
-        float c = ph_arr.get_average();
         Serial.print("thermometer avr value: ");
-        Serial.println(a);
+        Serial.println(temp_arr.get_average());
 
         Serial.print("ph_meter avr value: ");
-        Serial.println(b);
+        Serial.println(ph_arr.get_average());
 
         Serial.print("oxygen_meter avr value: ");
-        Serial.println(c);
+        Serial.println(oxygen_arr.get_average());
     }
 }
 /*
