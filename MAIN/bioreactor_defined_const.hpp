@@ -1,7 +1,6 @@
 #ifndef BIOREACTOR_CONST
 #define BIOREACTOR_CONST
 
-
 #define TERMOMETHERPIN A1
 // Thermistor settings   // resistance at 25 degrees C
 #define THERMISTORNOMINAL 10000
@@ -12,24 +11,11 @@
 // the value of the 'other' resistor
 #define SERIESRESISTOR 10000
 
-
 #define PHMETERPIN A2
 #define OXYGENMETERPIN A3
 
+#define PHSENSORPIN A0      // pH meter Analog output to Arduino Analog Input 0
+#define SAMPLINGINTERVAL 20 // Unit!
+#define PRINTINTERVAL 800   // Unit!
 
-#define PHSENSORPIN A0 // pH meter Analog output to Arduino Analog Input 0
-#define SAMPLINGINTERVAL 20 //Unit!
-#define PRINTINTERVAL 800 //Unit!
-
-
-
-
-
-
-
-
-
-
-
-
-#endif //BIOREACTOR_CONST
+#endif // BIOREACTOR_CONST

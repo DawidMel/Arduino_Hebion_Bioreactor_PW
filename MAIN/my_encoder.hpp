@@ -3,8 +3,4 @@
 
 int get_position();
 
-
-
-
-
 #endif
