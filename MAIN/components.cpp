@@ -21,7 +21,7 @@ void PeristalticPump::setPumpSpeed(int value) // probably need to define an alte
     currentPwmValue = map(value, -100, 100, -255, 255);
     analogWrite(pwmPin, abs(currentPwmValue));
 }
-const long PeristalticPump::GetCurrentSpeed()
+long PeristalticPump::getCurrentSpeed() const
 {
     return currentPwmValue;
 }
@@ -29,7 +29,7 @@ const long PeristalticPump::GetCurrentSpeed()
 MeasuringDevice::MeasuringDevice(int arg_read_pin) : read_pin(arg_read_pin)
 {
 }
-int MeasuringDevice::get_value()
+int MeasuringDevice::get_value() const
 {
     return 10;
 } // TODO
@@ -38,7 +38,7 @@ Thermometer::Thermometer(int arg_read_pin) : MeasuringDevice(arg_read_pin)
 {
 }
 
-int Thermometer::get_value()
+int Thermometer::get_value() const
 {
     static int a = 10;
     a += 1;
@@ -49,7 +49,7 @@ PhMeter::PhMeter(int arg_read_pin) : MeasuringDevice(arg_read_pin)
 {
 }
 
-int PhMeter::get_value()
+int PhMeter::get_value() const
 {
     return 10;
 } // TODO use real measure function
@@ -58,7 +58,7 @@ OxygenMeter::OxygenMeter(int arg_read_pin) : MeasuringDevice(arg_read_pin)
 {
 }
 
-int OxygenMeter::get_value()
+int OxygenMeter::get_value() const
 {
     return 10;
 } // TODO use real measure function

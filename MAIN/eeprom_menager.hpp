@@ -25,7 +25,7 @@ class ConfigurationVariable // rename sensor_parameter
   public:
     ConfigurationVariable(MemoryManager &mem_manager);
     void change_config_value(float value);
-    int retrieve_config_values_from_eeprom(void);
+    int retrieve_config_values_from_eeprom();
     float return_config_value();
     int get_addr();
 };

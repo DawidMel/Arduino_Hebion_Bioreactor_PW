@@ -15,7 +15,7 @@ class PeristalticPump
   public:
     PeristalticPump(int arg_PwmPin, int arg_Dir1Pin, int arg_Dir2Pin);
     void setPumpSpeed(int value); // from -100 (max reverse speed) to 100 (max forward speed)
-    const long GetCurrentSpeed();
+    long getCurrentSpeed() const;
 };
 
 class MeasuringDevice
@@ -26,28 +26,28 @@ class MeasuringDevice
 
   public:
     MeasuringDevice(int arg_read_pin);
-    virtual int get_value();
+    virtual int get_value() const;
 };
 
 class Thermometer : public MeasuringDevice
 {
   public:
     Thermometer(int arg_read_pin);
-    int get_value() override;
+    int get_value() const override;
 };
 
 class PhMeter : public MeasuringDevice
 {
   public:
     PhMeter(int arg_read_pin);
-    int get_value() override;
+    int get_value() const override;
 };
 
 class OxygenMeter : public MeasuringDevice
 {
   public:
     OxygenMeter(int arg_read_pin);
-    int get_value() override;
+    int get_value() const override;
 };
 
 #endif // BIOREACTOR_COMPONENTS
