@@ -12,7 +12,7 @@ Sensor setup_thermometer_sensors(MemoryManager &manager) // setup the sensor
     thermometer_zero_shift.retrieve_config_values_from_eeprom();
     ConfigurationVariable thermometer_linear_factor(manager);
     thermometer_linear_factor.retrieve_config_values_from_eeprom();
-    Thermometer *measure_dev_thermometer = new Thermometer(TERMOMETHERPIN);
+    Thermometer *measure_dev_thermometer = new Thermometer(TERMOMETHER_PIN);
     Sensor thermometer(measure_dev_thermometer, thermometer_zero_shift, thermometer_linear_factor);
     return thermometer;
 }
@@ -25,7 +25,7 @@ Sensor setup_ph_sensors(MemoryManager &manager) // setup the sensor
     ph_zero_shift.retrieve_config_values_from_eeprom();
     ConfigurationVariable ph_linear_factor(manager);
     ph_linear_factor.retrieve_config_values_from_eeprom();
-    PhMeter *measure_dev_ph_meter = new PhMeter(PHMETERPIN);
+    PhMeter *measure_dev_ph_meter = new PhMeter(PH_METER_PIN);
     Sensor ph_meter(measure_dev_ph_meter, ph_zero_shift, ph_linear_factor);
     return ph_meter;
 }
@@ -37,7 +37,7 @@ Sensor setup_oxygen_sensors(MemoryManager &manager) // setup the sensor
     oxygen_zero_shift.retrieve_config_values_from_eeprom();
     ConfigurationVariable oxygen_linear_factor(manager);
     oxygen_linear_factor.retrieve_config_values_from_eeprom();
-    OxygenMeter *measure_dev_oxygen_meter = new OxygenMeter(OXYGENMETERPIN);
+    OxygenMeter *measure_dev_oxygen_meter = new OxygenMeter(OXYGEN_METER_PIN);
     Sensor oxygen_meter(measure_dev_oxygen_meter, oxygen_zero_shift, oxygen_linear_factor);
     return oxygen_meter;
 }

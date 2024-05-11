@@ -8,6 +8,7 @@
 #include "my_encoder.hpp"
 #include "sensor_config.hpp"
 #include "utility.hpp"
+#include "sd_memory.hpp"
 // #include "Unit_tests.hpp"   //only for tests
 
 // global variable
@@ -15,6 +16,7 @@
 DataHMS my_data(12,30,30);
 MyLCD lcd(0x27, 16, 2);
 my_Rotary_encoder encoder1(3, 4, 5, 150);
+SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, 10); //last parameter is CS 
 
 
 MemoryManager memory_manager(0, 500);
@@ -23,8 +25,8 @@ Sensor ph_meter = setup_ph_sensors(memory_manager);
 Sensor oxygen_meter = setup_oxygen_sensors(memory_manager);
 
 // arrays for measures
-MeasureArray temperature_measurements_array(40), ph_measurements_array(40),
-    oxygen_measurements_array(40); // TODO think about this variable name
+MeasureArray temperature_measurements_array(20), ph_measurements_array(20),
+    oxygen_measurements_array(20); // TODO think about this variable name
 
 ////timers
 TimerLowPriority measure_timer, display_timer;
@@ -42,11 +44,12 @@ void setup()
 
     lcd.initialize();
     encoder1.init();
+    sd_men.init();
 
     /////////////////////sensors tests///////////////////////////
-    // test_sensor(thermometer, 1, "thermometer");
-    // test_sensor(ph_meter, 1, "ph_meter");
-    // test_sensor(oxygen_meter, 1, "oxygen_meter");
+    test_sensor(thermometer, 1, "thermometer");
+    test_sensor(ph_meter, 1, "ph_meter");
+    test_sensor(oxygen_meter, 1, "oxygen_meter");
 
     // initial array value is from measurement
     temperature_measurements_array.init(thermometer.get_value());
@@ -84,7 +87,7 @@ void loop()
     /// setting flags////
     measurement = measure_timer.activate(1000);
     display = display_timer.activate(10000);
-    config = encoder1.get_button_state(); //0 when event occure
+    config = encoder1.get_button_state(); //0 when event occur
 
 
     // if flag is set to 1 make action
