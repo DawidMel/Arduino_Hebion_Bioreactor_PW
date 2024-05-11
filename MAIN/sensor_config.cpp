@@ -17,6 +17,7 @@ Sensor setup_thermometer_sensors(MemoryManager &manager) // setup the sensor
     return thermometer;
 }
 
+//TODO: Change to template
 Sensor setup_ph_sensors(MemoryManager &manager) // setup the sensor
 {
     // ph-meter

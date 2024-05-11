@@ -10,9 +10,9 @@ LiquidCrystal_I2C(addr,column_num,row_num)
 }
 
 
-void MyLCD::initialize()
+void MyLCD::initialize()   //TODO check is we can omit this
 {
-  this->init();
+  this->init(); 
   this->backlight();
   this->setCursor(3,0);
   this->print(F("BIOREAKTOR"));

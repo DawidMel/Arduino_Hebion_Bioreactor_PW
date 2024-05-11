@@ -7,19 +7,20 @@
 class PeristalticPump
 {
   private:
-    const int m_pwmPin;
+    const int m_pwmPin;  //TODO snakekase
     const int m_dir1Pin;
     const int m_dir2Pin;
     long m_currentPwmValue;
 
   public:
-    PeristalticPump(int PwmPin, int Dir1Pin, int Dir2Pin);
+    PeristalticPump(int PwmPin, int Dir1Pin, int Dir2Pin);  //TODO rename variable
     void set_pump_speed(int value); // from -100 (max reverse speed) to 100 (max forward speed)
     long get_current_speed() const;
 };
 
 class MeasuringDevice
 {
+  //TODO: add virtual destructor even empty
   private:
     const int m_read_pin;
     int m_value; // check what sensors return  TODO for now int ; but probably will be change in inheritance

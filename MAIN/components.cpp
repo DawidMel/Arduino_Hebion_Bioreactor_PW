@@ -7,7 +7,7 @@ PeristalticPump::PeristalticPump(int PwmPin, int Dir1Pin, int Dir2Pin)
 
 void PeristalticPump::set_pump_speed(int value) // probably need to define an alternative method for the pump
 {
-    if (value >= 0)
+    if (value >= 0) //TODO - add validation of value (should be in range 0 to 100)
     {
         digitalWrite(m_dir1Pin, HIGH);
         digitalWrite(m_dir2Pin, LOW);

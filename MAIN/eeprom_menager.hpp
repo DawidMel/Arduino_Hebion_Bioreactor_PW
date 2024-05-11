@@ -16,7 +16,7 @@ class MemoryManager
     int give_memory(int require_memory);
 };
 
-class ConfigurationVariable // rename sensor_parameter
+class ConfigurationVariable 
 {
   private:
     int m_memory_addr;
@@ -36,7 +36,7 @@ class Sensor
     float m_value = 10;
 
   public: // bad practice TODO in free time try to change to private
-    ConfigurationVariable m_zero_shift, m_linear_factor;
+    ConfigurationVariable m_zero_shift, m_linear_factor; //TODO - make reference to this object not copy
     MeasuringDevice *m_measuring_device;
 
   public:
