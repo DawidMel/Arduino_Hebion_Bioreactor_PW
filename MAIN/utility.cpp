@@ -59,3 +59,20 @@ void TimerLowPriority::reset()
     m_start_time = millis();
     m_end_time = millis();
 }
+
+DataHMS::DataHMS(long hour, long minute, long second) : m_offset(hour * 3600000 + minute * 60000 + second * 1000)
+{
+}
+
+String DataHMS::return_data()
+{
+    long hour = ((m_offset + millis()) / 3600000) % 24;
+    long minute = ((m_offset + millis()) / 60000) % 60;
+    long secund = ((m_offset + millis()) / 1000) % 60;
+    char buffer[9];
+
+    sprintf(buffer, "%02d:%02d:%02d", (int)hour, (int)minute,
+            (int)secund); // conversion is needed because arduino issues
+    String my_data = String(buffer);
+    return my_data;
+}

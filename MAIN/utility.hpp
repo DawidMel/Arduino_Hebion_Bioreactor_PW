@@ -31,4 +31,14 @@ class TimerLowPriority
 
 // TODO high priority timer
 
+class DataHMS
+{
+  public:
+    long m_offset;
+
+  public:
+    DataHMS(long hour, long minute, long second);
+    String return_data();
+};
+
 #endif
