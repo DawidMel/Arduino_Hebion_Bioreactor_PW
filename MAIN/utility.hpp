@@ -4,6 +4,9 @@
 #include<string.h>
 #include<Arduino.h>
 
+#include "my_encoder.hpp"
+
+
 class MeasureArray // TODO is not good enough make it better
 {
   private:
@@ -43,5 +46,7 @@ class DataHMS
     DataHMS(long hour, long minute, long second);
     String return_data();
 };
+
+void print_config_menu(my_Rotary_encoder encode1);
 
 #endif

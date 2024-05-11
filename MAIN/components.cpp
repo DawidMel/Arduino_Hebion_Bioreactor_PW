@@ -40,9 +40,7 @@ Thermometer::Thermometer(int read_pin) : MeasuringDevice(read_pin)
 
 int Thermometer::get_value() const
 {
-    static int a = 10;
-    a += 1;
-    return a;
+    return 10;
 } // TODO use real measure function
 
 PhMeter::PhMeter(int read_pin) : MeasuringDevice(read_pin)
@@ -51,9 +49,7 @@ PhMeter::PhMeter(int read_pin) : MeasuringDevice(read_pin)
 
 int PhMeter::get_value() const
 {
-    static int a = 10;
-    a += 5;
-    return a;
+    return 10;
 } // TODO use real measure function
 
 OxygenMeter::OxygenMeter(int read_pin) : MeasuringDevice(read_pin)
@@ -62,7 +58,5 @@ OxygenMeter::OxygenMeter(int read_pin) : MeasuringDevice(read_pin)
 
 int OxygenMeter::get_value() const
 {
-    static int a = 10;
-    a -= 1;
-    return a;
+    return 10;
 } // TODO use real measure function

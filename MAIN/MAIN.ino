@@ -11,7 +11,12 @@
 // #include "Unit_tests.hpp"   //only for tests
 
 // global variable
+
+DataHMS my_data(12,30,30);
 MyLCD lcd(0x27, 16, 2);
+my_Rotary_encoder encoder1(3, 4, 5, 150);
+
+
 MemoryManager memory_manager(0, 500);
 Sensor thermometer = setup_thermometer_sensors(memory_manager);
 Sensor ph_meter = setup_ph_sensors(memory_manager);
@@ -27,6 +32,7 @@ TimerLowPriority measure_timer, display_timer;
 /// flags
 char measurement = 0;
 char display = 0;
+char config = 1;
 
 void setup()
 {
@@ -35,6 +41,7 @@ void setup()
     delay(2000);
 
     lcd.initialize();
+    encoder1.init();
 
     /////////////////////sensors tests///////////////////////////
     // test_sensor(thermometer, 1, "thermometer");
@@ -49,6 +56,18 @@ void setup()
     // timers reset
     measure_timer.reset();
     display_timer.reset();
+
+
+    // test z eeprom
+    /*
+    thermometer.m_linear_factor.change_config_value(encoder1.set_value_(1,0.01));
+    Serial.println();
+    Serial.println();
+    Serial.print("thermometer linear_factor: ");
+    Serial.println(thermometer.m_linear_factor.return_config_value());
+    Serial.println();
+    Serial.println();
+    */
 }
 
 void loop()
@@ -59,9 +78,14 @@ void loop()
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // think with need to be check as often as possible
+    encoder1.check_encoder_pos();
+
     /// setting flags////
     measurement = measure_timer.activate(1000);
     display = display_timer.activate(10000);
+    config = encoder1.get_button_state(); //0 when event occure
+
 
     // if flag is set to 1 make action
     if (measurement == 1)
@@ -85,5 +109,21 @@ void loop()
         lcd.clear();
         lcd.send_float_value("temp:",temperature_measurements_array.get_average(),0);
         lcd.send_float_value("ph:",ph_measurements_array.get_average(),1);
+
+        Serial.println("data: ");
+        Serial.println(my_data.return_data());
     }
+
+    if(config==0)
+    {
+        print_config_menu(encoder1);
+    }
+
 }
+
+/*
+most useful info:
+
+start/stop serial monitor reset variable and who know dont reset arduino code
+
+*/

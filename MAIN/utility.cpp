@@ -76,3 +76,38 @@ String DataHMS::return_data()
     String my_data = String(buffer);
     return my_data;
 }
+
+void print_config_menu(my_Rotary_encoder encoder)
+{
+    long temp_time = millis();
+    int position_previous = encoder.get_encoder_pos();
+
+    Serial.println("OPEN CONFIG MENU HURRY :)");
+
+    while (encoder.get_button_state() == 1 || temp_time + 2000 > millis())
+    {
+        encoder.check_encoder_pos();
+        if (position_previous != encoder.get_encoder_pos())
+
+            switch (abs(encoder.get_encoder_pos()) % 4)
+            {
+            case 0:
+                Serial.println("0");
+                break;
+
+            case 1:
+                Serial.println("1");
+                break;
+
+            case 2:
+                Serial.println("2");
+                break;
+
+            default:
+                Serial.println("3");
+                break;
+            }
+
+        position_previous = encoder.get_encoder_pos();
+    }
+}
