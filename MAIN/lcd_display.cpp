@@ -1,5 +1,6 @@
 #include "lcd_display.hpp"
 #include <LiquidCrystal_I2C.h>
+#include <Arduino.h>
 
 // not refactored
 

@@ -1,6 +1,7 @@
 #include <AUnit.h>
 #include <Arduino.h>
 #include <EEPROM.h>
+#include <string.h>
 
 #include "eeprom_menager.hpp"
 #include "lcd_display.hpp"
@@ -10,6 +11,7 @@
 // #include "Unit_tests.hpp"   //only for tests
 
 // global variable
+MyLCD lcd(0x27, 16, 2);
 MemoryManager memory_manager(0, 500);
 Sensor thermometer = setup_thermometer_sensors(memory_manager);
 Sensor ph_meter = setup_ph_sensors(memory_manager);
@@ -32,10 +34,12 @@ void setup()
     Serial.begin(115200); // Serial port monitor initialization
     delay(2000);
 
+    lcd.initialize();
+
     /////////////////////sensors tests///////////////////////////
-    test_sensor(thermometer, 5, "thermometer");
-    test_sensor(ph_meter, 5, "ph_meter");
-    test_sensor(oxygen_meter, 5, "oxygen_meter");
+    // test_sensor(thermometer, 1, "thermometer");
+    // test_sensor(ph_meter, 1, "ph_meter");
+    // test_sensor(oxygen_meter, 1, "oxygen_meter");
 
     // initial array value is from measurement
     temperature_measurements_array.init(thermometer.get_value());
@@ -77,10 +81,9 @@ void loop()
 
         Serial.print(F("oxygen_meter avr value: "));
         Serial.println(oxygen_measurements_array.get_average());
+
+        lcd.clear();
+        lcd.send_float_value("temp:",temperature_measurements_array.get_average(),0);
+        lcd.send_float_value("ph:",ph_measurements_array.get_average(),1);
     }
 }
-/*
-
-in TODO file (not in git repo)
-
-*/

@@ -43,7 +43,7 @@ Sensor setup_oxygen_sensors(MemoryManager &manager) // setup the sensor
 
 void test_sensor(Sensor &sensor, float value_new, String sensor_name = "Sensor")
 {
-    delay(2000);
+    delay(1000);
 
     Serial.print(F("wartosc przesuniecia_zera (po inicjalizacji) dla "));
     Serial.print(sensor_name);
@@ -51,7 +51,6 @@ void test_sensor(Sensor &sensor, float value_new, String sensor_name = "Sensor")
     Serial.println(sensor.m_zero_shift.return_config_value());
 
     sensor.m_zero_shift.retrieve_config_values_from_eeprom();
-    delay(20);
     Serial.print(F("wartosc przesuniecia_zera (po odczytaniu wartosci z eeprom) dla "));
     Serial.print(sensor_name);
     Serial.print(F(": "));
@@ -63,7 +62,6 @@ void test_sensor(Sensor &sensor, float value_new, String sensor_name = "Sensor")
     Serial.println(sensor.m_zero_shift.get_addr());
 
     sensor.m_zero_shift.change_config_value(value_new);
-    delay(20);
     Serial.print(F("wartosc przesuniecia_zera (po zmianie na ustawiona wartosc) dla "));
     Serial.print(sensor_name);
     Serial.print(F(": "));
@@ -76,7 +74,6 @@ void test_sensor(Sensor &sensor, float value_new, String sensor_name = "Sensor")
     Serial.println(sensor.m_linear_factor.return_config_value());
 
     sensor.m_linear_factor.retrieve_config_values_from_eeprom();
-    delay(20);
     Serial.print(F("wartosc wspolczynnika linowego (po odczytaniu wartosci z eeprom) dla "));
     Serial.print(sensor_name);
     Serial.print(F(": "));
@@ -88,21 +85,16 @@ void test_sensor(Sensor &sensor, float value_new, String sensor_name = "Sensor")
     Serial.println(sensor.m_linear_factor.get_addr());
 
     sensor.m_linear_factor.change_config_value(value_new);
-    delay(20);
     Serial.print(F("wartosc wspolczynnika linowego (po zmianie na ustawiona wartosc) dla "));
     Serial.print(sensor_name);
     Serial.print(F(": "));
     Serial.println(sensor.m_linear_factor.return_config_value());
     Serial.println("-----------------------------------------------------------------------------------------");
 
-    delay(20);
-
     Serial.print(F("wartosc odczytana (wprost) z czujnika "));
     Serial.print(sensor_name);
     Serial.print(F(": "));
     Serial.println(sensor.m_measuring_device->get_value());
-
-    delay(20);
 
     Serial.print(F("wartosc odczytana (po uwzględnieniu wspolczynników) z czujnika "));
     Serial.print(sensor_name);
@@ -110,5 +102,5 @@ void test_sensor(Sensor &sensor, float value_new, String sensor_name = "Sensor")
     Serial.println(sensor.get_value());
 
     Serial.println("-----------------------------------------------------------------------------------------");
-    delay(2000);
+    delay(1000);
 }

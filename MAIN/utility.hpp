@@ -1,6 +1,9 @@
 #ifndef MY_UTILITY
 #define MY_UTILITY
 
+#include<string.h>
+#include<Arduino.h>
+
 class MeasureArray // TODO is not good enough make it better
 {
   private:
