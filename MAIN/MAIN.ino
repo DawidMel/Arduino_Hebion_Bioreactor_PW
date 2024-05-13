@@ -16,7 +16,8 @@
 DataHMS my_data(12,30,30);
 MyLCD lcd(0x27, 16, 2);
 my_Rotary_encoder encoder1(3, 4, 5, 150);
-SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, 10); //last parameter is CS 
+
+//SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, 10); //last parameter is CS 
 
 
 MemoryManager memory_manager(0, 500);
@@ -44,7 +45,7 @@ void setup()
 
     lcd.initialize();
     encoder1.init();
-    sd_men.init();
+    //sd_men.init();
 
     /////////////////////sensors tests///////////////////////////
     test_sensor(thermometer, 1, "thermometer");
@@ -87,7 +88,8 @@ void loop()
     /// setting flags////
     measurement = measure_timer.activate(1000);
     display = display_timer.activate(10000);
-    config = encoder1.get_button_state(); //0 when event occur
+    //config = encoder1.get_button_state(); //0 when event occur
+    config = encoder1.get_button_state(); //TODO REMOVE IT debug only
 
 
     // if flag is set to 1 make action
@@ -115,11 +117,15 @@ void loop()
 
         Serial.println("data: ");
         Serial.println(my_data.return_data());
+
+
+        encoder1.emulate_change_button_state();
     }
 
     if(config==0)
     {
-        print_config_menu(encoder1);
+        encoder1.emulate_change_button_state();
+        print_config_menu(encoder1,lcd,thermometer,ph_meter,oxygen_meter);
     }
 
 }

@@ -14,7 +14,7 @@ class my_Rotary_encoder
   int m_aVal =0;
   int m_pinALast=0;
 
-  int m_button_state;
+  int m_button_state=1;
   int m_encoderPosCount;
 
   public:
@@ -26,7 +26,11 @@ class my_Rotary_encoder
   float set_value_(float initial_value, float step);
 
   int get_button_state();
+
+  void emulate_change_button_state();
+
   int get_encoder_move();
+  void emulate_phisical_move();
 };
 
 #endif

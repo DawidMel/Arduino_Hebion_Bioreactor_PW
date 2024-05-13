@@ -14,21 +14,21 @@ m_filename = FILENAME;
 
 void SdMemoryManager::init()
 {
-      Serial.print("Initializing SD card...");
+      Serial.print(F("Init SD card "));
 
   if (!SD.begin(m_CS))
   {
-    Serial.println("initialization failed. ");
+    Serial.println(F("init failed"));
     while (true);
   }
 
     //SD.remove(m_filename); //TODO should we reset file after reload?
     m_file = SD.open(m_filename, FILE_WRITE);
-    Serial.println("initialization done.");
+    Serial.println(F("init done."));
 
     if(!m_file)
     {
-    Serial.print("error opening ");
+    Serial.print(F("err open "));
     Serial.println(m_filename);
     while (true);
     }
@@ -36,7 +36,7 @@ void SdMemoryManager::init()
 
   m_file.println();
   m_file.println("Hello World!");
-  Serial.println("Starting to write to file...");
+  Serial.println(F("Star writing to file"));
 
 }
 

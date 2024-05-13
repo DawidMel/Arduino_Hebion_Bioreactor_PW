@@ -27,6 +27,11 @@ int my_Rotary_encoder::get_encoder_pos()
   return m_encoderPosCount;
 }
 
+void my_Rotary_encoder::emulate_phisical_move()
+{
+  m_encoderPosCount +=1;
+  delay(1000);  //TODO REMOVE IT
+}
 
 void my_Rotary_encoder::check_encoder_pos()
 {
@@ -96,3 +101,9 @@ int my_Rotary_encoder::get_button_state()
   m_button_state = digitalRead(m_pin_button);
   return m_button_state;
 }
+
+
+  void my_Rotary_encoder::emulate_change_button_state()
+  {
+    m_button_state=(1-m_button_state);
+  }

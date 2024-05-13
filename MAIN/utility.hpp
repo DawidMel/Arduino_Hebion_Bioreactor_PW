@@ -5,6 +5,8 @@
 #include<Arduino.h>
 
 #include "my_encoder.hpp"
+#include "eeprom_menager.hpp"
+#include "lcd_display.hpp"
 
 
 class MeasureArray // TODO is not good enough make it better
@@ -48,6 +50,7 @@ class DataHMS
     String return_data(); //TODO const
 };
 
-void print_config_menu(my_Rotary_encoder encode1);
+void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
+                       Sensor &term, Sensor &ph, Sensor &oxygen);
 
 #endif
