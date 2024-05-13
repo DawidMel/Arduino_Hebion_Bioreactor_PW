@@ -118,13 +118,10 @@ void loop()
         Serial.println("data: ");
         Serial.println(my_data.return_data());
 
-
-        encoder1.emulate_change_button_state();
     }
 
     if(config==0)
     {
-        encoder1.emulate_change_button_state();
         print_config_menu(encoder1,lcd,thermometer,ph_meter,oxygen_meter);
     }
 

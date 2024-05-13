@@ -94,7 +94,6 @@ void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
 
         if (position_previous != encoder.get_encoder_pos())
         {
-            encoder.emulate_phisical_move(); //TODO REMOVE IT!
             lcd.clear();
 
             switch (abs(encoder.get_encoder_pos()) % 6)

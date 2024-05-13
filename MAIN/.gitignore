@@ -1,5 +1,6 @@
 ##ubuntu
 .vscode/
+.\.
 build/
 
 
@@ -8,3 +9,4 @@ build/
 build\
 .cppcheckrc
 .clang-format
+.\.vscode\
