@@ -1,7 +1,7 @@
 #ifndef MY_ENCODER
 #define MY_ENCODER
 
-#include<Arduino.h>
+#include <Arduino.h>
 
 class my_Rotary_encoder
 {
@@ -23,17 +23,10 @@ class my_Rotary_encoder
     my_Rotary_encoder(uint8_t pinA, uint8_t pinB, uint8_t button, long sensitivity);
     void init();
     int get_encoder_pos();
-
-
-
-    void check_encoder_pos();
-
-    float set_value_(float initial_value, float step);
-
     int get_button_state();
-
-
+    void check_encoder_pos();
     int get_encoder_move();
+    float set_value(float initial_value, float step);
 };
 
 #endif
