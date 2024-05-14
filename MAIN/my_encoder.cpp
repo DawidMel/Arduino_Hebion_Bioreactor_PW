@@ -1,4 +1,5 @@
 #include "my_encoder.hpp"
+#include "bioreactor_defined_const.hpp"
 #include <Arduino.h>
 
 // not refactored
@@ -23,8 +24,13 @@ int my_Rotary_encoder::get_encoder_pos()
 }
 
 int my_Rotary_encoder::get_button_state()
-{
-    m_button_state = digitalRead(m_pin_button);
+{   
+    m_button_state=BUTTONDEFAULTSTATE; //default_state
+    if ((m_button_inactivate_state_time + BUTTONSTAYONSTATE) < millis())
+    {
+        m_button_state = digitalRead(m_pin_button);
+        m_button_inactivate_state_time = millis();
+    }
     return m_button_state;
 }
 

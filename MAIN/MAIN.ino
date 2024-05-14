@@ -6,19 +6,18 @@
 #include "eeprom_menager.hpp"
 #include "lcd_display.hpp"
 #include "my_encoder.hpp"
+#include "sd_memory.hpp"
 #include "sensor_config.hpp"
 #include "utility.hpp"
-#include "sd_memory.hpp"
 // #include "Unit_tests.hpp"   //only for tests
 
 // global variable
-
-DataHMS my_data(12,30,30);
+Config_var config_var(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION);
+DataHMS my_data(12, 30, 30);
 MyLCD lcd(0x27, 16, 2);
-my_Rotary_encoder encoder1(3, 4, 5, 150);
+my_Rotary_encoder encoder1(REPINA, REPINB, REBUTTONPIN, SENSITIVITY);
 
-//SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, 10); //last parameter is CS 
-
+SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, CSPIN); // last parameter is CS
 
 MemoryManager memory_manager(0, 500);
 Sensor thermometer = setup_thermometer_sensors(memory_manager);
@@ -26,8 +25,8 @@ Sensor ph_meter = setup_ph_sensors(memory_manager);
 Sensor oxygen_meter = setup_oxygen_sensors(memory_manager);
 
 // arrays for measures
-MeasureArray temperature_measurements_array(20), ph_measurements_array(20),
-    oxygen_measurements_array(20); // TODO think about this variable name
+MeasureArray temperature_measurements_array(10), ph_measurements_array(10),
+    oxygen_measurements_array(10); // TODO think about this variable name
 
 ////timers
 TimerLowPriority measure_timer, display_timer;
@@ -45,22 +44,21 @@ void setup()
 
     lcd.initialize();
     encoder1.init();
-    //sd_men.init();
+    sd_men.init();
 
     /////////////////////sensors tests///////////////////////////
-    test_sensor(thermometer, 1, "thermometer");
-    test_sensor(ph_meter, 1, "ph_meter");
-    test_sensor(oxygen_meter, 1, "oxygen_meter");
+    // test_sensor(thermometer, 1, "thermometer");
+    // test_sensor(ph_meter, 1, "ph_meter");
+    // test_sensor(oxygen_meter, 1, "oxygen_meter");
 
     // initial array value is from measurement
-    temperature_measurements_array.init(thermometer.get_value());
-    ph_measurements_array.init(ph_meter.get_value());
-    oxygen_measurements_array.init(oxygen_meter.get_value());
+    temperature_measurements_array.init(thermometer.get_value_from_measurement());
+    ph_measurements_array.init(ph_meter.get_value_from_measurement());
+    oxygen_measurements_array.init(oxygen_meter.get_value_from_measurement());
 
     // timers reset
     measure_timer.reset();
     display_timer.reset();
-
 
     // test z eeprom
     /*
@@ -86,18 +84,18 @@ void loop()
     encoder1.check_encoder_pos();
 
     /// setting flags////
-    measurement = measure_timer.activate(1000);
-    display = display_timer.activate(10000);
-    //config = encoder1.get_button_state(); //0 when event occur
-    config = encoder1.get_button_state(); //TODO REMOVE IT debug only
-
+    measurement = measure_timer.activate(100);
+    display = display_timer.activate(500);
+    config = encoder1.get_button_state(); // TODO REMOVE IT debug only
 
     // if flag is set to 1 make action
     if (measurement == 1)
     {
-        temperature_measurements_array.add_measure(thermometer.get_value());
-        ph_measurements_array.add_measure(ph_meter.get_value());
-        oxygen_measurements_array.add_measure(oxygen_meter.get_value());
+        temperature_measurements_array.add_measure(thermometer.get_value_from_measurement());
+        ph_measurements_array.add_measure(ph_meter.get_value_from_measurement());
+        oxygen_measurements_array.add_measure(oxygen_meter.get_value_from_measurement());
+
+        sd_men.write_data_frame_to_st(thermometer, ph_meter, oxygen_meter);
     }
 
     if (display == 1)
@@ -112,19 +110,20 @@ void loop()
         Serial.println(oxygen_measurements_array.get_average());
 
         lcd.clear();
-        lcd.send_float_value("temp:",temperature_measurements_array.get_average(),0);
-        lcd.send_float_value("ph:",ph_measurements_array.get_average(),1);
+        lcd.send_float_value(F("temp:"), temperature_measurements_array.get_average(), 0);
+        lcd.send_float_value(F("ph:"), ph_measurements_array.get_average(), 1);
 
-        Serial.println("data: ");
+        Serial.print(F("data: "));
         Serial.println(my_data.return_data());
 
+        Serial.print(F("frame: "));
+        Serial.println(sd_men.DEBUG_write_data_frame(thermometer, ph_meter, oxygen_meter));
     }
 
-    if(config==0)
+    if (config == 0)
     {
-        print_config_menu(encoder1,lcd,thermometer,ph_meter,oxygen_meter);
+        print_config_menu(encoder1, lcd, thermometer, ph_meter, oxygen_meter);
     }
-
 }
 
 /*

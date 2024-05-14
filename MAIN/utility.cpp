@@ -2,6 +2,17 @@
 #include "eeprom_menager.hpp"
 #include "lcd_display.hpp"
 #include <Arduino.h>
+#include "bioreactor_defined_const.hpp"
+
+Config_var::Config_var(float desire_ph, float max_ph_acceptable_deviation, float desire_temp, float max_temp_acceptable_deviation):
+m_desire_ph(desire_ph),
+m_desire_temp(desire_temp),
+m_max_ph_acceptable_deviation(m_max_ph_acceptable_deviation),
+m_max_temp_acceptable_deviation(m_max_temp_acceptable_deviation)
+{
+}
+
+
 
 MeasureArray::MeasureArray(int size) : m_array_size(size)
 {
@@ -79,16 +90,23 @@ String DataHMS::return_data()
     return my_data;
 }
 
+
+
+
 // TODO rely bad practice IMPROVE IT ASAP
 void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
                        Sensor &term, Sensor &ph, Sensor &oxygen)
 {
+
+    lcd.clear();
+    lcd.send_string(F("CONFIG MENU")," ",0);
+
     long temp_time = millis();
     int position_previous = encoder.get_encoder_pos();
 
-    Serial.println(F("OPEN CONFIG MENU HURRY :)"));
 
-    while (encoder.get_button_state() == 1 || temp_time + 3000 > millis())
+
+    while (encoder.get_button_state() == 1 || (temp_time + STAYINMENUTIME) > millis())
     {
         encoder.check_encoder_pos();
 
@@ -99,35 +117,40 @@ void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
             switch (abs(encoder.get_encoder_pos()) % 6)
             {
             case 0:
-                lcd.send_float_value(F("term_ZS: "), term.m_zero_shift.return_config_value(), 0);
+                lcd.send_float_value(F("ter_ZS:"), term.m_zero_shift.return_config_value(), 0);
                 break;
 
             case 1:
-                lcd.send_float_value(F("term_lin: "), term.m_linear_factor.return_config_value(), 0);
+                lcd.send_float_value(F("ter_lin:"), term.m_linear_factor.return_config_value(), 0);
                 break;
 
             case 2:
-                lcd.send_float_value(F("ph_ZS: "), ph.m_zero_shift.return_config_value(), 0);
+                lcd.send_float_value(F("ph_ZS:"), ph.m_zero_shift.return_config_value(), 0);
                 break;
 
             case 3:
-                lcd.send_float_value(F("ph_lin: "), ph.m_linear_factor.return_config_value(), 0);
+                lcd.send_float_value(F("ph_lin:"), ph.m_linear_factor.return_config_value(), 0);
                 break;
 
             case 4:
-                lcd.send_float_value(F("oxygen_zs: "), oxygen.m_zero_shift.return_config_value(), 0);
+                lcd.send_float_value(F("oxy_zs:"), oxygen.m_zero_shift.return_config_value(), 0);
                 break;
 
             case 5:
-                lcd.send_float_value(F("oxygen_lin: "), oxygen.m_linear_factor.return_config_value(), 0);
+                lcd.send_float_value(F("oxy_lin:"), oxygen.m_linear_factor.return_config_value(), 0);
                 break;
 
             default:
-                Serial.println("OOOO");
+                Serial.println(F("ERR"));
                 break;
             }
 
             position_previous = encoder.get_encoder_pos();
         }
     }
+}
+
+void print_sensor_menu(int encoder_state)
+{
+    
 }

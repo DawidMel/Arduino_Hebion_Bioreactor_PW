@@ -12,7 +12,7 @@ Sensor setup_thermometer_sensors(MemoryManager &manager) // setup the sensor
     thermometer_zero_shift.retrieve_config_values_from_eeprom();
     ConfigurationVariable thermometer_linear_factor(manager);
     thermometer_linear_factor.retrieve_config_values_from_eeprom();
-    Thermometer *measure_dev_thermometer = new Thermometer(TERMOMETHER_PIN);
+    Thermometer *measure_dev_thermometer = new Thermometer(THERMOMETHERPIN);
     Sensor thermometer(measure_dev_thermometer, thermometer_zero_shift, thermometer_linear_factor);
     return thermometer;
 }
@@ -100,7 +100,7 @@ void test_sensor(Sensor &sensor, float value_new, String sensor_name = "Sensor")
     Serial.print(F("wartosc odczytana (po uwzględnieniu wspolczynników) z czujnika "));
     Serial.print(sensor_name);
     Serial.print(F(": "));
-    Serial.println(sensor.get_value());
+    Serial.println(sensor.get_value_from_measurement());
 
     Serial.println("-----------------------------------------------------------------------------------------");
     delay(1000);

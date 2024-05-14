@@ -11,12 +11,12 @@ class my_Rotary_encoder
     const uint8_t m_pin_button;
 
     long m_sensitivity;
+    long m_button_inactivate_state_time; //TODO rename
     long m_last_change;
 
-    int m_aVal = 0;
-    int m_pinALast = 0;
-
-    int m_button_state = 1;
+    uint8_t m_aVal = 0;
+    uint8_t m_pinALast = 0;
+    uint8_t m_button_state = 1;
     int m_encoderPosCount;
 
   public:

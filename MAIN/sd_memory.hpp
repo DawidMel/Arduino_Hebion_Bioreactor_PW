@@ -1,31 +1,31 @@
 #ifndef SM_MEMORY
 #define SM_MEMORY
 
-#include<SD.h>
-
+#include <SD.h>
+#include "eeprom_menager.hpp"
 
 class SdMemoryManager
 {
-    private:
-        //pins
-        const uint8_t m_MOSI_pin;
-        const uint8_t m_MISO_pin;
-        const uint8_t m_SCK_pin;
-        const uint8_t m_CS;
+  private:
+    // pins
+    const uint8_t m_MOSI_pin;
+    const uint8_t m_MISO_pin;
+    const uint8_t m_SCK_pin;
+    const uint8_t m_CS;
 
-        File m_file;
-        String m_filename;   //TODO change to constantan char[]
-        String m_dataBuffer;
-        unsigned long m_last_write = 0;
+    File m_file;
+    String m_filename;
+    String m_dataBuffer;
+    unsigned long m_last_write = 0;
 
-    public:
-        SdMemoryManager(uint8_t MOSI_pin, uint8_t MISO_pin, uint8_t SCK_pin, uint8_t CS);
-        void init();
-        void write_to_st();
-        void close_file();
+  public:
+    SdMemoryManager(uint8_t MOSI_pin, uint8_t MISO_pin, uint8_t SCK_pin, uint8_t CS);
+    void init();
+    void write_to_st();
+    void write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter);
+    String DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter);
+    void close_file();
 };
-
-
 
 #endif
 

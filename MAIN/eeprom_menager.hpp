@@ -41,6 +41,7 @@ class Sensor
 
   public:
     Sensor(MeasuringDevice *measuring_dev, ConfigurationVariable &zero_shift, ConfigurationVariable &linear_factor);
+    float get_value_from_measurement();
     float get_value();
 };
 
