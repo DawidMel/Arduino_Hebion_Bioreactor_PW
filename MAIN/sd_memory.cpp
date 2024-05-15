@@ -41,23 +41,38 @@ void SdMemoryManager::write_to_st()
     m_file.println("TWOJA STARA");
 }
 
- void SdMemoryManager::write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter)
+ void SdMemoryManager::write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)
  {
-    char buffer[20];
-    sprintf(buffer, "%2f,%2f,%2f", thermometer, ph_meter,oxygen_meter); 
-    // conversion is needed because arduino issues
-    m_file.println(String(buffer));
+    String a = String(thermometer.get_value());
+    String b = String(ph_meter.get_value());
+    String c = String(oxygen_meter.get_value());
+
+    String ans = a+","+b+","+c+","+data.return_data();
+    m_file.println(ans);
  }
 
-String SdMemoryManager::DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter)
+String SdMemoryManager::DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)
 {
-    char buffer[35];
-    sprintf(buffer, "%.2f,%.2f,%.2f",  float(21.374208) /*float(thermometer.get_value())*/, float(ph_meter.get_value()), float(oxygen_meter.get_value())); 
-    return(String(buffer));
+String a = String(thermometer.get_value());
+String b = String(ph_meter.get_value());
+String c = String(oxygen_meter.get_value());
+
+return(a+","+b+","+c+","+data.return_data());
 }
 
 
 void SdMemoryManager::close_file()
 {
     m_file.close();
+}
+
+void SdMemoryManager::save()
+{
+    if(m_write_number > 100)
+    {
+        m_file.close();
+        m_file = SD.open(FILENAME, FILE_WRITE);
+        m_write_number = 0;
+    }
+    m_write_number+=1;
 }

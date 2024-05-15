@@ -3,6 +3,7 @@
 
 #include <SD.h>
 #include "eeprom_menager.hpp"
+#include "utility.hpp"
 
 class SdMemoryManager
 {
@@ -13,6 +14,8 @@ class SdMemoryManager
     const uint8_t m_SCK_pin;
     const uint8_t m_CS;
 
+    uint8_t m_write_number=0;
+
     File m_file;
     String m_filename;
     String m_dataBuffer;
@@ -22,8 +25,9 @@ class SdMemoryManager
     SdMemoryManager(uint8_t MOSI_pin, uint8_t MISO_pin, uint8_t SCK_pin, uint8_t CS);
     void init();
     void write_to_st();
-    void write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter);
-    String DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter);
+    void write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data);
+    String DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data);
+    void save();
     void close_file();
 };
 

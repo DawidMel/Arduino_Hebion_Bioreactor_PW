@@ -23,9 +23,14 @@ int my_Rotary_encoder::get_encoder_pos()
     return m_encoderPosCount;
 }
 
+long my_Rotary_encoder::return_button_inactivate_state_time()
+{
+    return m_button_inactivate_state_time;
+}
+
 int my_Rotary_encoder::get_button_state()
 {   
-    m_button_state=BUTTONDEFAULTSTATE; //default_state
+    m_button_state = BUTTONDEFAULTSTATE;
     if ((m_button_inactivate_state_time + BUTTONSTAYONSTATE) < millis())
     {
         m_button_state = digitalRead(m_pin_button);
@@ -80,23 +85,21 @@ void my_Rotary_encoder::check_encoder_pos()
     m_pinALast = m_aVal;
 }
 
-float my_Rotary_encoder::set_value(float initial_value, float step)
+float my_Rotary_encoder::set_value(float initial_value, float step, MyLCD lcd)
 {
     m_encoderPosCount = 0;
     float temp_value = initial_value;
-
+    lcd.clear();
     while (digitalRead(m_pin_button) == HIGH)
     {
         int encoder_return_val = this->get_encoder_move();
         temp_value += encoder_return_val * step;
-
-        /*   DEBUG ONLY
-                if (encoder_return_val != 0)
-                {
-                    Serial.print(F("value: "));
-                    Serial.println(temp_value);
-                }
-        */
+        lcd.send_float_value("",temp_value,0);
     }
     return temp_value;
 }
+
+    void my_Rotary_encoder::reset_encoder_pos()
+    {
+        m_encoderPosCount =0;
+    }

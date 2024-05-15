@@ -54,10 +54,16 @@ Sensor::Sensor(MeasuringDevice *measuring_dev, ConfigurationVariable &zero_shift
 {
 }
 
+void Sensor::init()
+{
+    m_measuring_device->init();
+}
+
 float Sensor::get_value_from_measurement()
 {
-    m_value = m_measuring_device->get_value();
-    return m_value * m_linear_factor.return_config_value() + m_zero_shift.return_config_value();
+    float temp_val = m_measuring_device->get_value();
+    m_value = temp_val * m_linear_factor.return_config_value() + m_zero_shift.return_config_value();
+    return m_value;
 }
 
 float Sensor::get_value()

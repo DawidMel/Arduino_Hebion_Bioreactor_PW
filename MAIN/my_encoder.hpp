@@ -2,6 +2,8 @@
 #define MY_ENCODER
 
 #include <Arduino.h>
+#include "lcd_display.hpp"
+
 
 class my_Rotary_encoder
 {
@@ -24,9 +26,11 @@ class my_Rotary_encoder
     void init();
     int get_encoder_pos();
     int get_button_state();
+    long return_button_inactivate_state_time();
     void check_encoder_pos();
+    void reset_encoder_pos();
     int get_encoder_move();
-    float set_value(float initial_value, float step);
+    float set_value(float initial_value, float step, MyLCD lcd);
 };
 
 #endif

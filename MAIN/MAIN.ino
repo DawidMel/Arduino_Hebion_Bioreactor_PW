@@ -19,22 +19,71 @@ my_Rotary_encoder encoder1(REPINA, REPINB, REBUTTONPIN, SENSITIVITY);
 
 SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, CSPIN); // last parameter is CS
 
+PeristalticPump pump(9,13,13);
 MemoryManager memory_manager(0, 500);
 Sensor thermometer = setup_thermometer_sensors(memory_manager);
 Sensor ph_meter = setup_ph_sensors(memory_manager);
 Sensor oxygen_meter = setup_oxygen_sensors(memory_manager);
 
 // arrays for measures
-MeasureArray temperature_measurements_array(10), ph_measurements_array(10),
-    oxygen_measurements_array(10); // TODO think about this variable name
+MeasureArray temperature_measurements_array(10);
+MeasureArray ph_measurements_array(10);
+MeasureArray oxygen_measurements_array(10); // TODO think about this variable name
 
 ////timers
-TimerLowPriority measure_timer, display_timer;
+TimerLowPriority measure_timer;
+TimerLowPriority display_timer;
+TimerLowPriority pump_timer;
 
 /// flags
+char pump_work_needed = 0;
 char measurement = 0;
 char display = 0;
 char config = 1;
+
+//TEMP FUNCTIONS
+
+void test_led_setup()
+{
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(9, OUTPUT);
+
+  digitalWrite(6, LOW);
+  digitalWrite(7, LOW);
+  digitalWrite(9, LOW);
+}
+
+void test_light_led(float read_ph, float dis_ph, float his)
+{
+
+  float current_ph = analogRead(A1);
+  Serial.println(current_ph);
+
+    if((read_ph-dis_ph)>his)
+    {
+        digitalWrite(6,HIGH);
+    }
+
+    else if ((dis_ph-read_ph)>his)
+    {
+        digitalWrite(7,HIGH);
+    }
+
+    else
+    {
+        digitalWrite(6, LOW);
+        digitalWrite(7, LOW);
+    }
+    
+}
+
+
+
+
+
+
+
 
 void setup()
 {
@@ -45,6 +94,12 @@ void setup()
     lcd.initialize();
     encoder1.init();
     sd_men.init();
+
+    pump.init();
+
+    thermometer.init();
+    ph_meter.init();
+    oxygen_meter.init();
 
     /////////////////////sensors tests///////////////////////////
     // test_sensor(thermometer, 1, "thermometer");
@@ -59,17 +114,11 @@ void setup()
     // timers reset
     measure_timer.reset();
     display_timer.reset();
+    pump_timer.reset();
 
-    // test z eeprom
-    /*
-    thermometer.m_linear_factor.change_config_value(encoder1.set_value_(1,0.01));
-    Serial.println();
-    Serial.println();
-    Serial.print("thermometer linear_factor: ");
-    Serial.println(thermometer.m_linear_factor.return_config_value());
-    Serial.println();
-    Serial.println();
-    */
+
+    test_led_setup();
+    delay(5000);
 }
 
 void loop()
@@ -84,9 +133,10 @@ void loop()
     encoder1.check_encoder_pos();
 
     /// setting flags////
-    measurement = measure_timer.activate(100);
-    display = display_timer.activate(500);
-    config = encoder1.get_button_state(); // TODO REMOVE IT debug only
+    measurement = measure_timer.activate(3000);
+    display = display_timer.activate(10000);
+    config = encoder1.get_button_state();
+    pump_work_needed = pump_timer.activate(TIMEBETWENWORK);
 
     // if flag is set to 1 make action
     if (measurement == 1)
@@ -95,35 +145,35 @@ void loop()
         ph_measurements_array.add_measure(ph_meter.get_value_from_measurement());
         oxygen_measurements_array.add_measure(oxygen_meter.get_value_from_measurement());
 
-        sd_men.write_data_frame_to_st(thermometer, ph_meter, oxygen_meter);
+
+
+        sd_men.write_data_frame_to_st(thermometer, ph_meter, oxygen_meter,my_data);
+        sd_men.save();
+        
+        Serial.print(F("frame: "));
+        Serial.println(sd_men.DEBUG_write_data_frame(thermometer, ph_meter, oxygen_meter, my_data));
+        test_light_led(ph_meter.get_value(),7.0, 1.0);
     }
 
     if (display == 1)
     {
-        Serial.print(F("thermometer avr value: "));
-        Serial.println(temperature_measurements_array.get_average());
-
-        Serial.print(F("ph_meter avr value: "));
-        Serial.println(ph_measurements_array.get_average());
-
-        Serial.print(F("oxygen_meter avr value: "));
-        Serial.println(oxygen_measurements_array.get_average());
-
         lcd.clear();
         lcd.send_float_value(F("temp:"), temperature_measurements_array.get_average(), 0);
         lcd.send_float_value(F("ph:"), ph_measurements_array.get_average(), 1);
-
-        Serial.print(F("data: "));
-        Serial.println(my_data.return_data());
-
-        Serial.print(F("frame: "));
-        Serial.println(sd_men.DEBUG_write_data_frame(thermometer, ph_meter, oxygen_meter));
     }
 
     if (config == 0)
     {
+
         print_config_menu(encoder1, lcd, thermometer, ph_meter, oxygen_meter);
     }
+
+    if(pump_work_needed && abs(ph_meter.get_value()-DESIRE_PH)>MAX_PH_ACCEPTABLE_DEVIATION)
+    {
+        Serial.println("HELLO ZDZIRO");
+        pump.stabilize_ph(ph_meter.get_value(),DESIRE_PH);
+    }
+
 }
 
 /*

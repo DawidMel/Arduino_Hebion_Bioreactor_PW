@@ -4,7 +4,7 @@
 
 //BUTTON SETTING
 #define BUTTONDEFAULTSTATE 1 //mean pin state is HIGH
-#define BUTTONSTAYONSTATE 1500 //[ms] time button dont change its state
+#define BUTTONSTAYONSTATE 2000 //[ms] time button dont change its state
 #define STAYINMENUTIME 3000 //[ms] time after you can exit menu
 
 
@@ -39,21 +39,28 @@
 #define REBUTTONPIN 5
 
 //SENSORS PHYSICAL CONNECTION
+#define PH_METER_PIN A1     
+#define THERMOMETHERPIN A2          
+#define OXYGEN_METER_PIN A3
+
+//SAMPLE PUMP PARAMETER
+#define PUMPFLOWSPEED 45 //[ml/min]
+#define SAMPLESIZE 10 //[ml]
+#define PUMPSAMPLETAKINGTIME     int(SAMPLESIZE/PUMPFLOWSPEED*1000) //[ms]
+
+//PH KEEPERS PUMP
+#define TIMEBETWENWORK 10000 //[ms] time between ph correction
+#define CORECTIONTIME 100 // [ms] initial time of corection
+#define MULTPERDEGRE 3 // it mean if  desire ph is 6 and we have 8 time of pump activate will be 100*3*3 = 900 ms
 
 
-#define THERMOMETHERPIN A1              // Thermistor settings   
+
+
 #define THERMISTOR_NOMINAL 10000        // [ohm] resistance at 25 degrees C
 #define TEMPERATURE_NOMINAL 25          // temp. for nominal resistance (almost always 25 C)
 #define B_COEFFICIENT 3950              // [UNIT!] The beta coefficient of the thermistor (usually 3000-4000)
 #define SERIES_RESISTOR 10000           // [ohm] the value of the 'other' resistor     
 
 
-#define PH_METER_PIN A0      // pH meter Analog output to Arduino Analog Input 0
-#define THERMOMETER_METER_PIN A2
-#define OXYGEN_METER_PIN A3
-
-
-#define SAMPLING_INTERVAL 20 // [UNIT!]
-#define PRINT_INTERVAL 800   // [UNIT!]
 
 #endif // BIOREACTOR_CONST

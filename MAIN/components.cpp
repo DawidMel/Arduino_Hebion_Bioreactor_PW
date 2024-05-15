@@ -5,9 +5,16 @@ PeristalticPump::PeristalticPump(int PwmPin, int Dir1Pin, int Dir2Pin)
 {
 }
 
+void PeristalticPump::init()
+{
+    pinMode(m_currentPwmValue,OUTPUT);
+    pinMode(m_dir1Pin, OUTPUT);
+    pinMode(m_dir2Pin, OUTPUT);
+}
+
 void PeristalticPump::set_pump_speed(int value) // probably need to define an alternative method for the pump
 {
-    if (value >= 0) //TODO - add validation of value (should be in range 0 to 100)
+    if (value >= 0) // TODO - add validation of value (should be in range 0 to 100)
     {
         digitalWrite(m_dir1Pin, HIGH);
         digitalWrite(m_dir2Pin, LOW);
@@ -26,10 +33,37 @@ long PeristalticPump::get_current_speed() const
     return m_currentPwmValue;
 }
 
+void PeristalticPump::stabilize_ph(float ph, float desire_ph) // make as digital write TODO tragedy improve it asap
+{
+    float temp_exponent = 1;
+    if (ph > desire_ph)
+    {
+     temp_exponent = abs(fmod(ph,desire_ph));
+    }
+    else
+    {
+      temp_exponent =  abs(fmod(desire_ph,ph));
+    }
+
+ 
+    int delay_time = int(pow(MULTPERDEGRE,temp_exponent) * CORECTIONTIME );
+    Serial.print("PH: ");
+    Serial.println(ph);
+    Serial.println(delay_time);
+    digitalWrite(m_pwmPin, HIGH);
+    delay(delay_time);
+    digitalWrite(m_pwmPin, LOW);
+}
+
 MeasuringDevice::MeasuringDevice(int read_pin) : m_read_pin(read_pin)
 {
 }
-int MeasuringDevice::get_value() const
+
+void MeasuringDevice::init()
+{
+    pinMode(m_read_pin, INPUT);
+}
+float MeasuringDevice::get_value()
 {
     return 10;
 } // TODO
@@ -38,25 +72,28 @@ Thermometer::Thermometer(int read_pin) : MeasuringDevice(read_pin)
 {
 }
 
-int Thermometer::get_value() const
+float Thermometer::get_value()
 {
     return 10;
 } // TODO use real measure function
 
 PhMeter::PhMeter(int read_pin) : MeasuringDevice(read_pin)
 {
+    pinMode(m_read_pin, INPUT);
 }
 
-int PhMeter::get_value() const
+float PhMeter::get_value()
 {
-    return 10;
+    float temp_voltage = analogRead(m_read_pin);
+    m_value = 3.5 * temp_voltage / 1023 * 5.0;
+    return m_value;
 } // TODO use real measure function
 
 OxygenMeter::OxygenMeter(int read_pin) : MeasuringDevice(read_pin)
 {
 }
 
-int OxygenMeter::get_value() const
+float OxygenMeter::get_value()
 {
     return 10;
 } // TODO use real measure function
