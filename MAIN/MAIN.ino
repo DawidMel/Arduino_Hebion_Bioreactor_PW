@@ -19,7 +19,10 @@ my_Rotary_encoder encoder1(REPINA, REPINB, REBUTTONPIN, SENSITIVITY);
 
 SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, CSPIN); // last parameter is CS
 
-PeristalticPump pump(9,13,13);
+PeristalticPump pump(8,9,9);
+SimplePeristalticPump s_pump1(6);
+SimplePeristalticPump s_pump2(7);
+
 MemoryManager memory_manager(0, 500);
 Sensor thermometer = setup_thermometer_sensors(memory_manager);
 Sensor ph_meter = setup_ph_sensors(memory_manager);
@@ -41,50 +44,6 @@ char measurement = 0;
 char display = 0;
 char config = 1;
 
-//TEMP FUNCTIONS
-
-void test_led_setup()
-{
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(9, OUTPUT);
-
-  digitalWrite(6, LOW);
-  digitalWrite(7, LOW);
-  digitalWrite(9, LOW);
-}
-
-void test_light_led(float read_ph, float dis_ph, float his)
-{
-
-  float current_ph = analogRead(A1);
-  Serial.println(current_ph);
-
-    if((read_ph-dis_ph)>his)
-    {
-        digitalWrite(6,HIGH);
-    }
-
-    else if ((dis_ph-read_ph)>his)
-    {
-        digitalWrite(7,HIGH);
-    }
-
-    else
-    {
-        digitalWrite(6, LOW);
-        digitalWrite(7, LOW);
-    }
-    
-}
-
-
-
-
-
-
-
-
 void setup()
 {
 
@@ -96,6 +55,8 @@ void setup()
     sd_men.init();
 
     pump.init();
+    s_pump1.init();
+    s_pump2.init();
 
     thermometer.init();
     ph_meter.init();
@@ -116,25 +77,17 @@ void setup()
     display_timer.reset();
     pump_timer.reset();
 
-
-    test_led_setup();
-    delay(5000);
+    delay(3000);
 }
 
 void loop()
 {
-    //////////////////////////////////////////////////////Unit tests////////////////////////////////////////////////////
-
-    // aunit::TestRunner::run();
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     // think with need to be check as often as possible
     encoder1.check_encoder_pos();
 
     /// setting flags////
-    measurement = measure_timer.activate(3000);
-    display = display_timer.activate(10000);
+    measurement = measure_timer.activate(500);
+    display = display_timer.activate(2000);
     config = encoder1.get_button_state();
     pump_work_needed = pump_timer.activate(TIMEBETWENWORK);
 
@@ -145,14 +98,11 @@ void loop()
         ph_measurements_array.add_measure(ph_meter.get_value_from_measurement());
         oxygen_measurements_array.add_measure(oxygen_meter.get_value_from_measurement());
 
-
-
-        sd_men.write_data_frame_to_st(thermometer, ph_meter, oxygen_meter,my_data);
+        sd_men.write_data_frame_to_st(thermometer, ph_meter, oxygen_meter, my_data);
         sd_men.save();
-        
+
         Serial.print(F("frame: "));
         Serial.println(sd_men.DEBUG_write_data_frame(thermometer, ph_meter, oxygen_meter, my_data));
-        test_light_led(ph_meter.get_value(),7.0, 1.0);
     }
 
     if (display == 1)
@@ -164,21 +114,20 @@ void loop()
 
     if (config == 0)
     {
-
-        print_config_menu(encoder1, lcd, thermometer, ph_meter, oxygen_meter);
+        print_config_menu(encoder1, lcd, thermometer, ph_meter, oxygen_meter, pump);
     }
 
-    if(pump_work_needed && abs(ph_meter.get_value()-DESIRE_PH)>MAX_PH_ACCEPTABLE_DEVIATION)
+
+    if (pump_work_needed && abs(ph_meter.get_value() - DESIRE_PH) > MAX_PH_ACCEPTABLE_DEVIATION)
     {
-        Serial.println("HELLO ZDZIRO");
-        pump.stabilize_ph(ph_meter.get_value(),DESIRE_PH);
+        if (ph_meter.get_value() > DESIRE_PH)
+        {
+            s_pump1.stabilize_ph(ph_meter.get_value(), DESIRE_PH);
+        }
+
+        else if (ph_meter.get_value() < DESIRE_PH)
+        {
+            s_pump2.stabilize_ph(ph_meter.get_value(), DESIRE_PH);
+        }
     }
-
 }
-
-/*
-most useful info:
-
-start/stop serial monitor reset variable and who know dont reset arduino code
-
-*/

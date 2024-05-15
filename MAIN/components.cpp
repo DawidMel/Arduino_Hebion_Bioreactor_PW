@@ -1,13 +1,49 @@
 #include "components.hpp"
 
-PeristalticPump::PeristalticPump(int PwmPin, int Dir1Pin, int Dir2Pin)
+SimplePeristalticPump::SimplePeristalticPump(uint8_t pin_forward) :
+m_pin_forward(pin_forward)
+{
+}
+void SimplePeristalticPump::init()
+{
+    pinMode(m_pin_forward,OUTPUT);
+}
+void SimplePeristalticPump::stabilize_ph(float current_ph, float desire_ph)
+{
+    float temp_exponent = 1;
+    if (current_ph > desire_ph)
+    {
+        temp_exponent = current_ph - desire_ph;
+    }
+    else
+    {
+        temp_exponent = desire_ph - current_ph;
+    }
+
+    long delay_time = long(pow(MULTPERDEGRE, temp_exponent) * CORECTIONTIME);
+    if(delay_time>MAXREACTIONTIME)
+    {
+        delay_time=MAXREACTIONTIME;
+    }
+    Serial.print("PH: ");
+    Serial.println(current_ph);
+    Serial.println(delay_time);
+    digitalWrite(m_pin_forward, HIGH);
+    delay(delay_time);
+    digitalWrite(m_pin_forward, LOW);
+}
+
+
+
+
+PeristalticPump::PeristalticPump(uint8_t PwmPin, uint8_t Dir1Pin, uint8_t Dir2Pin)
     : m_pwmPin(PwmPin), m_dir1Pin(Dir1Pin), m_dir2Pin(Dir2Pin)
 {
 }
 
 void PeristalticPump::init()
 {
-    pinMode(m_currentPwmValue,OUTPUT);
+    pinMode(m_pwmPin, OUTPUT);
     pinMode(m_dir1Pin, OUTPUT);
     pinMode(m_dir2Pin, OUTPUT);
 }
@@ -33,27 +69,14 @@ long PeristalticPump::get_current_speed() const
     return m_currentPwmValue;
 }
 
-void PeristalticPump::stabilize_ph(float ph, float desire_ph) // make as digital write TODO tragedy improve it asap
+void PeristalticPump::take_sample()
 {
-    float temp_exponent = 1;
-    if (ph > desire_ph)
-    {
-     temp_exponent = abs(fmod(ph,desire_ph));
-    }
-    else
-    {
-      temp_exponent =  abs(fmod(desire_ph,ph));
-    }
-
- 
-    int delay_time = int(pow(MULTPERDEGRE,temp_exponent) * CORECTIONTIME );
-    Serial.print("PH: ");
-    Serial.println(ph);
-    Serial.println(delay_time);
-    digitalWrite(m_pwmPin, HIGH);
-    delay(delay_time);
-    digitalWrite(m_pwmPin, LOW);
+    digitalWrite(m_pwmPin,HIGH);
+    delay(PUMPSAMPLETAKINGTIME);
+    digitalWrite(m_pwmPin,LOW);
 }
+
+
 
 MeasuringDevice::MeasuringDevice(int read_pin) : m_read_pin(read_pin)
 {

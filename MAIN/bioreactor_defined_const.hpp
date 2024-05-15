@@ -44,14 +44,15 @@
 #define OXYGEN_METER_PIN A3
 
 //SAMPLE PUMP PARAMETER
-#define PUMPFLOWSPEED 45 //[ml/min]
-#define SAMPLESIZE 10 //[ml]
-#define PUMPSAMPLETAKINGTIME     int(SAMPLESIZE/PUMPFLOWSPEED*1000) //[ms]
+#define PUMPFLOWSPEED 60 //[ml/min]
+#define SAMPLESIZE 2 //[ml]
+#define PUMPSAMPLETAKINGTIME     int(float(SAMPLESIZE)/float(PUMPFLOWSPEED)*60*1000) //[ms] //powinno wyjsc 2 sekundy
 
 //PH KEEPERS PUMP
 #define TIMEBETWENWORK 10000 //[ms] time between ph correction
 #define CORECTIONTIME 100 // [ms] initial time of corection
 #define MULTPERDEGRE 3 // it mean if  desire ph is 6 and we have 8 time of pump activate will be 100*3*3 = 900 ms
+#define MAXREACTIONTIME 5000
 
 
 

@@ -89,7 +89,7 @@ String DataHMS::return_data()
 
 // TODO rely bad practice IMPROVE IT ASAP
 void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
-                       Sensor &term, Sensor &ph, Sensor &oxygen)
+                       Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump& pump)
 {
 
     lcd.clear();
@@ -137,6 +137,7 @@ void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
 
             case 4:
                 lcd.send_string(F("take sample:"), "", 0);
+                break;
 
             default:
                 Serial.println(F("ERR"));
@@ -197,7 +198,10 @@ void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
                 break;
 
             case 4:
-
+                lcd.clear();
+                lcd.send_string(F("TAKING SAMPLE:"), "", 0);
+                delay(2000);
+                pump.take_sample();
                 break;
 
             default:
