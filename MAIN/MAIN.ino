@@ -46,7 +46,7 @@ char config = 1;
 
 void setup()
 {
-
+    delay(10000);
     Serial.begin(115200); // Serial port monitor initialization
     delay(2000);
 

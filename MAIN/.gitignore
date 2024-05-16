@@ -4,9 +4,13 @@
 build/
 
 
+
 ##windows
 .vscode\
 build\
 .cppcheckrc
 .clang-format
 .\.vscode\
+\venv\
+venv\.
+venv/
