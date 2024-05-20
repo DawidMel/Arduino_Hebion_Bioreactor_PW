@@ -1,4 +1,6 @@
 #include "components.hpp"
+#include "utility.hpp"
+
 
 SimplePeristalticPump::SimplePeristalticPump(uint8_t pin_forward) :
 m_pin_forward(pin_forward)

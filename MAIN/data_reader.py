@@ -9,7 +9,7 @@ sample_average:int = 10
 # Wczytujemy dane z pliku CSV
 df = pd.read_csv("dane.csv")
 
-# Obliczamy średnią kroczącą (moving average) z oknem 3
+# Obliczamy średnią kroczącą (moving average) z oknem sample_average
 df['temp_ma'] = df['temperatura'].rolling(window=sample_average).mean()
 df['ph_ma'] = df['ph'].rolling(window=sample_average).mean()
 df['stężenie_telnu_ma'] = df['stężenie_telnu'].rolling(window=sample_average).mean()

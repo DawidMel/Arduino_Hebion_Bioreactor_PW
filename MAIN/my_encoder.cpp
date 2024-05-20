@@ -35,6 +35,12 @@ int my_Rotary_encoder::get_button_state()
     {
         m_button_state = digitalRead(m_pin_button);
         m_button_inactivate_state_time = millis();
+        if(m_button_state == 0)
+        {
+            m_button_depth +=1;
+        }
+        Serial.print("m_button_depth: ");
+        Serial.println(m_button_depth);
     }
     return m_button_state;
 }
@@ -102,4 +108,13 @@ float my_Rotary_encoder::set_value(float initial_value, float step, MyLCD lcd)
     void my_Rotary_encoder::reset_encoder_pos()
     {
         m_encoderPosCount =0;
+    }
+
+    int my_Rotary_encoder::get_button_depth()
+    {
+        return m_button_depth;
+    }
+    void my_Rotary_encoder::reset__button_depth()
+    {
+        m_button_depth = 0;
     }

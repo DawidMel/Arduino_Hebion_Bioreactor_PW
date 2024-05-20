@@ -89,24 +89,29 @@ String DataHMS::return_data()
 
 // TODO rely bad practice IMPROVE IT ASAP
 void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
-                       Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump& pump)
+                       Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump &pump)
 {
 
+    static long last_display_time = millis();
+    static uint8_t chose_menu = 0;
+
+    if(last_display_time + 1000 < millis() &&  chose_menu==0)
+    {
     lcd.clear();
     lcd.send_string(F("CONFIG MENU"), " ", 0);
+    last_display_time = millis();
+    }
 
-    long temp_time = millis();
+    int position_previous = encoder.get_encoder_pos();
 
-    encoder.reset_encoder_pos();
-    int position_previous = 0;
-
-    while (encoder.get_button_state() == 1 || (temp_time + STAYINMENUTIME) > millis())
+    if (encoder.get_button_depth() == 1 )
     {
 
         encoder.check_encoder_pos();
 
         if (position_previous != encoder.get_encoder_pos())
         {
+            chose_menu = 1;
             lcd.clear();
 
             switch (abs(encoder.get_encoder_pos()) % 5)
@@ -127,14 +132,6 @@ void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
                 lcd.send_float_value(F("ph_lin:"), ph.m_linear_factor.return_config_value(), 0);
                 break;
 
-                // case 4:
-                //     lcd.send_float_value(F("oxy_zs:"), oxygen.m_zero_shift.return_config_value(), 0);
-                //     break;
-
-                // case 5:
-                //     lcd.send_float_value(F("oxy_lin:"), oxygen.m_linear_factor.return_config_value(), 0);
-                //     break;
-
             case 4:
                 lcd.send_string(F("take sample:"), "", 0);
                 break;
@@ -147,12 +144,12 @@ void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
             position_previous = encoder.get_encoder_pos();
         }
 
-        if (encoder.get_button_state() == 0)
+    }
+        if (encoder.get_button_depth() == 2)
         {
-            int encoder_pos = encoder.get_encoder_pos(); //TODO improve it!
-            float temp  = 0;
+            int encoder_pos = encoder.get_encoder_pos(); // TODO improve it!
+            float temp = 0;
             encoder.reset_encoder_pos();
-            Serial.println("HELLO!!!!");
 
 
             switch (abs(encoder_pos) % 5)
@@ -188,7 +185,7 @@ void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
                 break;
 
             case 3:
-  
+
                 lcd.clear();
                 lcd.send_float_value(F("PH LIN:"), ph.m_linear_factor.return_config_value(), 0);
                 delay(2000);
@@ -202,16 +199,20 @@ void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
                 lcd.send_string(F("TAKING SAMPLE:"), "", 0);
                 delay(2000);
                 pump.take_sample();
+                encoder.reset__button_depth();
                 break;
 
             default:
                 Serial.println(F("ERR"));
                 break;
-            }
-        }
+            
+        }        
     }
-}
 
-void print_sensor_menu(int encoder_state)
-{
+    if(encoder.get_button_depth()>2)
+    {
+        encoder.reset__button_depth();
+        chose_menu = 0;     
+    }
+
 }

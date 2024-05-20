@@ -68,10 +68,4 @@ class DataHMS
 void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
                        Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump& pump);
 
-
-
-void print_sensor_menu(int encoder_state);
-
-void print_config_variable_menu(int encoder_state);
-
 #endif

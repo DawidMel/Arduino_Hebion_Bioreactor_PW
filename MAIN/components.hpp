@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <math.h>
 #include "bioreactor_defined_const.hpp"
+#include "utility.hpp"
 
 #ifndef BIOREACTOR_COMPONENTS
 #define BIOREACTOR_COMPONENTS
@@ -17,7 +18,7 @@ void init();
 void stabilize_ph(float current_ph,float desire_ph);
 };
 
-class PeristalticPump
+class PeristalticPump 
 {
   private:
     const uint8_t m_pwmPin;  //TODO snakekase

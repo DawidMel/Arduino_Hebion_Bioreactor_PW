@@ -12,6 +12,7 @@ class my_Rotary_encoder
     const uint8_t m_pinB;
     const uint8_t m_pin_button;
 
+    uint8_t m_button_depth; 
     long m_sensitivity;
     long m_button_inactivate_state_time; //TODO rename
     long m_last_change;
@@ -31,6 +32,8 @@ class my_Rotary_encoder
     void reset_encoder_pos();
     int get_encoder_move();
     float set_value(float initial_value, float step, MyLCD lcd);
+    int get_button_depth();
+    void reset__button_depth();
 };
 
 #endif

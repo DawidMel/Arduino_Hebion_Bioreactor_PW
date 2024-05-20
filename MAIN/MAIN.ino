@@ -36,17 +36,28 @@ MeasureArray oxygen_measurements_array(10); // TODO think about this variable na
 ////timers
 TimerLowPriority measure_timer;
 TimerLowPriority display_timer;
-TimerLowPriority pump_timer;
+TimerLowPriority pump_activation_interval_timer;
+
+TimerLowPriority pump1_timer;
+TimerLowPriority pump2_timer;
 
 /// flags
-char pump_work_needed = 0;
-char measurement = 0;
-char display = 0;
-char config = 1;
+uint8_t pump_work_needed = 0;
+uint8_t measurement = 0;
+uint8_t display = 0;
+uint8_t config = 1;
+
+// flag masc - seting this value can inactivate flag even if it occure
+
+// uint8_t masc_pump_work_needed = 1; unmasced flag
+uint8_t masc_measurement = 1;
+uint8_t masc_display = 1;
+uint8_t masc_config = 1;
+
 
 void setup()
 {
-    delay(10000);
+    delay(2000);
     Serial.begin(115200); // Serial port monitor initialization
     delay(2000);
 
@@ -75,24 +86,42 @@ void setup()
     // timers reset
     measure_timer.reset();
     display_timer.reset();
-    pump_timer.reset();
+    pump_activation_interval_timer.reset();
 
-    delay(3000);
+    delay(1000);
 }
 
 void loop()
 {
-    // think with need to be check as often as possible
-    encoder1.check_encoder_pos();
-
     /// setting flags////
     measurement = measure_timer.activate(500);
-    display = display_timer.activate(2000);
+    display = display_timer.activate(500);
+    pump_work_needed = pump_activation_interval_timer.activate(TIMEBETWENWORK);
+
+    //TODO need for working but unnecesery in this way
     config = encoder1.get_button_state();
-    pump_work_needed = pump_timer.activate(TIMEBETWENWORK);
+
+
+
+    // setting masc
+
+    if (encoder1.get_button_depth()==0)
+    {
+        masc_display=1;
+    }
+
+
 
     // if flag is set to 1 make action
-    if (measurement == 1)
+
+    if (encoder1.get_button_depth()>0)
+    {
+        masc_display = 0;
+        print_config_menu(encoder1, lcd, thermometer, ph_meter, oxygen_meter, pump);   
+    }
+
+
+    if (measurement*masc_measurement == 1)
     {
         temperature_measurements_array.add_measure(thermometer.get_value_from_measurement());
         ph_measurements_array.add_measure(ph_meter.get_value_from_measurement());
@@ -105,17 +134,13 @@ void loop()
         Serial.println(sd_men.DEBUG_write_data_frame(thermometer, ph_meter, oxygen_meter, my_data));
     }
 
-    if (display == 1)
+    if (display*masc_display == 1)
     {
         lcd.clear();
         lcd.send_float_value(F("temp:"), temperature_measurements_array.get_average(), 0);
         lcd.send_float_value(F("ph:"), ph_measurements_array.get_average(), 1);
     }
 
-    if (config == 0)
-    {
-        print_config_menu(encoder1, lcd, thermometer, ph_meter, oxygen_meter, pump);
-    }
 
 
     if (pump_work_needed && abs(ph_meter.get_value() - DESIRE_PH) > MAX_PH_ACCEPTABLE_DEVIATION)
