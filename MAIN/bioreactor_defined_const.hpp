@@ -52,7 +52,7 @@
 #define TIMEBETWENWORK 10000 //[ms] time between ph correction
 #define CORECTIONTIME 100 // [ms] initial time of corection
 #define MULTPERDEGRE 3 // it mean if  desire ph is 6 and we have 8 time of pump activate will be 100*3*3 = 900 ms
-#define MAXREACTIONTIME 5000
+#define MAXREACTIONTIME 3000
 
 
 

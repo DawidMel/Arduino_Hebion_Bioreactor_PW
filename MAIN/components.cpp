@@ -110,6 +110,8 @@ PhMeter::PhMeter(int read_pin) : MeasuringDevice(read_pin)
 float PhMeter::get_value()
 {
     float temp_voltage = analogRead(m_read_pin);
+    Serial.print("temp_voltage mess: ");
+    Serial.println(temp_voltage);
     m_value = 3.5 * temp_voltage / 1023 * 5.0;
     return m_value;
 } // TODO use real measure function

@@ -130,8 +130,8 @@ void loop()
         sd_men.write_data_frame_to_st(thermometer, ph_meter, oxygen_meter, my_data);
         sd_men.save();
 
-        Serial.print(F("frame: "));
-        Serial.println(sd_men.DEBUG_write_data_frame(thermometer, ph_meter, oxygen_meter, my_data));
+        //Serial.print(F("frame: "));
+       // Serial.println(sd_men.DEBUG_write_data_frame(thermometer, ph_meter, oxygen_meter, my_data));
     }
 
     if (display*masc_display == 1)

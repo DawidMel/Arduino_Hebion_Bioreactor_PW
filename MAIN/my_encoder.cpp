@@ -39,8 +39,8 @@ int my_Rotary_encoder::get_button_state()
         {
             m_button_depth +=1;
         }
-        Serial.print("m_button_depth: ");
-        Serial.println(m_button_depth);
+        //Serial.print("m_button_depth: ");
+        //Serial.println(m_button_depth);
     }
     return m_button_state;
 }
