@@ -1,0 +1,11 @@
+
+python -m venv venv
+
+Windows średnio współpracuje ze uruchomieniem środowiska wirtualnego więc należy wpisac komendę 
+Set-ExecutionPolicy Unrestricted                    zatwierdzamy Y
+.\venv\Scripts\Activate.ps1
+Set-ExecutionPolicy Restricted                      wpisujemy A lub Y by przywrócić wartości fabryczne
+
+albo używać linuxa :)
+
+oczywiście wszystkie bilbioteki można pobrać dla posiadaneg pythona ale w 99% przypadków nie jest to optymalne rozwiązanie
