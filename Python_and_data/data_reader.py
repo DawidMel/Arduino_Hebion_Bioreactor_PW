@@ -6,9 +6,10 @@ from matplotlib.dates import SecondLocator, MinuteLocator, DateFormatter
 from tkinter import Tk, filedialog, Button
 
 
-def generate_plot(filepath):
+def generate_plot(filepath : str, num_of_avg_sample : int ):
     
-    sample_average:int = 10
+    sample_average : int = num_of_avg_sample
+    
     # Wczytujemy dane z pliku CSV
     df = pd.read_csv(filepath)
 
@@ -85,7 +86,7 @@ def open_file():
                                         )
 
 
-    generate_plot(filepath)
+    generate_plot(filepath=filepath, num_of_avg_sample=10)
     print("odczytano plik: " +  path.basename(filepath))
 
 

@@ -1,10 +1,12 @@
+Uruchamianie środowiska wirtualnego windows
 
 python -m venv venv
-
 Windows średnio współpracuje ze uruchomieniem środowiska wirtualnego więc należy wpisac komendę 
 Set-ExecutionPolicy Unrestricted                    zatwierdzamy Y
 .\venv\Scripts\Activate.ps1
-Set-ExecutionPolicy Restricted                      wpisujemy A lub Y by przywrócić wartości fabryczne
+Set-ExecutionPolicy Restricted                      wpisujemy Y by przywrócić ustawienie fabryczne
+
+
 
 albo używać linuxa :)
 
