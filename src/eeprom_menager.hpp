@@ -26,7 +26,7 @@ class ConfigurationVariable
     ConfigurationVariable(MemoryManager &mem_manager);
     int get_addr() const;
     float return_config_value() const;
-    int retrieve_config_values_from_eeprom();
+    void retrieve_config_values_from_eeprom();
     void change_config_value(float value);
 };
 

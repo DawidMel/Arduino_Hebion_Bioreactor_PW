@@ -4,13 +4,13 @@
 
 // not refactored
 
-my_Rotary_encoder::my_Rotary_encoder(uint8_t pinA, uint8_t pinB, uint8_t pin_button, long sensitivity)
+my_rotary_encoder::my_rotary_encoder(uint8_t pinA, uint8_t pinB, uint8_t pin_button, long sensitivity)
     : m_pinA(pinA), m_pinB(pinB), m_pin_button(pin_button), m_sensitivity(sensitivity)
 {
     Serial.println(F("RE was init"));
 }
 
-void my_Rotary_encoder::init()
+void my_rotary_encoder::init()
 {
     pinMode(m_pinA, INPUT);
     pinMode(m_pinB, INPUT);
@@ -18,17 +18,17 @@ void my_Rotary_encoder::init()
     m_pinALast = digitalRead(m_pinA);
 }
 
-int my_Rotary_encoder::get_encoder_pos()
+int my_rotary_encoder::get_encoder_pos()
 {
     return m_encoderPosCount;
 }
 
-long my_Rotary_encoder::return_button_inactivate_state_time()
+long my_rotary_encoder::return_button_inactivate_state_time()
 {
     return m_button_inactivate_state_time;
 }
 
-int my_Rotary_encoder::get_button_state()
+int my_rotary_encoder::get_button_state()
 {   
     m_button_state = BUTTONDEFAULTSTATE;
     if ((m_button_inactivate_state_time + BUTTONSTAYONSTATE) < millis())
@@ -45,7 +45,7 @@ int my_Rotary_encoder::get_button_state()
     return m_button_state;
 }
 
-int my_Rotary_encoder::get_encoder_move()
+int my_rotary_encoder::get_encoder_move()
 {
     m_aVal = digitalRead(m_pinA);
 
@@ -66,7 +66,7 @@ int my_Rotary_encoder::get_encoder_move()
     return 0;
 }
 
-void my_Rotary_encoder::check_encoder_pos()
+void my_rotary_encoder::check_encoder_pos()
 {
     m_aVal = digitalRead(m_pinA);
 
@@ -91,7 +91,7 @@ void my_Rotary_encoder::check_encoder_pos()
     m_pinALast = m_aVal;
 }
 
-float my_Rotary_encoder::set_value(float initial_value, float step, MyLCD lcd)
+float my_rotary_encoder::set_value(float initial_value, float step, MyLCD lcd)
 {
     m_encoderPosCount = 0;
     float temp_value = initial_value;
@@ -105,16 +105,16 @@ float my_Rotary_encoder::set_value(float initial_value, float step, MyLCD lcd)
     return temp_value;
 }
 
-    void my_Rotary_encoder::reset_encoder_pos()
+    void my_rotary_encoder::reset_encoder_pos()
     {
         m_encoderPosCount =0;
     }
 
-    int my_Rotary_encoder::get_button_depth()
+    int my_rotary_encoder::get_button_depth()
     {
         return m_button_depth;
     }
-    void my_Rotary_encoder::reset__button_depth()
+    void my_rotary_encoder::reset__button_depth()
     {
         m_button_depth = 0;
     }

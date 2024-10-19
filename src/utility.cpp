@@ -88,11 +88,11 @@ String DataHMS::return_data()
 }
 
 // TODO rely bad practice IMPROVE IT ASAP
-void print_config_menu(my_Rotary_encoder &encoder, MyLCD &lcd, // main sensors
+void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
                        Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump &pump)
 {
 
-    static long last_display_time = millis();
+    static unsigned long last_display_time = millis();
     static uint8_t chose_menu = 0;
 
     if(last_display_time + 1000 < millis() &&  chose_menu==0)

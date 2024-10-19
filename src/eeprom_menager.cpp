@@ -37,7 +37,7 @@ float ConfigurationVariable::return_config_value() const
     return m_value;
 }
 
-int ConfigurationVariable::retrieve_config_values_from_eeprom(void)
+void ConfigurationVariable::retrieve_config_values_from_eeprom(void)
 {
     EEPROM.get(m_memory_addr, m_value);
 }

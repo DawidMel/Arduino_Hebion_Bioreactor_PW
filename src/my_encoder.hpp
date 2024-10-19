@@ -5,7 +5,12 @@
 #include "lcd_display.hpp"
 
 
-class my_Rotary_encoder
+/**
+ * @class my_rotary_encoder
+ * @brief 
+ * 
+ */
+class my_rotary_encoder
 {
   private:
     const uint8_t m_pinA;
@@ -13,9 +18,9 @@ class my_Rotary_encoder
     const uint8_t m_pin_button;
 
     uint8_t m_button_depth; 
-    long m_sensitivity;
-    long m_button_inactivate_state_time; //TODO rename
-    long m_last_change;
+    unsigned long m_sensitivity;
+    unsigned long m_button_inactivate_state_time; //TODO rename
+    unsigned long m_last_change;
 
     uint8_t m_aVal = 0;
     uint8_t m_pinALast = 0;
@@ -23,7 +28,7 @@ class my_Rotary_encoder
     int m_encoderPosCount;
 
   public:
-    my_Rotary_encoder(uint8_t pinA, uint8_t pinB, uint8_t button, long sensitivity);
+    my_rotary_encoder(uint8_t pinA, uint8_t pinB, uint8_t button, long sensitivity);
     void init();
     int get_encoder_pos();
     int get_button_state();

@@ -16,7 +16,7 @@
 Config_var config_var(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION);
 DataHMS my_data(12, 30, 30);
 MyLCD lcd(0x27, 16, 2);
-my_Rotary_encoder encoder1(REPINA, REPINB, REBUTTONPIN, SENSITIVITY);
+my_rotary_encoder encoder1(REPINA, REPINB, REBUTTONPIN, SENSITIVITY);
 
 SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, CSPIN); // last parameter is CS
 
