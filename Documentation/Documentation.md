@@ -1,2 +1,5 @@
-# STILL IN POGRES
 
+# Startował
+# w wyborach
+
+# prezydenckich

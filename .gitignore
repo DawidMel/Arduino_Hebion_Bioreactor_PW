@@ -4,3 +4,8 @@
 .vscode/launch.json
 .vscode/ipch
 venv/*
+
+
+
+Documentation/latex/*
+Documentation/html/*
