@@ -9,3 +9,4 @@ venv/*
 
 Documentation/latex/*
 Documentation/html/*
+!Documentation/latex/refman.pdf
