@@ -49,10 +49,10 @@
 #define PUMP_SAMPLE_TAKING_TIME     int(float(SAMPLE_SIZE)/float(PUMP_FLOW_SPEED)*60*1000) //[ms] //should be 2s (2000ms)
 
 //PH KEEPERS PUMP
-#define TIMEBETWENWORK 10000 //[ms] time between ph correction [TODO change name]
-#define CORECTIONTIME 100 // [ms] initial time of correction
-#define MULTPERDEGRE 3 // it mean if  desire ph is 6 and we have 8 time of pump activate will be 100*3*3 = 900 ms
-#define MAXREACTIONTIME 3000
+#define TIME_BETWEEN_WORK 10000 //[ms] time between ph correction [TODO change name]
+#define CORRECTION_TIME 100 // [ms] initial time of correction
+#define MULT_PER_DEGREE 3 // it mean if  desire ph is 6 and we have 8 time of pump activate will be 100*3*3 = 900 ms
+#define MAX_REACTION_TIME 3000
 
 
 

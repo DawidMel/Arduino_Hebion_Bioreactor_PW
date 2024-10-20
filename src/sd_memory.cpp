@@ -32,7 +32,7 @@ void SdMemoryManager::init()
     }
 
     m_file.println();
-    m_file.println("temperatura,ph,stężenie_telnu,data");
+    m_file.println("temperature,ph,oxygen_concentration,data");
     Serial.println(F("Star writing to file"));
 }
 

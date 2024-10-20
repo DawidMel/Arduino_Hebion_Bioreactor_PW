@@ -22,10 +22,10 @@ void SimplePeristalticPump::stabilize_ph(float current_ph, float desire_ph)
         temp_exponent = desire_ph - current_ph;
     }
 
-    long delay_time = long(pow(MULTPERDEGRE, temp_exponent) * CORECTIONTIME);
-    if(delay_time>MAXREACTIONTIME)
+    long delay_time = long(pow(MULT_PER_DEGREE, temp_exponent) * CORRECTION_TIME);
+    if(delay_time>MAX_REACTION_TIME)
     {
-        delay_time=MAXREACTIONTIME;
+        delay_time=MAX_REACTION_TIME;
     }
     Serial.print("PH: ");
     Serial.println(current_ph);

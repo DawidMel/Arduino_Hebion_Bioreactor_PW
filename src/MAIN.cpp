@@ -97,7 +97,7 @@ void loop()
     /// setting flags////
     measurement = measure_timer.activate(500);
     display = display_timer.activate(500);
-    pump_work_needed = pump_activation_interval_timer.activate(TIMEBETWENWORK);
+    pump_work_needed = pump_activation_interval_timer.activate(TIME_BETWEEN_WORK);
 
     //TODO need for working but unnecessary in this way
     config = encoder1.get_button_state();
