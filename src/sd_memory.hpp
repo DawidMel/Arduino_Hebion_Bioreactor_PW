@@ -19,10 +19,10 @@ class SdMemoryManager
 {
   private:
     // pins
-    const uint8_t m_MOSI_pin;
-    const uint8_t m_MISO_pin;
-    const uint8_t m_SCK_pin;
-    const uint8_t m_CS;
+    const uint8_t m_mosi_pin;
+    const uint8_t m_miso_pin;
+    const uint8_t m_sck_pin;
+    const uint8_t m_cs_pin;
 
     uint8_t m_write_number=0;
 
@@ -33,15 +33,7 @@ class SdMemoryManager
 
   public:
 
-  /**
-   * @brief Construct a new Sd Memory Manager object
-   * 
-   * @param MOSI_pin 
-   * @param MISO_pin 
-   * @param SCK_pin 
-   * @param CS 
-   */
-    SdMemoryManager(uint8_t MOSI_pin, uint8_t MISO_pin, uint8_t SCK_pin, uint8_t CS);
+    SdMemoryManager(uint8_t mosi_pin, uint8_t miso_pin, uint8_t sck_pin, uint8_t cs_pin);
 
     /**
      * @brief 

@@ -3,8 +3,8 @@
 #include <SD.h>
 
 
-SdMemoryManager::SdMemoryManager(uint8_t MOSI_pin, uint8_t MISO_pin, uint8_t SCK_pin, uint8_t CS)
-    : m_MOSI_pin(MOSI_pin), m_MISO_pin(MISO_pin), m_SCK_pin(SCK_pin), m_CS(CS)
+SdMemoryManager::SdMemoryManager(uint8_t mosi_pin, uint8_t miso_pin, uint8_t sck_pin, uint8_t cs_pin)
+    : m_mosi_pin(mosi_pin), m_miso_pin(miso_pin), m_sck_pin(sck_pin), m_cs_pin(cs_pin)
 {
     m_filename = FILENAME;  //use defined filename
 }
@@ -13,7 +13,7 @@ void SdMemoryManager::init()
 {
     Serial.print(F("Init SD card "));
 
-    if (!SD.begin(m_CS))
+    if (!SD.begin(m_cs_pin))
     {
         Serial.println(F("init failed"));
         while (true) 

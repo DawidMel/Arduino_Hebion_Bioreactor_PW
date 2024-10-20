@@ -38,44 +38,44 @@ void SimplePeristalticPump::stabilize_ph(float current_ph, float desire_ph)
 
 
 
-PeristalticPump::PeristalticPump(uint8_t PwmPin, uint8_t Dir1Pin, uint8_t Dir2Pin)
-    : m_pwmPin(PwmPin), m_dir1Pin(Dir1Pin), m_dir2Pin(Dir2Pin)
+PeristalticPump::PeristalticPump(uint8_t pwm_pin, uint8_t dir1_pin, uint8_t dir2_pin)
+    : m_pwm_pin(pwm_pin), m_dir1_pin(dir1_pin), m_dir2_pin(dir2_pin)
 {
 }
 
 void PeristalticPump::init()
 {
-    pinMode(m_pwmPin, OUTPUT);
-    pinMode(m_dir1Pin, OUTPUT);
-    pinMode(m_dir2Pin, OUTPUT);
+    pinMode(m_pwm_pin, OUTPUT);
+    pinMode(m_dir1_pin, OUTPUT);
+    pinMode(m_dir2_pin, OUTPUT);
 }
 
 void PeristalticPump::set_pump_speed(int value) // probably need to define an alternative method for the pump
 {
     if (value >= 0) // TODO - add validation of value (should be in range 0 to 100)
     {
-        digitalWrite(m_dir1Pin, HIGH);
-        digitalWrite(m_dir2Pin, LOW);
+        digitalWrite(m_dir1_pin, HIGH);
+        digitalWrite(m_dir2_pin, LOW);
     }
     else
     {
-        digitalWrite(m_dir1Pin, LOW);
-        digitalWrite(m_dir2Pin, HIGH);
+        digitalWrite(m_dir1_pin, LOW);
+        digitalWrite(m_dir2_pin, HIGH);
     }
 
-    m_currentPwmValue = map(value, -100, 100, -255, 255);
-    analogWrite(m_pwmPin, abs(m_currentPwmValue));
+    m_current_pwm_value = map(value, -100, 100, -255, 255);
+    analogWrite(m_pwm_pin, abs(m_current_pwm_value));
 }
 long PeristalticPump::get_current_speed() const
 {
-    return m_currentPwmValue;
+    return m_current_pwm_value;
 }
 
 void PeristalticPump::take_sample()
 {
-    digitalWrite(m_pwmPin,HIGH);
+    digitalWrite(m_pwm_pin,HIGH);
     delay(PUMP_SAMPLE_TAKING_TIME);
-    digitalWrite(m_pwmPin,LOW);
+    digitalWrite(m_pwm_pin,LOW);
 }
 
 

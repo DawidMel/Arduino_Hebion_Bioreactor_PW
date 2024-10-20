@@ -22,13 +22,13 @@ void stabilize_ph(float current_ph,float desire_ph);
 class PeristalticPump 
 {
   private:
-    const uint8_t m_pwmPin;  //TODO snake case
-    const uint8_t m_dir1Pin;
-    const uint8_t m_dir2Pin;
-    int m_currentPwmValue;
+    const uint8_t m_pwm_pin;  //TODO snake case
+    const uint8_t m_dir1_pin;
+    const uint8_t m_dir2_pin;
+    int m_current_pwm_value;
 
   public:
-    PeristalticPump(uint8_t PwmPin, uint8_t Dir1Pin, uint8_t Dir2Pin);  //TODO rename variable
+    PeristalticPump(uint8_t pwm_pin, uint8_t dir1_pin, uint8_t dir2_pin);  //TODO rename variable
     void init();
     void set_pump_speed(int value); // from -100 (max reverse speed) to 100 (max forward speed)
     long get_current_speed() const;

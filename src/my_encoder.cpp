@@ -4,18 +4,18 @@
 
 // not refactored
 
-my_rotary_encoder::my_rotary_encoder(uint8_t pinA, uint8_t pinB, uint8_t pin_button, long sensitivity)
-    : m_pinA(pinA), m_pinB(pinB), m_pin_button(pin_button), m_sensitivity(sensitivity)
+my_rotary_encoder::my_rotary_encoder(uint8_t pin_a, uint8_t pin_b, uint8_t pin_button, long sensitivity)
+    : m_pin_a(pin_a), m_pin_b(pin_b), m_pin_button(pin_button), m_sensitivity(sensitivity)
 {
     Serial.println(F("RE was init"));
 }
 
 void my_rotary_encoder::init()
 {
-    pinMode(m_pinA, INPUT);
-    pinMode(m_pinB, INPUT);
+    pinMode(m_pin_a, INPUT);
+    pinMode(m_pin_b, INPUT);
     pinMode(m_pin_button, INPUT_PULLUP);
-    m_pinALast = digitalRead(m_pinA);
+    m_pinALast = digitalRead(m_pin_a);
 }
 
 int my_rotary_encoder::get_encoder_pos()
@@ -47,11 +47,11 @@ int my_rotary_encoder::get_button_state()
 
 int my_rotary_encoder::get_encoder_move()
 {
-    m_aVal = digitalRead(m_pinA);
+    m_a_val = digitalRead(m_pin_a);
 
-    if ((m_aVal != m_pinALast) && (millis() > m_last_change + m_sensitivity))
+    if ((m_a_val != m_pinALast) && (millis() > m_last_change + m_sensitivity))
     {
-        if (digitalRead(m_pinB) != m_aVal) // 3 value operator to make it simpler
+        if (digitalRead(m_pin_b) != m_a_val) // 3 value operator to make it simpler
         {
             m_last_change = millis();
             return 1;
@@ -62,20 +62,20 @@ int my_rotary_encoder::get_encoder_move()
             return -1;
         }
     }
-    m_pinALast = m_aVal;
+    m_pinALast = m_a_val;
     return 0;
 }
 
 void my_rotary_encoder::check_encoder_pos()
 {
-    m_aVal = digitalRead(m_pinA);
+    m_a_val = digitalRead(m_pin_a);
 
-    if ((m_aVal != m_pinALast) && (millis() > m_last_change + m_sensitivity))
+    if ((m_a_val != m_pinALast) && (millis() > m_last_change + m_sensitivity))
     {
         // Means the knob is rotating
         // if the knob is rotating, we need to determine direction
         // We do that by reading pin B.
-        if (digitalRead(m_pinB) != m_aVal)
+        if (digitalRead(m_pin_b) != m_a_val)
         {
             m_encoderPosCount++;
         }
@@ -88,7 +88,7 @@ void my_rotary_encoder::check_encoder_pos()
         Serial.println(m_encoderPosCount);
         m_last_change = millis();
     }
-    m_pinALast = m_aVal;
+    m_pinALast = m_a_val;
 }
 
 float my_rotary_encoder::set_value(float initial_value, float step, MyLCD lcd)
