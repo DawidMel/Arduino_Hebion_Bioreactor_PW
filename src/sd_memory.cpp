@@ -38,7 +38,7 @@ void SdMemoryManager::init()
 
 void SdMemoryManager::write_to_st()
 {
-    m_file.println("TWOJA STARA");
+    m_file.println("w_test");
 }
 
  void SdMemoryManager::write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)

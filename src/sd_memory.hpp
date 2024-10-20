@@ -1,3 +1,5 @@
+//TODO REFACTOR WHOLE CLASS in way which Define is not used in CPP file
+
 #ifndef SM_MEMORY
 #define SM_MEMORY
 
@@ -5,6 +7,14 @@
 #include "eeprom_menager.hpp"
 #include "utility.hpp"
 
+/**
+ * @class SdMemoryManager
+ * @brief Main purpose is write data to SD card
+ * 
+ * this class mostly use function in SD.h library 
+ * main idea is to create file and write data to it
+ * 
+ */
 class SdMemoryManager
 {
   private:
@@ -22,9 +32,35 @@ class SdMemoryManager
     unsigned long m_last_write = 0;
 
   public:
+
+  /**
+   * @brief Construct a new Sd Memory Manager object
+   * 
+   * @param MOSI_pin 
+   * @param MISO_pin 
+   * @param SCK_pin 
+   * @param CS 
+   */
     SdMemoryManager(uint8_t MOSI_pin, uint8_t MISO_pin, uint8_t SCK_pin, uint8_t CS);
+
+    /**
+     * @brief 
+     * 
+     */
     void init();
+    /**
+     * @brief 
+     * 
+     */
     void write_to_st();
+    /**
+     * @brief 
+     * 
+     * @param thermometer 
+     * @param ph_meter 
+     * @param oxygen_meter 
+     * @param data 
+     */
     void write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data);
     String DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data);
     void save();

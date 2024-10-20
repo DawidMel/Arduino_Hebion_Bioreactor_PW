@@ -22,7 +22,7 @@ void stabilize_ph(float current_ph,float desire_ph);
 class PeristalticPump 
 {
   private:
-    const uint8_t m_pwmPin;  //TODO snakekase
+    const uint8_t m_pwmPin;  //TODO snake case
     const uint8_t m_dir1Pin;
     const uint8_t m_dir2Pin;
     int m_currentPwmValue;

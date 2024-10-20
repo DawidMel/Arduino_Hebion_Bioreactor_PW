@@ -16,9 +16,9 @@
 Config_var config_var(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION);
 DataHMS my_data(12, 30, 30);
 MyLCD lcd(0x27, 16, 2);
-my_rotary_encoder encoder1(REPINA, REPINB, REBUTTONPIN, SENSITIVITY);
+my_rotary_encoder encoder1(RE_PIN_A, RE_PIN_B, RE_BUTTON_PIN, SENSITIVITY);
 
-SdMemoryManager sd_men(MOSIPIN, MISOPIN, SCKPIN, CSPIN); // last parameter is CS
+SdMemoryManager sd_men(DEF_MOSI_PIN, DEF_MISO_PIN, DEF_SCK_PIN, CS_PIN); // last parameter is CS
 
 PeristalticPump pump(8,9,9);
 SimplePeristalticPump s_pump1(6);
@@ -48,9 +48,9 @@ uint8_t measurement = 0;
 uint8_t display = 0;
 uint8_t config = 1;
 
-// flag masc - seting this value can inactivate flag even if it occure
+// flag masc - setting this value can inactivate flag even if it occur
 
-// uint8_t masc_pump_work_needed = 1; unmasced flag
+// uint8_t masc_pump_work_needed = 1; unmasked flag
 uint8_t masc_measurement = 1;
 uint8_t masc_display = 1;
 uint8_t masc_config = 1;
@@ -99,7 +99,7 @@ void loop()
     display = display_timer.activate(500);
     pump_work_needed = pump_activation_interval_timer.activate(TIMEBETWENWORK);
 
-    //TODO need for working but unnecesery in this way
+    //TODO need for working but unnecessary in this way
     config = encoder1.get_button_state();
 
 

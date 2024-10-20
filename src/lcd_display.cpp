@@ -15,9 +15,9 @@ void MyLCD::initialize()   //TODO check is we can omit this
   this->init(); 
   this->backlight();
   this->setCursor(3,0);
-  this->print(F("BIOREAKTOR"));
+  this->print(F("BIOREACTOR"));
   this->setCursor(2,1);
-  this->print(F("KGB HEMOROID"));
+  this->print(F("KNB HERBION"));
 }
 
 

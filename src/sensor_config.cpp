@@ -12,7 +12,7 @@ Sensor setup_thermometer_sensors(MemoryManager &manager) // setup the sensor
     thermometer_zero_shift.retrieve_config_values_from_eeprom();
     ConfigurationVariable thermometer_linear_factor(manager);
     thermometer_linear_factor.retrieve_config_values_from_eeprom();
-    Thermometer *measure_dev_thermometer = new Thermometer(THERMOMETHERPIN);
+    Thermometer *measure_dev_thermometer = new Thermometer(THERMOMETER_PIN);
     Sensor thermometer(measure_dev_thermometer, thermometer_zero_shift, thermometer_linear_factor);
     return thermometer;
 }

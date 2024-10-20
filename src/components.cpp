@@ -74,7 +74,7 @@ long PeristalticPump::get_current_speed() const
 void PeristalticPump::take_sample()
 {
     digitalWrite(m_pwmPin,HIGH);
-    delay(PUMPSAMPLETAKINGTIME);
+    delay(PUMP_SAMPLE_TAKING_TIME);
     digitalWrite(m_pwmPin,LOW);
 }
 
