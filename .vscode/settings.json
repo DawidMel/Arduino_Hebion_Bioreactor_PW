@@ -2,11 +2,13 @@
     "cSpell.words": [
         "Biocompatible",
         "bootloader",
+        "doxygen",
         "eeprom",
         "heatsink",
         "HERBION",
         "microcontroller",
         "MOSI",
+        "MSYS",
         "platformio"
     ]
 }
