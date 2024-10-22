@@ -1,5 +1,0 @@
-
-# Startował
-# w wyborach
-
-# prezydenckich
