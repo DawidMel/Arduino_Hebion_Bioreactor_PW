@@ -27,8 +27,7 @@ class SdMemoryManager
     uint8_t m_write_number=0;
 
     File m_file;
-    String m_filename;
-    String m_dataBuffer;
+    const char * m_filename;
     unsigned long m_last_write = 0;
 
   public:
@@ -39,7 +38,7 @@ class SdMemoryManager
      * @brief 
      * 
      */
-    void init();
+    void init(MyLCD lcd);
     /**
      * @brief 
      * 

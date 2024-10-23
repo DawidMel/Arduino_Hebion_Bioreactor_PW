@@ -28,7 +28,7 @@ class PeristalticPump
     int m_current_pwm_value;
 
   public:
-    PeristalticPump(uint8_t pwm_pin, uint8_t dir1_pin, uint8_t dir2_pin);  //TODO rename variable
+    PeristalticPump(uint8_t pwm_pin, uint8_t m_motor_negative_pin, uint8_t m_motor_positive_pin);  //TODO rename variable
     void init();
     void set_pump_speed(int value); // from -100 (max reverse speed) to 100 (max forward speed)
     long get_current_speed() const;

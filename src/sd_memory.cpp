@@ -1,27 +1,32 @@
 #include "sd_memory.hpp"
 #include "bioreactor_defined_const.hpp"
 #include <SD.h>
-
+#include "lcd_display.hpp"
 
 SdMemoryManager::SdMemoryManager(uint8_t mosi_pin, uint8_t miso_pin, uint8_t sck_pin, uint8_t cs_pin)
     : m_mosi_pin(mosi_pin), m_miso_pin(miso_pin), m_sck_pin(sck_pin), m_cs_pin(cs_pin)
 {
-    m_filename = FILENAME;  //use defined filename
+    m_filename = SD_FILENAME;  //use defined filename
 }
 
-void SdMemoryManager::init()
+void SdMemoryManager::init(MyLCD lcd)
 {
     Serial.print(F("Init SD card "));
 
     if (!SD.begin(m_cs_pin))
     {
         Serial.println(F("init failed"));
-        while (true) 
-            ;
+        lcd.send_string(F("SD INIT FAIL!"),"",0);
+        lcd.send_string(F("SD WON'T WORK"),"",1);
+        delay(10000);
+        exit(1);
     }
-    m_filename = FILENAME;
-    m_file = SD.open(FILENAME, FILE_WRITE);
+    m_filename = SD_FILENAME;
+    m_file = SD.open(SD_FILENAME, FILE_WRITE);
     Serial.println(F("init done."));
+    lcd.clear();
+    lcd.send_string(F("SD init done"),"",0);
+    delay(3000);
 
     if (!m_file)
     {
@@ -71,7 +76,7 @@ void SdMemoryManager::save()
     if(m_write_number > 100)
     {
         m_file.close();
-        m_file = SD.open(FILENAME, FILE_WRITE);
+        m_file = SD.open(SD_FILENAME, FILE_WRITE);
         m_write_number = 0;
     }
     m_write_number+=1;

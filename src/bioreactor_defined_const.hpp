@@ -47,7 +47,7 @@ constexpr unsigned long STAY_IN_MENU_TIME = 3000; //[ms] time after you can exit
 
 
 //ROTARY ENCODER SETTINGS - CAN BE CONFIGURABLE!
-constexpr unsigned long SENSITIVITY = 150; // [ms] time after re will not change it state after did it before //TODO use better world :)
+constexpr unsigned long SENSITIVITY = 300; // [ms] time after re will not change it state after did it before //TODO use better world :)
 
 //SENSOR DESIRE PARAMETER - CAN BE CONFIGURABLE!
 constexpr float DESIRE_PH = 7;
@@ -77,6 +77,6 @@ constexpr long int SERIES_RESISTOR = 10000;           // [ohm] the value of the 
 
 
 //FILE WITH DATA
-#define FILENAME "m.txt"
+#define SD_FILENAME "m.txt"
 
 #endif // BIOREACTOR_CONST

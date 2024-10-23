@@ -33,4 +33,6 @@ I use version 20240727
 
 # Hardware configuration
 
+## MAKE SURE ALL build pheryferia is in off state because sometime it may cause trouble (advice for nor original arduino board)
+
 ## NOT YET CREATED
