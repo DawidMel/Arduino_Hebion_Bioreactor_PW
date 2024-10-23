@@ -1,1 +1,0 @@
-// need for changing #Define to extern const
