@@ -139,3 +139,39 @@ Size: 60 x 37 mm
 10 Driver board Weight: 33g  
 11 Other features: control direction indicator, power indicator, current detection, logical part of  
 the plate to take power interface.  
+
+## LCD - LCM1602 with I2C adapter - HW-61
+![LCD](../Images/I2C_LCD.jpg)  
+
+LCD display 2x16 characters
+Character color: white
+Backlight: blue
+Module size: 80 x 36 mm
+Character dimensions: 2.45 x 5.00 mm
+I2C bus converter
+No resistors pulling up the I2C bus lines (switched on in Arduino)
+Converter based on the PCF8574 system (documentation)
+Soldered-in potentiometer for contrast adjustment
+Possibility to control the backlight via the I2C bus
+
+## Encoder with button - Iduino SE055
+![Encoder](../Images/Encode.jpg)  
+
+Power supply voltage: 5 V
+Detects clockwise and counterclockwise rotation
+Knob button
+Number of steps in 360°: 20 steps
+Knob diameter: 6 mm
+Knob type: beveled (D)
+Module dimensions: 32 x 30 x 20 mm
+Weight: 20 g
+
+## SD reader - HW-125
+![SD reader](../Images/SD_reader.jpg)  
+
+Supply voltage: 3.3 V or 5 V
+Communication interface: SPI
+Built-in 3.3 V voltage regulator (LM1117)
+Installed SD card slot with ejector
+Module dimensions: 50 x 31 mm
+Mounting hole diameter: 2.2 mm
