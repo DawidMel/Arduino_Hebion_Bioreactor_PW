@@ -23,8 +23,8 @@ class PeristalticPump
 {
   private:
     const uint8_t m_pwm_pin;  //TODO snake case
-    const uint8_t m_dir1_pin;
-    const uint8_t m_dir2_pin;
+    const uint8_t m_motor_negative_pin;
+    const uint8_t m_motor_positive_pin;
     int m_current_pwm_value;
 
   public:

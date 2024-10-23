@@ -13,17 +13,17 @@
 class my_rotary_encoder
 {
   private:
-    const uint8_t m_pin_a;
-    const uint8_t m_pin_b;
-    const uint8_t m_pin_button;
+    const uint8_t m_clk_pin;
+    const uint8_t m_dt_pin;
+    const uint8_t m_button_pin;
 
     uint8_t m_button_depth; 
     unsigned long m_sensitivity;
     unsigned long m_button_inactivate_state_time; //TODO rename
     unsigned long m_last_change;
 
-    uint8_t m_a_val = 0;
-    uint8_t m_pinALast = 0;
+    uint8_t m_clk_val = 0;
+    uint8_t m_clk_val_last = 0;
     uint8_t m_button_state = 1;
     int m_encoderPosCount;
 
