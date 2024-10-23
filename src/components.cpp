@@ -10,36 +10,23 @@ void SimplePeristalticPump::init()
 {
     pinMode(m_pin_forward,OUTPUT);
 }
-void SimplePeristalticPump::stabilize_ph(float current_ph, float desire_ph)
-{
-    float temp_exponent = 1;
-    if (current_ph > desire_ph)
-    {
-        temp_exponent = current_ph - desire_ph;
-    }
-    else
-    {
-        temp_exponent = desire_ph - current_ph;
-    }
 
-    long delay_time = long(pow(MULT_PER_DEGREE, temp_exponent) * CORRECTION_TIME);
-    if(delay_time>MAX_REACTION_TIME)
-    {
-        delay_time=MAX_REACTION_TIME;
-    }
-    Serial.print("PH: ");
-    Serial.println(current_ph);
-    Serial.println(delay_time);
+
+void SimplePeristalticPump::run()
+{
     digitalWrite(m_pin_forward, HIGH);
-    delay(delay_time);
+}
+
+void SimplePeristalticPump::stop()
+{
     digitalWrite(m_pin_forward, LOW);
 }
 
 
 
 
-PeristalticPump::PeristalticPump(uint8_t pwm_pin, uint8_t m_motor_negative_pin, uint8_t m_motor_positive_pin)
-    : m_pwm_pin(pwm_pin), m_motor_negative_pin(m_motor_negative_pin), m_motor_positive_pin(m_motor_positive_pin)
+PeristalticPump::PeristalticPump(uint8_t pwm_pin, uint8_t motor_negative_pin, uint8_t motor_positive_pin)
+    : m_pwm_pin(pwm_pin), m_motor_negative_pin(motor_negative_pin), m_motor_positive_pin(motor_positive_pin)
 {
 }
 
@@ -64,23 +51,26 @@ void PeristalticPump::set_pump_speed(int value) // probably need to define an al
     }
 
     m_current_pwm_value = map(value, -100, 100, -255, 255);
-    analogWrite(m_pwm_pin, abs(m_current_pwm_value));
+    analogWrite(m_pwm_pin, abs(m_current_pwm_value));  //TODO IS IT PWM? need check driver setting
 }
 long PeristalticPump::get_current_speed() const
 {
     return m_current_pwm_value;
 }
 
-void PeristalticPump::take_sample()
+void PeristalticPump::start_taking_sample() //just use max available speed of pump
 {
-    digitalWrite(m_pwm_pin,HIGH);
-    delay(PUMP_SAMPLE_TAKING_TIME);
-    digitalWrite(m_pwm_pin,LOW);
+    digitalWrite(m_pwm_pin,HIGH); //TODO change to something none blocking
+}
+
+void PeristalticPump::stop_taking_sample() //just use max available speed of pump
+{
+    digitalWrite(m_pwm_pin,LOW); //TODO change to something none blocking
 }
 
 
 
-MeasuringDevice::MeasuringDevice(int read_pin) : m_read_pin(read_pin)
+MeasuringDevice::MeasuringDevice(uint8_t read_pin) : m_read_pin(read_pin)
 {
 }
 
@@ -88,12 +78,12 @@ void MeasuringDevice::init()
 {
     pinMode(m_read_pin, INPUT);
 }
-float MeasuringDevice::get_value()
+float MeasuringDevice::get_value() const
 {
     return 10;
 } // TODO
 
-Thermometer::Thermometer(int read_pin) : MeasuringDevice(read_pin)
+Thermometer::Thermometer(uint8_t read_pin) : MeasuringDevice(read_pin)
 {
 }
 
@@ -102,7 +92,7 @@ float Thermometer::get_value()
     return 10;
 } // TODO use real measure function
 
-PhMeter::PhMeter(int read_pin) : MeasuringDevice(read_pin)
+PhMeter::PhMeter(uint8_t read_pin) : MeasuringDevice(read_pin)
 {
     pinMode(m_read_pin, INPUT);
 }
@@ -116,7 +106,7 @@ float PhMeter::get_value()
     return m_value;
 } // TODO use real measure function
 
-OxygenMeter::OxygenMeter(int read_pin) : MeasuringDevice(read_pin)
+OxygenMeter::OxygenMeter(uint8_t read_pin) : MeasuringDevice(read_pin)
 {
 }
 

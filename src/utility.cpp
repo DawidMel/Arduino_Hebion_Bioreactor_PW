@@ -4,13 +4,6 @@
 #include "lcd_display.hpp"
 #include <Arduino.h>
 
-Config_var::Config_var(float desire_ph, float max_ph_acceptable_deviation, float desire_temp,
-                       float max_temp_acceptable_deviation)
-    : m_desire_ph(desire_ph), m_desire_temp(desire_temp), m_max_ph_acceptable_deviation(m_max_ph_acceptable_deviation),
-      m_max_temp_acceptable_deviation(m_max_temp_acceptable_deviation)
-{
-}
-
 MeasureArray::MeasureArray(int size) : m_array_size(size)
 {
     measurement = new float[m_array_size]; // Dynamic create of array
@@ -198,7 +191,7 @@ void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
                 lcd.clear();
                 lcd.send_string(F("TAKING SAMPLE:"), "", 0);
                 delay(2000);
-                pump.take_sample();
+                pump.start_taking_sample();
                 encoder.reset__button_depth();
                 break;
 

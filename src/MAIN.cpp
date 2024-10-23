@@ -9,10 +9,11 @@
 #include "sd_memory.hpp"
 #include "sensor_config.hpp"
 #include "utility.hpp"
+#include "steering_funct.hpp"
 // #include "Unit_tests.hpp"   //only for tests
 
 // global variable
-Config_var config_var(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION);
+MainController controller(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION);
 DataHMS my_data(12, 30, 30);
 
 //creating object of components
@@ -35,7 +36,6 @@ MeasureArray temperature_measurements_array(10);
 MeasureArray ph_measurements_array(10);
 MeasureArray oxygen_measurements_array(10); // TODO think about this variable name
 
-
 void setup()
 {
     delay(2000);
@@ -56,9 +56,9 @@ void setup()
 
 
     ///////////////////sensors tests///////////////////////////
-    test_sensor(thermometer, 1, "thermometer");
-    test_sensor(ph_meter, 1, "ph_meter");
-    test_sensor(oxygen_meter, 1, "oxygen_meter");
+    // test_sensor(thermometer, 1, "thermometer");
+    // test_sensor(ph_meter, 1, "ph_meter");
+    // test_sensor(oxygen_meter, 1, "oxygen_meter");
 
     //initial array value is from measurement
     temperature_measurements_array.init(thermometer.get_value_from_measurement());
@@ -72,6 +72,4 @@ void setup()
 
 void loop()
 {
-encoder1.check_encoder_pos();
-encoder1.get_encoder_move();
 }

@@ -8,21 +8,6 @@
 #include "eeprom_menager.hpp"
 #include "lcd_display.hpp"
 
-class Config_var   //more like struct but... TODO check if we can change it to real struct
-{
-  private:
-  float m_desire_ph;
-  float m_max_ph_acceptable_deviation;
-
-  float m_desire_temp;
-  float m_max_temp_acceptable_deviation;
-
-  public:
-  Config_var(float desire_ph, float max_ph_acceptable_deviation, float desire_temp, float max_temp_acceptable_deviation);
-};
-
-
-
 
 class MeasureArray // TODO is not good enough make it better
 {

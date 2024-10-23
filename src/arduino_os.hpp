@@ -1,7 +1,4 @@
-//some kind basic job schedule optimized to minimal size and ram usage
-
-
-//general idea - adding task then planer will check 
+//WORKING ONLY WITCH SPECIFIC CONDITION; NOT RECOMENDED TO USE IT
 
 #include <Arduino.h>
 
