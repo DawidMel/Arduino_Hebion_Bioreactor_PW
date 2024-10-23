@@ -18,34 +18,28 @@ void my_rotary_encoder::init()
     m_clk_val_last = digitalRead(m_clk_pin);
 }
 
-int my_rotary_encoder::get_encoder_pos()
+uint8_t my_rotary_encoder::get_encoder_pos()
 {
     return m_encoderPosCount;
 }
 
-long my_rotary_encoder::return_button_inactivate_state_time()
+unsigned long my_rotary_encoder::return_button_inactivate_state_time()
 {
     return m_button_inactivate_state_time;
 }
 
-int my_rotary_encoder::get_button_state()
+uint8_t my_rotary_encoder::get_button_state()
 {   
     m_button_state = BUTTON_DEFAULT_STATE;
     if ((m_button_inactivate_state_time + BUTTON_STAY_ON_STATE) < millis())
     {
         m_button_state = digitalRead(m_button_pin);
         m_button_inactivate_state_time = millis();
-        if(m_button_state == 0)
-        {
-            m_button_depth +=1;
-        }
-        Serial.print("m_button_depth: ");
-        Serial.println(m_button_depth);
     }
     return m_button_state;
 }
 
-int my_rotary_encoder::get_encoder_move()
+uint8_t my_rotary_encoder::get_encoder_move()
 {
     m_clk_val = digitalRead(m_clk_pin);
 
@@ -54,13 +48,13 @@ int my_rotary_encoder::get_encoder_move()
         if (digitalRead(m_dt_pin) != m_clk_val) // 3 value operator to make it simpler
         {
             m_last_change = millis();
-            Serial.println("up");
+            Serial.println(F("up"));
             return 1;
         }
         else
         {
             m_last_change = millis();
-            Serial.println("down");
+            Serial.println(F("down"));
             return -1;
         }
     }
@@ -110,13 +104,4 @@ float my_rotary_encoder::set_value(float initial_value, float step, MyLCD lcd)
     void my_rotary_encoder::reset_encoder_pos()
     {
         m_encoderPosCount =0;
-    }
-
-    int my_rotary_encoder::get_button_depth()
-    {
-        return m_button_depth;
-    }
-    void my_rotary_encoder::reset__button_depth()
-    {
-        m_button_depth = 0;
     }

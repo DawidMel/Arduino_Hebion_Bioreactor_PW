@@ -78,7 +78,7 @@ void MeasuringDevice::init()
 {
     pinMode(m_read_pin, INPUT);
 }
-float MeasuringDevice::get_value() const
+float MeasuringDevice::get_value()
 {
     return 10;
 } // TODO

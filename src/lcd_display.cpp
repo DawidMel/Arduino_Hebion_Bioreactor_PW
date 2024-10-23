@@ -22,11 +22,11 @@ void MyLCD::initialize()   //TODO check is we can omit this
 
 
 
-void MyLCD::send_float_value(String text, float value, int lcd_row)
+void MyLCD::send_float_value(String text, float value, uint8_t lcd_row)
 {
-  int text_length = text.length();
+  uint16_t text_length = text.length();
   String s_value = String(value);
-  int s_value_length = s_value.length();
+  uint16_t s_value_length = s_value.length();
 
   this->setCursor(0,lcd_row);
   this->print(text);
@@ -49,10 +49,10 @@ void MyLCD::send_float_value(String text, float value, int lcd_row)
 
 
 
-void MyLCD::send_string(String text, String value, int lcd_row)
+void MyLCD::send_string(String text, String value, uint8_t lcd_row)
 {
-  int v_l = value.length();
-  int t_l = text.length();
+  uint16_t v_l = value.length();
+  uint16_t t_l = text.length();
 
   this->setCursor(0,lcd_row);
   this->print(text);

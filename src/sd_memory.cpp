@@ -37,7 +37,7 @@ void SdMemoryManager::init(MyLCD lcd)
     }
 
     m_file.println();
-    m_file.println("temperature,ph,oxygen_concentration,data");
+    m_file.println(F("temperature,ph,oxygen_concentration,data"));
     Serial.println(F("Star writing to file"));
 }
 

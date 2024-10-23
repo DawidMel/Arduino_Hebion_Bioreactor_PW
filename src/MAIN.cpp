@@ -65,11 +65,12 @@ void setup()
     ph_measurements_array.init(ph_meter.get_value_from_measurement());
     oxygen_measurements_array.init(oxygen_meter.get_value_from_measurement());
 
-    Serial.println("HELLO we are after setup");
+    Serial.println(F("HELLO we are after setup"));
 
     delay(1000);
 }
 
 void loop()
 {
+    
 }

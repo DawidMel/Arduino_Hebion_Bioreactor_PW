@@ -48,7 +48,7 @@ class MeasuringDevice
   public:
     MeasuringDevice(uint8_t read_pin);
     void init();
-    virtual float get_value() const;
+    virtual float get_value();
 };
 
 class Thermometer : public MeasuringDevice

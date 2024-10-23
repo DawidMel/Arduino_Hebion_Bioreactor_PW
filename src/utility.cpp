@@ -97,8 +97,6 @@ void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
 
     int position_previous = encoder.get_encoder_pos();
 
-    if (encoder.get_button_depth() == 1 )
-    {
 
         encoder.check_encoder_pos();
 
@@ -137,9 +135,7 @@ void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
             position_previous = encoder.get_encoder_pos();
         }
 
-    }
-        if (encoder.get_button_depth() == 2)
-        {
+
             int encoder_pos = encoder.get_encoder_pos(); // TODO improve it!
             float temp = 0;
             encoder.reset_encoder_pos();
@@ -192,20 +188,9 @@ void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
                 lcd.send_string(F("TAKING SAMPLE:"), "", 0);
                 delay(2000);
                 pump.start_taking_sample();
-                encoder.reset__button_depth();
                 break;
 
             default:
                 Serial.println(F("ERR"));
                 break;
-            
-        }        
-    }
-
-    if(encoder.get_button_depth()>2)
-    {
-        encoder.reset__button_depth();
-        chose_menu = 0;     
-    }
-
-}
+            }}
