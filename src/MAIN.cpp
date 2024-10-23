@@ -16,9 +16,9 @@
 Config_var config_var(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION);
 DataHMS my_data(12, 30, 30);
 MyLCD lcd(0x27, 16, 2);
-my_rotary_encoder encoder1(RE_PIN_A, RE_PIN_B, RE_BUTTON_PIN, SENSITIVITY);
+my_rotary_encoder encoder1(RE_CLK_PIN, RE_DT_PIN, RE_BUTTON_PIN, SENSITIVITY);
 
-SdMemoryManager sd_men(DEF_MOSI_PIN, DEF_MISO_PIN, DEF_SCK_PIN, CS_PIN); // last parameter is CS
+SdMemoryManager sd_men(SD_MOSI_PIN, SD_MISO_PIN, SD_SCK_PIN, SD_CS_PIN); // last parameter is CS
 
 PeristalticPump pump(8,9,9);
 SimplePeristalticPump s_pump1(6);

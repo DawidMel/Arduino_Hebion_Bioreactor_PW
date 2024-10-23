@@ -15,24 +15,24 @@ constexpr uint8_t ALKALINE_PUMP_PIN = 5;
 constexpr uint8_t ACID_PUMP_PIN = 6;
 
 //ROTARY ENCODER PHYSICAL CONNECTION
-constexpr uint8_t RE_PIN_A = 7;
-constexpr uint8_t RE_PIN_B = 8;
+constexpr uint8_t RE_CLK_PIN = 7;
+constexpr uint8_t RE_DT_PIN = 8;
 constexpr uint8_t RE_BUTTON_PIN = 9;
 
 //SD CARD READER PHYSICAL CONNECTION
-constexpr uint8_t CS_PIN = 10;
-constexpr uint8_t DEF_MOSI_PIN = 11;
-constexpr uint8_t DEF_MISO_PIN = 12;
-constexpr uint8_t DEF_SCK_PIN = 13;
+constexpr uint8_t SD_CS_PIN = 10;
+constexpr uint8_t SD_MOSI_PIN = 11;
+constexpr uint8_t SD_MISO_PIN = 12;
+constexpr uint8_t SD_SCK_PIN = 13;
 
 //SENSORS PHYSICAL CONNECTION
 constexpr uint8_t PH_METER_PIN = A1;
 constexpr uint8_t THERMOMETER_PIN = A2;        
 constexpr uint8_t OXYGEN_METER_PIN = A3;
 
-//LCD PHYSICAL CONNECTION
-constexpr uint8_t SDA_PIN = A4; //physical connected with SDA (more specific is it 1 microcontroller pin)
-constexpr uint8_t SCL_pin = A5; //physical connected with SCL (more specific is it 1 microcontroller pin)
+//LCD PHYSICAL CONNECTION 
+constexpr uint8_t LCD_SDA_PIN = 18; //physical connected with A4 (more specific is it 1 microcontroller pin)
+constexpr uint8_t LCD_SCL_pin = 19; //physical connected with A5 (more specific is it 1 microcontroller pin)
 
 // FREE PIN :
 // AREF - NOTE THAT IT IS NOT PROGRAMABLE PIN it is just reference voltage for A/D Converter
