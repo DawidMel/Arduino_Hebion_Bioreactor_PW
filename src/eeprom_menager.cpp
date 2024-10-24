@@ -21,9 +21,9 @@ int MemoryManager::give_memory(int require_memory)
 }
 
 // sensor config
-ConfigurationVariable::ConfigurationVariable(MemoryManager &mem_man)
+ConfigurationVariable::ConfigurationVariable(MemoryManager &memory_manager)
     : m_memory_addr(
-          mem_man.give_memory(sizeof(float))) // float is 4 byte  TODO change code to support any data structure (very low priority)
+          memory_manager.give_memory(sizeof(float))) // float is 4 byte  TODO change code to support any data structure (very low priority)
 {
 }
 

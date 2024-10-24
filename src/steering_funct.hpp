@@ -38,9 +38,9 @@ void stop_correction(SimplePeristalticPump pump);
 uint8_t return_menu_state() const;
 void change_menu_state(my_rotary_encoder encoder);
 
-unsigned int measure_temperature(Thermometer Therm1);
-unsigned int measure_PH(PhMeter phm1);
-unsigned int measure_Oxygen_amount(OxygenMeter oxm1);
+unsigned int measure_temperature(Thermometer &Therm1);
+unsigned int measure_PH(PhMeter &phm1);
+unsigned int measure_Oxygen_amount(OxygenMeter &oxm1);
 
 float calculate_average_from_measurement(float linear_factor,float zero_shift, float average);
 

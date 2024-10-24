@@ -75,15 +75,15 @@ void MainController::change_menu_state(my_rotary_encoder encoder)
 
 }
 
-unsigned int MainController::measure_temperature(Thermometer therm1)
+unsigned int MainController::measure_temperature(Thermometer &therm1)
 {
     return therm1.get_value();
 }
-unsigned int MainController::measure_PH(PhMeter phm1)
+unsigned int MainController::measure_PH(PhMeter &phm1)
 {
     return phm1.get_value();
 }
-unsigned int MainController::measure_Oxygen_amount(OxygenMeter oxm1)
+unsigned int MainController::measure_Oxygen_amount(OxygenMeter &oxm1)
 {
     return oxm1.get_value();
 }
