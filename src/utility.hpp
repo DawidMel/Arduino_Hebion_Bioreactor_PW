@@ -50,7 +50,7 @@ class DataHMS
     String return_data(); //TODO const
 };
 
-void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
-                       Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump& pump);
+// void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
+//                        Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump& pump);
 
 #endif

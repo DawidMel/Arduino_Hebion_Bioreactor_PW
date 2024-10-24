@@ -2,6 +2,7 @@
 #include <math.h>
 #include "bioreactor_defined_const.hpp"
 #include "utility.hpp"
+#include "eeprom_menager.hpp"
 
 #ifndef BIOREACTOR_COMPONENTS
 #define BIOREACTOR_COMPONENTS
@@ -51,6 +52,13 @@ class MeasuringDevice
   public:
     MeasuringDevice(uint8_t read_pin, EepromVariable &zero_shift, EepromVariable &linear_factor);
     void init();
+    void set_zero_shift(EepromVariable &zero_shift);
+    void set_linear_factor(EepromVariable &linear_factor);
+    float get_zero_shift();
+    float get_linear_factor();
+
+
+    unsigned int get_rav_measure();
     virtual float get_value();
 };
 
@@ -58,21 +66,21 @@ class Thermometer : public MeasuringDevice
 {
   public:
     Thermometer(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor);
-    float get_value() override;
+    float get_value() override; 
 };
 
 class PhMeter : public MeasuringDevice
 {
   public:
     PhMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor);
-    float get_value() override;
+    float get_value() override; 
 };
 
 class OxygenMeter : public MeasuringDevice
 {
   public:
     OxygenMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor);
-    float get_value() override;
+    float get_value() override; 
 };
 
 #endif // BIOREACTOR_COMPONENTS

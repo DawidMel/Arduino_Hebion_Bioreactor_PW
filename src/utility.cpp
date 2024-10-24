@@ -59,116 +59,116 @@ String DataHMS::return_data()
 }
 
 // TODO rely bad practice IMPROVE IT ASAP
-void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
-                       Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump &pump)
-{
+// void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
+//                        Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump &pump)
+// {
 
-    static unsigned long last_display_time = millis();
-    static uint8_t chose_menu = 0;
+//     static unsigned long last_display_time = millis();
+//     static uint8_t chose_menu = 0;
 
-    if(last_display_time + 1000 < millis() &&  chose_menu==0)
-    {
-    lcd.clear();
-    lcd.send_string(F("CONFIG MENU"), " ", 0);
-    last_display_time = millis();
-    }
+//     if(last_display_time + 1000 < millis() &&  chose_menu==0)
+//     {
+//     lcd.clear();
+//     lcd.send_string(F("CONFIG MENU"), " ", 0);
+//     last_display_time = millis();
+//     }
 
-    int position_previous = encoder.get_encoder_pos();
-
-
-        encoder.check_encoder_pos();
-
-        if (position_previous != encoder.get_encoder_pos())
-        {
-            chose_menu = 1;
-            lcd.clear();
-
-            switch (abs(encoder.get_encoder_pos()) % 5)
-            {
-            case 0:
-                lcd.send_float_value(F("ter_ZS:"), term.m_zero_shift.return_config_value(), 0);
-                break;
-
-            case 1:
-                lcd.send_float_value(F("ter_lin:"), term.m_linear_factor.return_config_value(), 0);
-                break;
-
-            case 2:
-                lcd.send_float_value(F("ph_ZS:"), ph.m_zero_shift.return_config_value(), 0);
-                break;
-
-            case 3:
-                lcd.send_float_value(F("ph_lin:"), ph.m_linear_factor.return_config_value(), 0);
-                break;
-
-            case 4:
-                lcd.send_string(F("take sample:"), "", 0);
-                break;
-
-            default:
-                Serial.println(F("ERR"));
-                break;
-            }
-
-            position_previous = encoder.get_encoder_pos();
-        }
+//     int position_previous = encoder.get_encoder_pos();
 
 
-            int encoder_pos = encoder.get_encoder_pos(); // TODO improve it!
-            float temp = 0;
-            encoder.reset_encoder_pos();
+//         encoder.check_encoder_pos();
+
+//         if (position_previous != encoder.get_encoder_pos())
+//         {
+//             chose_menu = 1;
+//             lcd.clear();
+
+//             switch (abs(encoder.get_encoder_pos()) % 5)
+//             {
+//             case 0:
+//                 lcd.send_float_value(F("ter_ZS:"), term.m_zero_shift.return_config_value(), 0);
+//                 break;
+
+//             case 1:
+//                 lcd.send_float_value(F("ter_lin:"), term.m_linear_factor.return_config_value(), 0);
+//                 break;
+
+//             case 2:
+//                 lcd.send_float_value(F("ph_ZS:"), ph.m_zero_shift.return_config_value(), 0);
+//                 break;
+
+//             case 3:
+//                 lcd.send_float_value(F("ph_lin:"), ph.m_linear_factor.return_config_value(), 0);
+//                 break;
+
+//             case 4:
+//                 lcd.send_string(F("take sample:"), "", 0);
+//                 break;
+
+//             default:
+//                 Serial.println(F("ERR"));
+//                 break;
+//             }
+
+//             position_previous = encoder.get_encoder_pos();
+//         }
 
 
-            switch (abs(encoder_pos) % 5)
-            {
-            case 0:
+//             int encoder_pos = encoder.get_encoder_pos(); // TODO improve it!
+//             float temp = 0;
+//             encoder.reset_encoder_pos();
 
-                lcd.clear();
-                lcd.send_float_value(F("TER ZS:"), term.m_zero_shift.return_config_value(), 0);
-                delay(2000);
 
-                temp = encoder.set_value(term.m_zero_shift.return_config_value(), 0.01, lcd);
-                term.m_zero_shift.change_config_value(temp);
-                break;
+//             switch (abs(encoder_pos) % 5)
+//             {
+//             case 0:
 
-            case 1:
+//                 lcd.clear();
+//                 lcd.send_float_value(F("TER ZS:"), term.m_zero_shift.return_config_value(), 0);
+//                 delay(2000);
 
-                lcd.clear();
-                lcd.send_float_value(F("TER LIN:"), term.m_linear_factor.return_config_value(), 0);
-                delay(2000);
+//                 temp = encoder.set_value(term.m_zero_shift.return_config_value(), 0.01, lcd);
+//                 term.m_zero_shift.change_config_value(temp);
+//                 break;
 
-                temp = encoder.set_value(term.m_linear_factor.return_config_value(), 0.01, lcd);
-                term.m_linear_factor.change_config_value(temp);
-                break;
+//             case 1:
 
-            case 2:
+//                 lcd.clear();
+//                 lcd.send_float_value(F("TER LIN:"), term.m_linear_factor.return_config_value(), 0);
+//                 delay(2000);
 
-                lcd.clear();
-                lcd.send_float_value(F("PH ZS:"), ph.m_zero_shift.return_config_value(), 0);
-                delay(2000);
+//                 temp = encoder.set_value(term.m_linear_factor.return_config_value(), 0.01, lcd);
+//                 term.m_linear_factor.change_config_value(temp);
+//                 break;
 
-                temp = encoder.set_value(ph.m_zero_shift.return_config_value(), 0.01, lcd);
-                ph.m_zero_shift.change_config_value(temp);
-                break;
+//             case 2:
 
-            case 3:
+//                 lcd.clear();
+//                 lcd.send_float_value(F("PH ZS:"), ph.m_zero_shift.return_config_value(), 0);
+//                 delay(2000);
 
-                lcd.clear();
-                lcd.send_float_value(F("PH LIN:"), ph.m_linear_factor.return_config_value(), 0);
-                delay(2000);
+//                 temp = encoder.set_value(ph.m_zero_shift.return_config_value(), 0.01, lcd);
+//                 ph.m_zero_shift.change_config_value(temp);
+//                 break;
 
-                temp = encoder.set_value(ph.m_linear_factor.return_config_value(), 0.01, lcd);
-                ph.m_linear_factor.change_config_value(temp);
-                break;
+//             case 3:
 
-            case 4:
-                lcd.clear();
-                lcd.send_string(F("TAKING SAMPLE:"), "", 0);
-                delay(2000);
-                pump.start_taking_sample();
-                break;
+//                 lcd.clear();
+//                 lcd.send_float_value(F("PH LIN:"), ph.m_linear_factor.return_config_value(), 0);
+//                 delay(2000);
 
-            default:
-                Serial.println(F("ERR"));
-                break;
-            }}
+//                 temp = encoder.set_value(ph.m_linear_factor.return_config_value(), 0.01, lcd);
+//                 ph.m_linear_factor.change_config_value(temp);
+//                 break;
+
+//             case 4:
+//                 lcd.clear();
+//                 lcd.send_string(F("TAKING SAMPLE:"), "", 0);
+//                 delay(2000);
+//                 pump.start_taking_sample();
+//                 break;
+
+//             default:
+//                 Serial.println(F("ERR"));
+//                 break;
+//             }}

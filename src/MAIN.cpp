@@ -17,10 +17,8 @@ MemoryManager memory_manager(0, 500);
 // EepromVariable  //TODO may set it in included hpp library?
 EepromVariable term_zero_shift(memory_manager);
 EepromVariable term_linear_factor(memory_manager);
-
 EepromVariable oxg_zero_shift(memory_manager);
 EepromVariable oxg_linear_factor(memory_manager);
-
 EepromVariable ph_zero_shift(memory_manager);
 EepromVariable ph_linear_factor(memory_manager);
 
@@ -89,5 +87,4 @@ void setup()
 
 void loop()
 {
- 
 }

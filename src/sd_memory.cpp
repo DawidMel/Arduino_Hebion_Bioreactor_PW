@@ -46,24 +46,24 @@ void SdMemoryManager::write_to_st()
     m_file.println("w_test");
 }
 
- void SdMemoryManager::write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)
- {
-    String a = String(thermometer.get_value());
-    String b = String(ph_meter.get_value());
-    String c = String(oxygen_meter.get_value());
+//  void SdMemoryManager::write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)
+//  {
+//     String a = String(thermometer.get_value());
+//     String b = String(ph_meter.get_value());
+//     String c = String(oxygen_meter.get_value());
 
-    String ans = a+","+b+","+c+","+data.return_data();
-    m_file.println(ans);
- }
+//     String ans = a+","+b+","+c+","+data.return_data();
+//     m_file.println(ans);
+//  }
 
-String SdMemoryManager::DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)
-{
-String a = String(thermometer.get_value());
-String b = String(ph_meter.get_value());
-String c = String(oxygen_meter.get_value());
+// String SdMemoryManager::DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)
+// {
+// String a = String(thermometer.get_value());
+// String b = String(ph_meter.get_value());
+// String c = String(oxygen_meter.get_value());
 
-return(a+","+b+","+c+","+data.return_data());
-}
+// return(a+","+b+","+c+","+data.return_data());
+// }
 
 
 void SdMemoryManager::close_file()

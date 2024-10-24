@@ -82,21 +82,31 @@ void MeasuringDevice::init()
 {
     pinMode(m_read_pin, INPUT);
 }
+unsigned int MeasuringDevice::get_rav_measure()
+{
+    unsigned int temp_pin_voltage = analogRead(m_read_pin);
+    return temp_pin_voltage;
+} 
+
+
 float MeasuringDevice::get_value()
 {
-    return 10;
+    return 15;
 } // TODO
+
+
 
 Thermometer::Thermometer(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) :
  MeasuringDevice(read_pin, zero_shift, linear_factor)
 {
 }
 
-float Thermometer::get_value()
+
+float Thermometer::get_value() //TODO function implemented voltage -> value
 {
-    unsigned int temp_pin_voltage = analogRead(m_read_pin);
-    return temp_pin_voltage;
-} 
+    return 15;
+} // TODO
+
 
 PhMeter::PhMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) : 
 MeasuringDevice(read_pin, zero_shift, linear_factor)
@@ -104,19 +114,19 @@ MeasuringDevice(read_pin, zero_shift, linear_factor)
     pinMode(m_read_pin, INPUT);
 }
 
-float PhMeter::get_value()
+float PhMeter::get_value() //TODO function implemented voltage -> value
 {
-    unsigned int ph_pin_voltage = analogRead(m_read_pin);
-    return ph_pin_voltage;
-} // TODO use real measure function
+    return 15;
+} // TODO
+
 
 OxygenMeter::OxygenMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) :
  MeasuringDevice(read_pin, zero_shift, linear_factor)
 {
 }
 
-float OxygenMeter::get_value()
+
+float OxygenMeter::get_value() //TODO function implemented voltage -> value
 {
-    unsigned int oxygen_pin_voltage = analogRead(m_read_pin);
-    return oxygen_pin_voltage;
-}
+    return 15;
+} // TODO

@@ -38,14 +38,31 @@ void stop_correction(SimplePeristalticPump pump);
 uint8_t return_menu_state() const;
 void change_menu_state(my_rotary_encoder encoder);
 
-unsigned int measure_temperature(Thermometer &Therm1);
-unsigned int measure_PH(PhMeter &phm1);
-unsigned int measure_Oxygen_amount(OxygenMeter &oxm1);
 
-float calculate_avg_from_temp_meas(MeasureArray &measure_arr);
-float calculate_avg_from_ph_meas(MeasureArray &measure_arr);
-float calculate_avg_from_oxg_meas(MeasureArray &measure_arr);
+
 };
+
+class MeasuringController
+{
+private:
+
+
+public:
+  MeasuringController();
+
+  unsigned int measure_temperature(Thermometer &Therm1);
+  unsigned int measure_PH(PhMeter &phm1);
+  unsigned int measure_Oxygen_amount(OxygenMeter &oxm1);
+
+  float calculate_avg_from_temp_meas(MeasureArray &measure_arr, Thermometer &therm);
+  float calculate_avg_from_ph_meas(MeasureArray &measure_arr, PhMeter &ph);
+  float calculate_avg_from_oxg_meas(MeasureArray &measure_arr, OxygenMeter &oxg);
+};
+
+
+
+
+
 
 
 

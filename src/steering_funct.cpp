@@ -75,29 +75,37 @@ void MainController::change_menu_state(my_rotary_encoder encoder)
 
 }
 
-unsigned int MainController::measure_temperature(Thermometer &therm1)
+
+
+
+
+MeasuringController::MeasuringController(/* args */)
+{
+}
+
+unsigned int MeasuringController::measure_temperature(Thermometer &therm1)
 {
     return therm1.get_value();
 }
-unsigned int MainController::measure_PH(PhMeter &phm1)
+unsigned int MeasuringController::measure_PH(PhMeter &phm1)
 {
     return phm1.get_value();
 }
-unsigned int MainController::measure_Oxygen_amount(OxygenMeter &oxm1)
+unsigned int MeasuringController::measure_Oxygen_amount(OxygenMeter &oxm1)
 {
     return oxm1.get_value();
 }
 
 
-float MainController::calculate_avg_from_temp_meas(MeasureArray &measure_arr)
+float MeasuringController::calculate_avg_from_temp_meas(MeasureArray &measure_arr, Thermometer &therm)
 {
     return(measure_arr.get_average());
 }
-float MainController::calculate_avg_from_ph_meas(MeasureArray &measure_arr)
+float MeasuringController::calculate_avg_from_ph_meas(MeasureArray &measure_arr, PhMeter &ph)
 {
     return(measure_arr.get_average());
 }
-float MainController::calculate_avg_from_oxg_meas(MeasureArray &measure_arr)
+float MeasuringController::calculate_avg_from_oxg_meas(MeasureArray &measure_arr, OxygenMeter &oxg)
 {
     return(measure_arr.get_average());
 }

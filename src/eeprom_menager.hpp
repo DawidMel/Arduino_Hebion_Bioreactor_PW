@@ -1,4 +1,3 @@
-#include "components.hpp"
 #include <EEPROM.h>
 
 #ifndef TEST
