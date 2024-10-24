@@ -1,5 +1,6 @@
 #include "components.hpp"
 #include "utility.hpp"
+#include "eeprom_menager.hpp"
 
 
 SimplePeristalticPump::SimplePeristalticPump(uint8_t pin_forward) :
@@ -70,8 +71,11 @@ void PeristalticPump::stop_taking_sample() //just use max available speed of pum
 
 
 
-MeasuringDevice::MeasuringDevice(uint8_t read_pin) : m_read_pin(read_pin)
+MeasuringDevice::MeasuringDevice(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) : 
+m_read_pin(read_pin)
 {
+m_linear_factor = (linear_factor.retrieve_config_values_from_eeprom());
+m_zero_shift = (zero_shift.retrieve_config_values_from_eeprom());
 }
 
 void MeasuringDevice::init()
@@ -83,7 +87,8 @@ float MeasuringDevice::get_value()
     return 10;
 } // TODO
 
-Thermometer::Thermometer(uint8_t read_pin) : MeasuringDevice(read_pin)
+Thermometer::Thermometer(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) :
+ MeasuringDevice(read_pin, zero_shift, linear_factor)
 {
 }
 
@@ -93,7 +98,8 @@ float Thermometer::get_value()
     return temp_pin_voltage;
 } 
 
-PhMeter::PhMeter(uint8_t read_pin) : MeasuringDevice(read_pin)
+PhMeter::PhMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) : 
+MeasuringDevice(read_pin, zero_shift, linear_factor)
 {
     pinMode(m_read_pin, INPUT);
 }
@@ -104,7 +110,8 @@ float PhMeter::get_value()
     return ph_pin_voltage;
 } // TODO use real measure function
 
-OxygenMeter::OxygenMeter(uint8_t read_pin) : MeasuringDevice(read_pin)
+OxygenMeter::OxygenMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) :
+ MeasuringDevice(read_pin, zero_shift, linear_factor)
 {
 }
 

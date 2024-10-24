@@ -43,10 +43,13 @@ class MeasuringDevice
   //TODO: add virtual destructor even empty
   protected:
     const int m_read_pin;
-    float m_value; // check what sensors return  TODO for now int ; but probably will be change in inheritance
+
+    float m_zero_shift;
+    float m_linear_factor;
+    float m_value; 
 
   public:
-    MeasuringDevice(uint8_t read_pin);
+    MeasuringDevice(uint8_t read_pin, EepromVariable &zero_shift, EepromVariable &linear_factor);
     void init();
     virtual float get_value();
 };
@@ -54,21 +57,21 @@ class MeasuringDevice
 class Thermometer : public MeasuringDevice
 {
   public:
-    Thermometer(uint8_t read_pin);
+    Thermometer(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor);
     float get_value() override;
 };
 
 class PhMeter : public MeasuringDevice
 {
   public:
-    PhMeter(uint8_t read_pin);
+    PhMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor);
     float get_value() override;
 };
 
 class OxygenMeter : public MeasuringDevice
 {
   public:
-    OxygenMeter(uint8_t read_pin);
+    OxygenMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor);
     float get_value() override;
 };
 

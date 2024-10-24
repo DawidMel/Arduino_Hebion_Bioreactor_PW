@@ -42,8 +42,9 @@ unsigned int measure_temperature(Thermometer &Therm1);
 unsigned int measure_PH(PhMeter &phm1);
 unsigned int measure_Oxygen_amount(OxygenMeter &oxm1);
 
-float calculate_average_from_measurement(float linear_factor,float zero_shift, float average);
-
+float calculate_avg_from_temp_meas(MeasureArray &measure_arr);
+float calculate_avg_from_ph_meas(MeasureArray &measure_arr);
+float calculate_avg_from_oxg_meas(MeasureArray &measure_arr);
 };
 
 

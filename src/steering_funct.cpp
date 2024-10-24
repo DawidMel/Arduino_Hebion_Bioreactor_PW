@@ -88,7 +88,16 @@ unsigned int MainController::measure_Oxygen_amount(OxygenMeter &oxm1)
     return oxm1.get_value();
 }
 
-float MainController::calculate_average_from_measurement(float linear_factor,float zero_shift, float average)
+
+float MainController::calculate_avg_from_temp_meas(MeasureArray &measure_arr)
 {
-    return (average*linear_factor + zero_shift);
+    return(measure_arr.get_average());
+}
+float MainController::calculate_avg_from_ph_meas(MeasureArray &measure_arr)
+{
+    return(measure_arr.get_average());
+}
+float MainController::calculate_avg_from_oxg_meas(MeasureArray &measure_arr)
+{
+    return(measure_arr.get_average());
 }

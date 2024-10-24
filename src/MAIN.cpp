@@ -12,6 +12,23 @@
 #include "steering_funct.hpp"
 // #include "Unit_tests.hpp"   //only for tests
 
+MemoryManager memory_manager(0, 500);
+
+// EepromVariable  //TODO may set it in included hpp library?
+EepromVariable term_zero_shift(memory_manager);
+EepromVariable term_linear_factor(memory_manager);
+
+EepromVariable oxg_zero_shift(memory_manager);
+EepromVariable oxg_linear_factor(memory_manager);
+
+EepromVariable ph_zero_shift(memory_manager);
+EepromVariable ph_linear_factor(memory_manager);
+
+Thermometer thermometer(THERMOMETER_PIN,term_zero_shift,term_linear_factor);
+PhMeter ph_meter(PH_METER_PIN,ph_zero_shift,ph_linear_factor);
+OxygenMeter oxygen_meter(OXYGEN_METER_PIN,oxg_zero_shift,oxg_linear_factor);
+
+
 // global variable
 MainController controller(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION,3);
 DataHMS my_data(12, 30, 30);
@@ -25,10 +42,10 @@ SimplePeristalticPump acid_pump(ACID_PUMP_PIN);
 SimplePeristalticPump alkaline_pump(ALKALINE_PUMP_PIN);
 
 
-MemoryManager memory_manager(0, 500);
-Sensor thermometer = setup_thermometer_sensors(memory_manager);
-Sensor ph_meter = setup_ph_sensors(memory_manager);
-Sensor oxygen_meter = setup_oxygen_sensors(memory_manager);
+
+// Sensor thermometer = setup_thermometer_sensors(memory_manager);
+// Sensor ph_meter = setup_ph_sensors(memory_manager);
+// Sensor oxygen_meter = setup_oxygen_sensors(memory_manager);
 
 
 // arrays for measures
@@ -49,9 +66,9 @@ void setup()
     sample_pump.init();
     acid_pump.init();
     alkaline_pump.init();
-    thermometer.init();
-    ph_meter.init();
-    oxygen_meter.init();
+    // thermometer.init();
+    // ph_meter.init();
+    // oxygen_meter.init();
 
 
 
@@ -61,9 +78,9 @@ void setup()
     // test_sensor(oxygen_meter, 1, "oxygen_meter");
 
     //initial array value is from measurement
-    temperature_measurements_array.init(thermometer.get_value_from_measurement());
-    ph_measurements_array.init(ph_meter.get_value_from_measurement());
-    oxygen_measurements_array.init(oxygen_meter.get_value_from_measurement());
+    // temperature_measurements_array.init(thermometer.get_value_from_measurement());
+    // ph_measurements_array.init(ph_meter.get_value_from_measurement());
+    // oxygen_measurements_array.init(oxygen_meter.get_value_from_measurement());
 
     Serial.println(F("HELLO we are after setup"));
 
