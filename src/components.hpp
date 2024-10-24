@@ -52,8 +52,8 @@ class MeasuringDevice
   public:
     MeasuringDevice(uint8_t read_pin, EepromVariable &zero_shift, EepromVariable &linear_factor);
     void init();
-    void set_zero_shift(EepromVariable &zero_shift);
-    void set_linear_factor(EepromVariable &linear_factor);
+    void set_zero_shift(EepromVariable &zero_shift,float new_value);
+    void set_linear_factor(EepromVariable &linear_factor,float new_value);
     float get_zero_shift();
     float get_linear_factor();
 

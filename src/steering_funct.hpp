@@ -50,13 +50,8 @@ private:
 public:
   MeasuringController();
 
-  unsigned int measure_temperature(Thermometer &Therm1);
-  unsigned int measure_PH(PhMeter &phm1);
-  unsigned int measure_Oxygen_amount(OxygenMeter &oxm1);
-
-  float calculate_avg_from_temp_meas(MeasureArray &measure_arr, Thermometer &therm);
-  float calculate_avg_from_ph_meas(MeasureArray &measure_arr, PhMeter &ph);
-  float calculate_avg_from_oxg_meas(MeasureArray &measure_arr, OxygenMeter &oxg);
+  unsigned int measure(MeasuringDevice &dev);
+  float calculate_avg_from_meas(MeasureArray &measure_arr, MeasuringDevice &dev);
 };
 
 

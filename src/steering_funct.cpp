@@ -79,33 +79,21 @@ void MainController::change_menu_state(my_rotary_encoder encoder)
 
 
 
-MeasuringController::MeasuringController(/* args */)
+MeasuringController::MeasuringController()
 {
 }
 
-unsigned int MeasuringController::measure_temperature(Thermometer &therm1)
+unsigned int MeasuringController::measure(MeasuringDevice &dev)
 {
-    return therm1.get_value();
-}
-unsigned int MeasuringController::measure_PH(PhMeter &phm1)
-{
-    return phm1.get_value();
-}
-unsigned int MeasuringController::measure_Oxygen_amount(OxygenMeter &oxm1)
-{
-    return oxm1.get_value();
+    return dev.get_value();
 }
 
 
-float MeasuringController::calculate_avg_from_temp_meas(MeasureArray &measure_arr, Thermometer &therm)
+
+float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, MeasuringDevice &dev)
 {
-    return(measure_arr.get_average());
-}
-float MeasuringController::calculate_avg_from_ph_meas(MeasureArray &measure_arr, PhMeter &ph)
-{
-    return(measure_arr.get_average());
-}
-float MeasuringController::calculate_avg_from_oxg_meas(MeasureArray &measure_arr, OxygenMeter &oxg)
-{
-    return(measure_arr.get_average());
+    float zero_shift = dev.get_zero_shift();
+    float linear_factor = dev.get_linear_factor();
+    int meas_avg = measure_arr.get_average();
+    return (meas_avg*linear_factor+zero_shift);
 }

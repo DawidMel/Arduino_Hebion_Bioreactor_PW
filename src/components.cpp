@@ -95,6 +95,24 @@ float MeasuringDevice::get_value()
 } // TODO
 
 
+void MeasuringDevice::set_zero_shift(EepromVariable &zero_shift,float new_value)
+{
+    m_zero_shift = new_value;
+    zero_shift.change_eeprom_config_value(new_value);
+}
+void MeasuringDevice::set_linear_factor(EepromVariable &linear_factor,float new_value)
+{
+    m_linear_factor = new_value;
+    linear_factor.change_eeprom_config_value(new_value);
+}
+
+float MeasuringDevice::get_zero_shift()
+{return m_zero_shift;}
+float MeasuringDevice::get_linear_factor()
+{return m_linear_factor;}
+
+
+
 
 Thermometer::Thermometer(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) :
  MeasuringDevice(read_pin, zero_shift, linear_factor)
@@ -104,7 +122,7 @@ Thermometer::Thermometer(uint8_t read_pin,EepromVariable &zero_shift, EepromVari
 
 float Thermometer::get_value() //TODO function implemented voltage -> value
 {
-    return 15;
+    return 12;
 } // TODO
 
 
@@ -116,7 +134,7 @@ MeasuringDevice(read_pin, zero_shift, linear_factor)
 
 float PhMeter::get_value() //TODO function implemented voltage -> value
 {
-    return 15;
+    return 17;
 } // TODO
 
 
@@ -128,5 +146,5 @@ OxygenMeter::OxygenMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVari
 
 float OxygenMeter::get_value() //TODO function implemented voltage -> value
 {
-    return 15;
+    return 21;
 } // TODO

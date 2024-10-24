@@ -29,6 +29,7 @@ OxygenMeter oxygen_meter(OXYGEN_METER_PIN,oxg_zero_shift,oxg_linear_factor);
 
 // global variable
 MainController controller(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION,3);
+MeasuringController meas_contr;
 DataHMS my_data(12, 30, 30);
 
 //creating object of components
@@ -76,9 +77,9 @@ void setup()
     // test_sensor(oxygen_meter, 1, "oxygen_meter");
 
     //initial array value is from measurement
-    // temperature_measurements_array.init(thermometer.get_value_from_measurement());
-    // ph_measurements_array.init(ph_meter.get_value_from_measurement());
-    // oxygen_measurements_array.init(oxygen_meter.get_value_from_measurement());
+     temperature_measurements_array.init(thermometer.get_value());
+     ph_measurements_array.init(ph_meter.get_value());
+     oxygen_measurements_array.init(oxygen_meter.get_value());
 
     Serial.println(F("HELLO we are after setup"));
 
@@ -87,4 +88,6 @@ void setup()
 
 void loop()
 {
+    meas_contr.calculate_avg_from_meas(temperature_measurements_array,thermometer);
+    delay(1000);
 }
