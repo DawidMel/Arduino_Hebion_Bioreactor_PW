@@ -23,7 +23,6 @@ class my_rotary_encoder
 
     uint8_t m_clk_val = 0;
     uint8_t m_clk_val_last = 0;
-    uint8_t m_button_state = 1;
     uint8_t m_encoderPosCount;
 
   public:

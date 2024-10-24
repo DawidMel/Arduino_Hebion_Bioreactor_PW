@@ -23,20 +23,15 @@ uint8_t my_rotary_encoder::get_encoder_pos()
     return m_encoderPosCount;
 }
 
-unsigned long my_rotary_encoder::return_button_inactivate_state_time()
-{
-    return m_button_inactivate_state_time;
-}
-
 uint8_t my_rotary_encoder::get_button_state()
 {   
-    m_button_state = BUTTON_DEFAULT_STATE;
+    uint8_t button_state = BUTTON_DEFAULT_STATE;
     if ((m_button_inactivate_state_time + BUTTON_STAY_ON_STATE) < millis())
     {
-        m_button_state = digitalRead(m_button_pin);
+        button_state = digitalRead(m_button_pin);
         m_button_inactivate_state_time = millis();
     }
-    return m_button_state;
+    return button_state;
 }
 
 uint8_t my_rotary_encoder::get_encoder_move()

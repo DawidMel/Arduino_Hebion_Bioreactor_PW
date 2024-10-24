@@ -13,7 +13,7 @@
 // #include "Unit_tests.hpp"   //only for tests
 
 // global variable
-MainController controller(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION);
+MainController controller(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION,3);
 DataHMS my_data(12, 30, 30);
 
 //creating object of components
@@ -72,5 +72,7 @@ void setup()
 
 void loop()
 {
-    
+ 
+
+
 }

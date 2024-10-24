@@ -89,8 +89,9 @@ Thermometer::Thermometer(uint8_t read_pin) : MeasuringDevice(read_pin)
 
 float Thermometer::get_value()
 {
-    return 10;
-} // TODO use real measure function
+    unsigned int temp_pin_voltage = analogRead(m_read_pin);
+    return temp_pin_voltage;
+} 
 
 PhMeter::PhMeter(uint8_t read_pin) : MeasuringDevice(read_pin)
 {
@@ -99,11 +100,8 @@ PhMeter::PhMeter(uint8_t read_pin) : MeasuringDevice(read_pin)
 
 float PhMeter::get_value()
 {
-    float temp_voltage = analogRead(m_read_pin);
-    Serial.print("temp_voltage mess: ");
-    Serial.println(temp_voltage);
-    m_value = 3.5 * temp_voltage / 1023 * 5.0;
-    return m_value;
+    unsigned int ph_pin_voltage = analogRead(m_read_pin);
+    return ph_pin_voltage;
 } // TODO use real measure function
 
 OxygenMeter::OxygenMeter(uint8_t read_pin) : MeasuringDevice(read_pin)
@@ -112,5 +110,6 @@ OxygenMeter::OxygenMeter(uint8_t read_pin) : MeasuringDevice(read_pin)
 
 float OxygenMeter::get_value()
 {
-    return 10;
-} // TODO use real measure function
+    unsigned int oxygen_pin_voltage = analogRead(m_read_pin);
+    return oxygen_pin_voltage;
+}

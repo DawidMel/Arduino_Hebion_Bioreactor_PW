@@ -4,12 +4,12 @@
 #include "lcd_display.hpp"
 #include <Arduino.h>
 
-MeasureArray::MeasureArray(int size) : m_array_size(size)
+MeasureArray::MeasureArray(int size) : m_array_size(size) //check for static alternative
 {
-    measurement = new float[m_array_size]; // Dynamic create of array
+    measurement = new int[m_array_size]; // Dynamic create of array
 }
 
-void MeasureArray::init(float initial_value)
+void MeasureArray::init(int initial_value)
 {
     for (int i = 0; i < m_array_size; i++)
     {
@@ -17,7 +17,7 @@ void MeasureArray::init(float initial_value)
     }
 }
 
-void MeasureArray::add_measure(float value)
+void MeasureArray::add_measure(int value) //cyclic list
 {
     measurement[m_memory_cursor] = value;
     m_memory_cursor += 1;
@@ -31,37 +31,15 @@ float MeasureArray::read_measure(char index)
 
 float MeasureArray::get_average() // TODO vectorization but not need now
 {
-    float sum = 0;
+    long sum = 0;
     for (int i = 0; i < m_array_size; i++)
     {
         sum += measurement[i];
     }
-    return sum / m_array_size;
+    return (float(sum) / m_array_size); //conversion to float prevent int round effect (precision 7 digits instead of 5)
 }
 
-TimerLowPriority::TimerLowPriority() : m_start_time(millis()), m_end_time(millis())
-{
-}
 
-bool TimerLowPriority::activate(int time_to_activate)
-{
-    if (millis() >= m_end_time)
-    {
-        m_start_time = m_end_time;
-        m_end_time = millis() + time_to_activate;
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
-void TimerLowPriority::reset()
-{
-    m_start_time = millis();
-    m_end_time = millis();
-}
 
 DataHMS::DataHMS(long hour, long minute, long second) : m_offset(hour * 3600000 + minute * 60000 + second * 1000)
 {

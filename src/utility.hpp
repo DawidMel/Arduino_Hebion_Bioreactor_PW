@@ -13,15 +13,15 @@ class MeasureArray // TODO is not good enough make it better
 {
   private: //TODO: inheritance after arduino vector
   //TODO: is not good enough make it better
-    const char m_array_size; // max 256 (but not recommended to use more than 100)
-    float *measurement;      // Pointer array, will be initialized in constructor
+    const uint8_t m_array_size; // max 256 (but not recommended to use more than 100)
+    int *measurement;      // Pointer array, will be initialized in constructor
     int m_memory_cursor = 0;
     float m_oldest_measure;
 
   public:
     MeasureArray(int size);
-    void init(float initial_value); //TODO make it vector
-    void add_measure(float value);
+    void init(int initial_value); //TODO make it vector
+    void add_measure(int value);
     float read_measure(char index);
     float get_average(); //TODO: add const
 };
