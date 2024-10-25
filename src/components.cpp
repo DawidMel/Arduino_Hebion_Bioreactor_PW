@@ -122,7 +122,9 @@ Thermometer::Thermometer(uint8_t read_pin,EepromVariable &zero_shift, EepromVari
 
 float Thermometer::get_value() //TODO function implemented voltage -> value
 {
-    return 12;
+    static int i = 12;
+    i++;
+    return i;
 } // TODO
 
 

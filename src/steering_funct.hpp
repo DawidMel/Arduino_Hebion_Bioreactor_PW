@@ -50,8 +50,10 @@ private:
 public:
   MeasuringController();
 
-  unsigned int measure(MeasuringDevice &dev);
+  float measure(MeasuringDevice &dev);
+  unsigned int rav_measure(MeasuringDevice &dev);
   float calculate_avg_from_meas(MeasureArray &measure_arr, MeasuringDevice &dev);
+  
 };
 
 

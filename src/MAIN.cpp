@@ -88,6 +88,13 @@ void setup()
 
 void loop()
 {
-    meas_contr.calculate_avg_from_meas(temperature_measurements_array,thermometer);
+
     delay(1000);
+
+    //making measurement to array
+    temperature_measurements_array.add_measure(meas_contr.rav_measure(thermometer));
+    ph_measurements_array.add_measure(meas_contr.rav_measure(ph_meter));
+    oxygen_measurements_array.add_measure(meas_contr.rav_measure(oxygen_meter));
+    
+    Serial.println(meas_contr.calculate_avg_from_meas(temperature_measurements_array,thermometer));
 }

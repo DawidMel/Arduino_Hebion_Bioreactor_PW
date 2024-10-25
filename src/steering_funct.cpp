@@ -83,11 +83,15 @@ MeasuringController::MeasuringController()
 {
 }
 
-unsigned int MeasuringController::measure(MeasuringDevice &dev)
+float MeasuringController::measure(MeasuringDevice &dev)
 {
     return dev.get_value();
 }
 
+unsigned int MeasuringController::rav_measure(MeasuringDevice &dev)
+{
+    return dev.get_rav_measure();
+}
 
 
 float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, MeasuringDevice &dev)
