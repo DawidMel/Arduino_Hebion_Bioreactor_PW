@@ -53,6 +53,8 @@ MeasureArray temperature_measurements_array(10);
 MeasureArray ph_measurements_array(10);
 MeasureArray oxygen_measurements_array(10); // TODO think about this variable name
 
+#ifndef UNIT_TEST 
+
 void setup()
 {
     delay(2000);
@@ -129,3 +131,4 @@ void loop()
     
     Serial.println(meas_contr.calculate_avg_from_meas(temperature_measurements_array,thermometer));
 }
+#endif
