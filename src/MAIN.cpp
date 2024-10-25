@@ -22,6 +22,7 @@ EepromVariable oxg_linear_factor(memory_manager);
 EepromVariable ph_zero_shift(memory_manager);
 EepromVariable ph_linear_factor(memory_manager);
 
+
 Thermometer thermometer(THERMOMETER_PIN,term_zero_shift,term_linear_factor);
 PhMeter ph_meter(PH_METER_PIN,ph_zero_shift,ph_linear_factor);
 OxygenMeter oxygen_meter(OXYGEN_METER_PIN,oxg_zero_shift,oxg_linear_factor);
@@ -75,6 +76,36 @@ void setup()
     // test_sensor(thermometer, 1, "thermometer");
     // test_sensor(ph_meter, 1, "ph_meter");
     // test_sensor(oxygen_meter, 1, "oxygen_meter");
+
+    //set config variable
+    term_zero_shift.change_eeprom_config_value(1);
+    term_linear_factor.change_eeprom_config_value(2);
+    ph_zero_shift.change_eeprom_config_value(3);
+    ph_linear_factor.change_eeprom_config_value(4);
+    oxg_zero_shift.change_eeprom_config_value(5);
+    oxg_linear_factor.change_eeprom_config_value(6);
+
+    float a,b,c,d,e,f;
+
+    a = term_zero_shift.retrieve_config_values_from_eeprom();
+    b = term_linear_factor.retrieve_config_values_from_eeprom();
+    c = ph_zero_shift.retrieve_config_values_from_eeprom();
+    d = ph_linear_factor.retrieve_config_values_from_eeprom();
+    e = oxg_zero_shift.retrieve_config_values_from_eeprom();
+    f = oxg_linear_factor.retrieve_config_values_from_eeprom();
+
+    Serial.println();
+    Serial.println();
+    Serial.println();
+
+    delay(6000);
+    Serial.println(a);
+    Serial.println(b);
+    Serial.println(c);
+    Serial.println(d);
+    Serial.println(e);
+    Serial.println(f);
+
 
     //initial array value is from measurement
      temperature_measurements_array.init(thermometer.get_value());
