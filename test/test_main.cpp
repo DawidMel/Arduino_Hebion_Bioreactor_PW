@@ -98,22 +98,14 @@ delay(10);
 RUN_TEST(test_dumb_func);
 
 
-delay(10);
-Serial.println(eeprom_test1.retrieve_config_values_from_eeprom());
+
 reset_eeprom_variable();
-Serial.println(eeprom_test1.retrieve_config_values_from_eeprom());
-delay(10);
-Serial.println(eeprom_test1.retrieve_config_values_from_eeprom());
+delay(5);
 RUN_TEST(test_retrieve_eeprom_value_after_reset);
-Serial.println(eeprom_test1.retrieve_config_values_from_eeprom());
 
-delay(10);
 change_eeprom_to_2137();
-
-delay(10);
+delay(5);
 RUN_TEST(test_retrieve_eeprom_value);
-
-delay(10);
 RUN_TEST(test_get_eeprom_addr);
 
 
