@@ -139,26 +139,42 @@ float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, Me
     pHValue = 3.5 * voltage + Offset;
 
 
-    // TEMPERATURE FORMULA
-      average = 0;
-  for (i = 0; i < NUMSAMPLES; i++)
-  {
-    average += samples[i];
-  }
-  average /= NUMSAMPLES;
+
+
+    // TEMPERATURE FORMULA TODO REMOVE THIS SENSOR BECAUSE THIS SUCK A LOT!
+
       // convert the value to resistance
-  average = 1023 / average - 1;
-  average = SERIESRESISTOR / average;
-  float steinhart;
-  steinhart = average / THERMISTORNOMINAL;          // (R/Ro)
-  steinhart = log(steinhart);                       // ln(R/Ro)
-  steinhart /= BCOEFFICIENT;                        // 1/B * ln(R/Ro)
-  steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
+
+//idea your thermometer is in serial with resistor of knowing resistance 
+// it make voltage divider, we measure voltage on 
+float return_temp(float voltage_measure)
+{
+  voltage_measure = 1023 / voltage_measure - 1;  
+  voltage_measure = SERIES_RESISTOR / voltage_measure;
+
+
+
+  // formula when we measure voltage from Rt
+ //  V = Rt/(Rt+Rs) * Vcc
+ //  Rt= V/Vcc * (Rt+Rs)
+ //  Rt * (1-V/Vcc) = V/Vcc*Rs
+  // Rt = V/(Vcc-V)*Rs
+  // where V is analogRead Vcc is maximum value of A/D converter (in arduino it is 1023)
+
+  thermistor_resistance = voltage_measure/(1023-voltage_measure)*THERMISTOR_NOMINAL;
+
+
+  float steinhart;                                       //TODO hell of optimization but fuck it
+  steinhart = thermistor_resistance / THERMISTOR_NOMINAL;          // (R/Ro)
+  steinhart = log(steinhart);                         // ln(R/Ro)
+  steinhart /= B_COEFFICIENT;                        // 1/B * ln(R/Ro)
+  steinhart += 1.0 / (THERMISTOR_NOMINAL + 273.15); // + (1/To)
   steinhart = 1.0 / steinhart;                      // Invert
   steinhart -= 273.15;                              // convert absolute temp to C
 
   TemperatureValue = steinhart;
-
+  return TemperatureValue;
+}
 
 //oxygen formula 
 
