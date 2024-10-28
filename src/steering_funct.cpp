@@ -56,25 +56,52 @@ void MainController::stop_correction(SimplePeristalticPump pump)
     }
 }
 
-uint8_t MainController::return_menu_state() const
+uint8_t MainController::return_menu_depth() const
 {
-    return m_menu_state;
+    return m_menu_depth;
 }
 
-void MainController::change_menu_state(my_rotary_encoder encoder)
+void MainController::change_menu_depth(MyRotaryEncoder encoder)
 {
     uint8_t button_state = encoder.get_button_state();
     if(button_state == LOW) //if button pressed
     {
-        m_menu_state+=1;
-        if(m_menu_state > m_max_menu_depth)
+        m_menu_depth+=1;
+        if(m_menu_depth > m_max_menu_depth)
         {
-            m_menu_state = 0;
+            m_menu_depth = 0;
         }
     }
 
 }
 
+void MainController::set_config_value(float initial_value, float step, MyLCD &lcd , MyRotaryEncoder &encoder)
+{
+    static int prev_menu_state = 0;
+    static int menu_state = 0;
+
+    menu_state += encoder.get_encoder_move();
+
+    if (menu_state != prev_menu_state) 
+    {
+        lcd.clear();
+        lcd.send_float_value("new value:",initial_value+step*menu_state,0);
+        prev_menu_state = menu_state;
+    }
+
+    if(m_set_value_activator = 1)
+    {
+        m_temp_val = (initial_value+step*menu_state);
+        prev_menu_state = 0;
+        menu_state = 0;
+
+    }
+}
+
+float MainController::return_temp_val()
+{
+    return m_temp_val;
+}
 
 
 
@@ -99,5 +126,8 @@ float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, Me
     float zero_shift = dev.get_zero_shift();
     float linear_factor = dev.get_linear_factor();
     int meas_avg = measure_arr.get_average();
+
+    // TODO implement code for different variant of measurement
+
     return (meas_avg*linear_factor+zero_shift);
 }

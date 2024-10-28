@@ -9,7 +9,7 @@
 #include "lcd_display.hpp"
 
 
-class MeasureArray // TODO is not good enough make it better
+class MeasureArray // TODO make inherence of this object to match sensor way of calculate
 {
   private: //TODO: inheritance after arduino vector
   //TODO: is not good enough make it better
@@ -50,7 +50,8 @@ class DataHMS
     String return_data(); //TODO const
 };
 
-// void print_config_menu(my_rotary_encoder &encoder, MyLCD &lcd, // main sensors
-//                        Sensor &term, Sensor &ph, Sensor &oxygen, PeristalticPump& pump);
+
+
+void print_config_menu(MyRotaryEncoder &encoder, MyLCD &lcd, Thermometer &term, PhMeter &ph, OxygenMeter &oxg);
 
 #endif

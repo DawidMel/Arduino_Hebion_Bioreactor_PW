@@ -31,7 +31,7 @@ OxygenMeter oxygen_meter(OXYGEN_METER_PIN,oxg_zero_shift,oxg_linear_factor);
 
 //create input-output components
 MyLCD lcd(0x27, 16, 2);
-my_rotary_encoder encoder1(RE_CLK_PIN, RE_DT_PIN, RE_BUTTON_PIN, SENSITIVITY);
+MyRotaryEncoder encoder1(RE_CLK_PIN, RE_DT_PIN, RE_BUTTON_PIN, SENSITIVITY);
 SdMemoryManager sd_men(SD_MOSI_PIN, SD_MISO_PIN, SD_SCK_PIN, SD_CS_PIN);
 
 // create pump components
@@ -77,14 +77,30 @@ void setup()
      ph_measurements_array.init(ph_meter.get_value());
      oxygen_measurements_array.init(oxygen_meter.get_value());
 
-    delay(5000);  //5 seconds is for time to read init screen
+    delay(5000);  //5 seconds is for time to read init screen of LCD
 }
 
 void loop()
 {
-    if(controller.return_menu_state()==0)
+    if(controller.return_menu_depth()==0) // default idle state
     {
+
     }
+
+    if(controller.return_menu_depth()==1) // enter config menu
+    {
+        controller.set_config_value(10,1,lcd,encoder1);
+        delay(1000);
+    }
+
+    // measurement run despite controller state
+    temperature_measurements_array.add_measure(thermometer.get_rav_measure());
+    ph_measurements_array.add_measure(ph_meter.get_rav_measure());
+    oxygen_measurements_array.add_measure(oxygen_meter.get_rav_measure());
+
+    // SD writer run despite controller state
+    
+
 
 }
 #endif

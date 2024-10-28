@@ -2,6 +2,8 @@
 #include "bioreactor_defined_const.hpp"
 #include <SD.h>
 #include "lcd_display.hpp"
+#include "components.hpp"
+#include "steering_funct.hpp"
 
 SdMemoryManager::SdMemoryManager(uint8_t mosi_pin, uint8_t miso_pin, uint8_t sck_pin, uint8_t cs_pin)
     : m_mosi_pin(mosi_pin), m_miso_pin(miso_pin), m_sck_pin(sck_pin), m_cs_pin(cs_pin)
@@ -46,15 +48,17 @@ void SdMemoryManager::write_to_st()
     m_file.println("w_test");
 }
 
-//  void SdMemoryManager::write_data_frame_to_st(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)
-//  {
-//     String a = String(thermometer.get_value());
-//     String b = String(ph_meter.get_value());
-//     String c = String(oxygen_meter.get_value());
+ void SdMemoryManager::write_data_frame_to_sd  //TODO string is bad try to change it in char*
+ (MeasureArray& thermometer_arr , MeasureArray & ph_meter_arr, MeasureArray & oxygen_meter_arr, DataHMS& data,
+ Thermometer &thermometer, PhMeter &ph_meter, OxygenMeter &oxygen_meter, MeasuringController &controller)
+ {
+    String a = String(controller.calculate_avg_from_meas(thermometer_arr,thermometer));
+    String b = String(ph_meter_arr.get_average());
+    String c = String(oxygen_meter_arr.get_average());
 
-//     String ans = a+","+b+","+c+","+data.return_data();
-//     m_file.println(ans);
-//  }
+    String ans = a+","+b+","+c+","+data.return_data();
+    m_file.println(ans);
+ }
 
 // String SdMemoryManager::DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data)
 // {

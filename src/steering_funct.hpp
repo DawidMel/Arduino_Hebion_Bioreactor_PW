@@ -16,7 +16,11 @@ private:
 
   unsigned long m_correction_period = 0;
   unsigned long m_sample_taking_period = 0; //TODO MAY JUST PUT CONST HERE
-  uint8_t m_menu_state = 0;
+  uint8_t m_menu_depth = 0;
+
+
+  uint8_t m_set_value_activator = 0;
+  float m_temp_val = 0;
 
 
   unsigned long m_correction_timer =0;
@@ -35,8 +39,11 @@ void stop_taking_sample(PeristalticPump pump);
 void start_correction(SimplePeristalticPump pump);
 void stop_correction(SimplePeristalticPump pump);
 
-uint8_t return_menu_state() const;
-void change_menu_state(my_rotary_encoder encoder);
+uint8_t return_menu_depth() const;
+void change_menu_depth(MyRotaryEncoder encoder);
+
+void set_config_value(float initial_value, float step, MyLCD &lcd, MyRotaryEncoder &encoder);
+float return_temp_val();
 
 
 
