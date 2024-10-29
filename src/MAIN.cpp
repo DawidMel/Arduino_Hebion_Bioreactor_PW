@@ -40,7 +40,7 @@ SimplePeristalticPump acid_pump(ACID_PUMP_PIN);
 SimplePeristalticPump alkaline_pump(ALKALINE_PUMP_PIN);
 
 // create main steering (virtual) components 
-MainController controller(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION,3);
+MainController controller(DESIRE_PH, MAX_PH_ACCEPTABLE_DEVIATION, DESIRE_TEMP, MAX_TEMP_ACCEPTABLE_DEVIATION,1);
 MeasuringController meas_contr;
 
 //create arrays for measures
@@ -51,6 +51,11 @@ MeasureArray oxygen_measurements_array(10);
 // create else useful object
 DataHMS my_data(12, 30, 30); //data in Hours, Minutes, Seconds order 
 
+// global variable (ONLY FOR CODE SIMPLICITY!)
+uint8_t amount_of_ready_measurement = 0;
+float temperature = 0;
+float ph = 0;
+float oxygen_value = 0;
 
 #ifndef UNIT_TEST
 void setup()
@@ -77,30 +82,63 @@ void setup()
      ph_measurements_array.init(ph_meter.get_value());
      oxygen_measurements_array.init(oxygen_meter.get_value());
 
-    delay(5000);  //5 seconds is for time to read init screen of LCD
+    delay(500);  //5 seconds is for time to read init screen of LCD
+    lcd.clear();
 }
 
 void loop()
 {
+
     if(controller.return_menu_depth()==0) // default idle state
     {
-
+        lcd.send_float_value("TEMP:",temperature,0);
+        lcd.send_float_value("PH:",ph,1);
     }
 
     if(controller.return_menu_depth()==1) // enter config menu
     {
-        controller.set_config_value(10,1,lcd,encoder1);
-        delay(1000);
+        lcd.send_float_value("oxg:",oxygen_value,0);
+        lcd.send_string("data:",my_data.return_data(),1);
     }
 
-    // measurement run despite controller state
-    temperature_measurements_array.add_measure(thermometer.get_rav_measure());
-    ph_measurements_array.add_measure(ph_meter.get_rav_measure());
-    oxygen_measurements_array.add_measure(oxygen_meter.get_rav_measure());
 
-    // SD writer run despite controller state
+
+    //measurement run despite controller state
+    if(meas_contr.get_measurement_state()==1)
+    {
+        temperature_measurements_array.add_measure(thermometer.get_rav_measure());
+        ph_measurements_array.add_measure(ph_meter.get_rav_measure());
+        oxygen_measurements_array.add_measure(oxygen_meter.get_rav_measure());
+        amount_of_ready_measurement +=1;
+
+        Serial.println(thermometer.get_rav_measure());
+        Serial.println(ph_meter.get_rav_measure());
+        Serial.println(oxygen_meter.get_rav_measure());
+    }
+
+    if ((amount_of_ready_measurement%10)==9)
+    {
+        amount_of_ready_measurement = 0;
+
+        //calculate real parameter
+
+        temperature =  meas_contr.calculate_temperature_from_meas_avg(temperature_measurements_array,thermometer);
+        ph = meas_contr.calculate_ph_from_meas_avg(ph_measurements_array,ph_meter);
+        oxygen_value = meas_contr.calculate_oxg_sat_from_meas_avg(oxygen_measurements_array,oxygen_meter, (uint8_t)temperature );
+        Serial.println("/////////////////////////");
+        Serial.println(temperature);
+        Serial.println(ph);
+        Serial.println(oxygen_value);
+        Serial.println("/////////////////////////");
+
+        // SD writer run despite controller state
+        sd_men.write_data_frame_to_sd(temperature,ph,oxygen_value,my_data);
+    }
+
+    meas_contr.check_is_measure_ready();
+    controller.change_menu_depth(encoder1);
+
     
-
 
 }
 #endif

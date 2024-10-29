@@ -20,8 +20,9 @@ void MyRotaryEncoder::init()
 
 uint8_t MyRotaryEncoder::get_button_state()
 {   
-    uint8_t button_state = BUTTON_DEFAULT_STATE;
-    if ((m_button_inactivate_state_time + BUTTON_STAY_ON_STATE) < millis())
+    uint8_t button_state = HIGH;
+ 
+    if ((m_button_inactivate_state_time + BUTTON_STAY_ON_STATE < millis()) && digitalRead(m_button_pin)==LOW)
     {
         button_state = digitalRead(m_button_pin);
         m_button_inactivate_state_time = millis();

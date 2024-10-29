@@ -48,13 +48,12 @@ void SdMemoryManager::write_to_st()
     m_file.println("w_test");
 }
 
- void SdMemoryManager::write_data_frame_to_sd  //TODO string is bad try to change it in char*
- (MeasureArray& thermometer_arr , MeasureArray & ph_meter_arr, MeasureArray & oxygen_meter_arr, DataHMS& data,
- Thermometer &thermometer, PhMeter &ph_meter, OxygenMeter &oxygen_meter, MeasuringController &controller)
+ void SdMemoryManager::write_data_frame_to_sd(float temperature,float ph_value,float oxygen_val,DataHMS data)  //TODO string is bad try to change it in char*
+ 
  {
-    String a = String(controller.calculate_avg_from_meas(thermometer_arr,thermometer));
-    String b = String(ph_meter_arr.get_average());
-    String c = String(oxygen_meter_arr.get_average());
+    String a = String(temperature);
+    String b = String(ph_value);
+    String c = String(oxygen_val);
 
     String ans = a+","+b+","+c+","+data.return_data();
     m_file.println(ans);

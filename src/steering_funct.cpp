@@ -25,7 +25,7 @@ void MainController::calculate_correction_time(float current_ph) //TODO find bet
     }
 }
 
-void MainController::start_taking_sample(PeristalticPump pump)
+void MainController::start_taking_sample(PeristalticPump &pump)
 {   
     if (m_sample_taking_timer + m_sample_taking_period < millis()) //if not taking sample
     {
@@ -33,14 +33,14 @@ void MainController::start_taking_sample(PeristalticPump pump)
         pump.start_taking_sample();                                //take it
     }
 }
-void MainController::stop_taking_sample(PeristalticPump pump)
+void MainController::stop_taking_sample(PeristalticPump &pump)
 {
     if(m_sample_taking_timer + m_sample_taking_period < millis())
     {
         pump.stop_taking_sample();
     }
 }
-void MainController::start_correction(SimplePeristalticPump pump)
+void MainController::start_correction(SimplePeristalticPump &pump)
 {
     if (m_correction_timer + m_correction_period < millis()) //if not taking sample
     {
@@ -48,7 +48,7 @@ void MainController::start_correction(SimplePeristalticPump pump)
         pump.run();                                //take it
     }
 }
-void MainController::stop_correction(SimplePeristalticPump pump)
+void MainController::stop_correction(SimplePeristalticPump &pump)
 {
     if(m_correction_timer + m_correction_period < millis())
     {
@@ -61,16 +61,18 @@ uint8_t MainController::return_menu_depth() const
     return m_menu_depth;
 }
 
-void MainController::change_menu_depth(MyRotaryEncoder encoder)
+void MainController::change_menu_depth(MyRotaryEncoder &encoder)
 {
     uint8_t button_state = encoder.get_button_state();
     if(button_state == LOW) //if button pressed
     {
-        m_menu_depth+=1;
+        Serial.println("button_pressed");
+        m_menu_depth++;
         if(m_menu_depth > m_max_menu_depth)
         {
             m_menu_depth = 0;
         }
+        Serial.println(m_menu_depth);
     }
 
 }
@@ -203,9 +205,9 @@ float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, Me
         7560, 7430, 7300, 7180, 7070, 6950, 6840, 6730, 6630, 6530, 6410};
 
     // alternative
-    // to get best parameter in range 15-35 celsius degree we can use linearyzation with  a=-154,6753247	 b=12216,40693 max err in range 2,1%
-    // to get best parameter in range 10-40 celsius degree we can use linearyzation with a=-158,0846774	b=12415,02016 max err in range 5%
-    // to get best parameter in range 0-40 celsius degree we can use linearyzation with a=-194,6550523	 b=13453,83275  max err in range 12%
+    // to get best parameter in range 15-35 celsius degree we can use linearization with  a=-154,6753247; b=12216,40693 max err in range 2,1%
+    // to get best parameter in range 10-40 celsius degree we can use linearization with a=-158,0846774; b=12415,02016 max err in range 5%
+    // to get best parameter in range 0-40 celsius degree we can use linearization with a=-194,6550523; b=13453,83275  max err in range 12%
 
         
     float voltage_mv = measure_arr.get_average()*5.0/1023;
@@ -214,7 +216,20 @@ float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, Me
     return (voltage_mv * DO_Table[temperature] / V_saturation);
   }
 
+  void MeasuringController::check_is_measure_ready()
+  {
+        m_allow_measurement = 0;
+    if(millis()>(m_last_measurement+m_measurement_interval))
+    {
+        m_allow_measurement = 1;
+        m_last_measurement = millis();
+    }
+  }
+  uint8_t MeasuringController::get_measurement_state()
+  {
+    return m_allow_measurement;
 
+  }
 
 
 

@@ -8,9 +8,12 @@
         "heatsink",
         "HERBION",
         "Iduino",
+        "linearization",
         "microcontroller",
         "MOSI",
         "MSYS",
-        "platformio"
+        "platformio",
+        "Steinhart",
+        "VREF"
     ]
 }

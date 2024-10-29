@@ -33,14 +33,14 @@ MainController(float desire_ph, float max_ph_acceptable_deviation,
 
 void calculate_correction_time(float current_ph);
 
-void start_taking_sample(PeristalticPump pump);
-void stop_taking_sample(PeristalticPump pump);
+void start_taking_sample(PeristalticPump &pump);
+void stop_taking_sample(PeristalticPump &pump);
 
-void start_correction(SimplePeristalticPump pump);
-void stop_correction(SimplePeristalticPump pump);
+void start_correction(SimplePeristalticPump &pump);
+void stop_correction(SimplePeristalticPump &pump);
 
 uint8_t return_menu_depth() const;
-void change_menu_depth(MyRotaryEncoder encoder);
+void change_menu_depth(MyRotaryEncoder &encoder);
 
 void set_config_value(float initial_value, float step, MyLCD &lcd, MyRotaryEncoder &encoder);
 float return_temp_val();
@@ -52,8 +52,9 @@ float return_temp_val();
 class MeasuringController
 {
 private:
-
-
+uint8_t m_allow_measurement = 0;
+uint32_t m_measurement_interval = 2000; 
+uint32_t m_last_measurement = 0;
 public:
   MeasuringController();
 
@@ -63,6 +64,8 @@ public:
   float calculate_temperature_from_meas_avg(MeasureArray &measure_arr, Thermometer &term);
   float calculate_oxg_sat_from_meas_avg(MeasureArray &measure_arr, OxygenMeter &oxg, uint8_t temperature);
   float calculate_ph_from_meas_avg(MeasureArray &measure_arr, PhMeter &ph);
+  void check_is_measure_ready();
+  uint8_t get_measurement_state(); //TODO RENAME
   
 };
 

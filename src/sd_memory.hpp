@@ -55,9 +55,7 @@ class SdMemoryManager
     // String DEBUG_write_data_frame(Sensor& thermometer, Sensor& ph_meter, Sensor& oxygen_meter, DataHMS& data);
     void save();
     void close_file();
- void write_data_frame_to_sd
-  (MeasureArray& thermometer_arr , MeasureArray & ph_meter_arr, MeasureArray & oxygen_meter_arr, DataHMS& data,
- Thermometer &thermometer, PhMeter &ph_meter, OxygenMeter &oxygen_meter, MeasuringController &controller);
+ void write_data_frame_to_sd(float temperature,float ph_value,float oxygen_val,DataHMS data);
 };
 
 #endif

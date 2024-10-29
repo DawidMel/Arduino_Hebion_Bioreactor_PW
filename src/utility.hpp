@@ -7,6 +7,7 @@
 #include "my_encoder.hpp"
 #include "eeprom_menager.hpp"
 #include "lcd_display.hpp"
+#include "components.hpp"
 
 
 class MeasureArray // TODO make inherence of this object to match sensor way of calculate
