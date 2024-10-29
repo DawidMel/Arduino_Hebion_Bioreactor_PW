@@ -60,6 +60,9 @@ public:
   float measure(MeasuringDevice &dev);
   unsigned int rav_measure(MeasuringDevice &dev);
   float calculate_avg_from_meas(MeasureArray &measure_arr, MeasuringDevice &dev);
+  float calculate_temperature_from_meas_avg(MeasureArray &measure_arr, Thermometer &term);
+  float calculate_oxg_sat_from_meas_avg(MeasureArray &measure_arr, OxygenMeter &oxg, uint8_t temperature);
+  float calculate_ph_from_meas_avg(MeasureArray &measure_arr, PhMeter &ph);
   
 };
 

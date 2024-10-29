@@ -5,6 +5,7 @@
 #include <Arduino.h>
 #include "components.hpp"
 
+
 MeasureArray::MeasureArray(int size) : m_array_size(size) //check for static alternative
 {
     measurement = new int[m_array_size]; // Dynamic create of array
@@ -39,7 +40,6 @@ float MeasureArray::get_average()
     }
     return (float(sum) / m_array_size); //conversion to float prevent int round effect (precision 7 digits instead of 5)
 }
-
 
 
 DataHMS::DataHMS(long hour, long minute, long second) : m_offset(hour * 3600000 + minute * 60000 + second * 1000)

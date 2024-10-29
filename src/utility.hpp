@@ -24,6 +24,7 @@ class MeasureArray // TODO make inherence of this object to match sensor way of 
     void add_measure(int value);
     float read_measure(char index);
     float get_average(); //TODO: add const
+
 };
 
 class TimerLowPriority

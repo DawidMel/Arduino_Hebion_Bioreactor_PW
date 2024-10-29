@@ -122,22 +122,21 @@ Thermometer::Thermometer(uint8_t read_pin,EepromVariable &zero_shift, EepromVari
 
 float Thermometer::get_value() //TODO function implemented voltage -> value
 {
-    static int i = 12;
-    i++;
-    return i;
-} // TODO
+    //not implemented;
+    return 0;
+} 
 
 
 PhMeter::PhMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) : 
 MeasuringDevice(read_pin, zero_shift, linear_factor)
 {
-    pinMode(m_read_pin, INPUT);
 }
 
 float PhMeter::get_value() //TODO function implemented voltage -> value
 {
-    return 17;
-} // TODO
+    //not implemented;
+    return 0;
+} 
 
 
 OxygenMeter::OxygenMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVariable &linear_factor) :
@@ -148,5 +147,6 @@ OxygenMeter::OxygenMeter(uint8_t read_pin,EepromVariable &zero_shift, EepromVari
 
 float OxygenMeter::get_value() //TODO function implemented voltage -> value
 {
-    return 21;
-} // TODO
+    //not implemented;
+    return 0;
+} 

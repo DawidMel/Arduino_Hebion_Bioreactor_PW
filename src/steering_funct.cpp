@@ -132,92 +132,94 @@ float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, Me
     return (meas_avg*linear_factor+zero_shift);
 }
 
-/*
 
-    // PH VALUE FORMULA
-    voltage = avergearray(pHArray, ArrayLenth) * 5.0 / 1024;
-    pHValue = 3.5 * voltage + Offset;
-
-
-
-
-    // TEMPERATURE FORMULA TODO REMOVE THIS SENSOR BECAUSE THIS SUCK A LOT!
-
-      // convert the value to resistance
-
-//idea your thermometer is in serial with resistor of knowing resistance 
-// it make voltage divider, we measure voltage on 
-float return_temp(float voltage_measure)
-{
-  voltage_measure = 1023 / voltage_measure - 1;  
-  voltage_measure = SERIES_RESISTOR / voltage_measure;
+  float MeasuringController::calculate_ph_from_meas_avg(MeasureArray &measure_arr, PhMeter &ph)
+  {
+        // PH VALUE FORMULA easy and simple :) like it
+    float voltage = measure_arr.get_average() * 5.0 / 1023;
+    float pHValue = 3.5 * voltage;
+    return (pHValue*ph.get_linear_factor() + ph.get_zero_shift());
+  }
 
 
+  float MeasuringController::calculate_temperature_from_meas_avg(MeasureArray &measure_arr, Thermometer &term)
+  {
+    // CALCULATE TEMPERATURE level of irritation implementing this = NAGOTUJCE MI GAR BIGOSU
 
-  // formula when we measure voltage from Rt
- //  V = Rt/(Rt+Rs) * Vcc
- //  Rt= V/Vcc * (Rt+Rs)
- //  Rt * (1-V/Vcc) = V/Vcc*Rs
-  // Rt = V/(Vcc-V)*Rs
-  // where V is analogRead Vcc is maximum value of A/D converter (in arduino it is 1023)
+    //idea your thermometer is in serial with resistor of knowing resistance 
+    // it make voltage divider, we measure voltage drop on thermometer
 
-  thermistor_resistance = voltage_measure/(1023-voltage_measure)*THERMISTOR_NOMINAL;
+    // formula when we measure voltage from Rt and we want get resistance of Rt
+
+    //  V = Rt/(Rt+Rs) * Vcc | * ((Rt+Rs)/Vcc)
+    //  Rt= V/Vcc * (Rt+Rs)  | - (V/Vcc * Rt)
+    //  Rt * ((1-V)/Vcc) = V/Vcc*Rs  | * (Vcc/(1-V))
+    //  Rt = V/(Vcc-V)*Rs
+    //  where V is analogRead Vcc is maximum value of A/D converter (in arduino it is 1023)
+
+  float voltage_measure =  measure_arr.get_average();           // NOT MAKE PROPERTY BECAUSE IT SHOULD BE GEOMETRIC AVERAGE 
+                                                                // because logarithmic operation to obtain best precision we should also include
+                                                                // non linear formula to calculate Thermistor resistance
+  float thermistor_resistance = voltage_measure/(1023-voltage_measure)*THERMISTOR_NOMINAL;
+
+//  using Steinhart–Hart equation
+
+// 1/T = 1/T0 + (1/B)*(Ln(Rt/R0))
+// T = 1/(1/T0 + (1/B)*(Ln(Rt/R0)))
+// T = 1/(B/(T0*B)) + (T0/(B*T0))*(Ln(Rt/R0)))
+// T = (B*T0)/B+T0(Ln(R/R0))
+// to convert in to C degree just subtract 273,15
+
+  float temperature;   
+  temperature =  (B_COEFFICIENT*TEMPERATURE_NOMINAL)/
+  (B_COEFFICIENT +  TEMPERATURE_NOMINAL*log(thermistor_resistance / THERMISTOR_NOMINAL))-273,15;   
+
+  return temperature;
+
+  }
 
 
-  float steinhart;                                       //TODO hell of optimization but fuck it
-  steinhart = thermistor_resistance / THERMISTOR_NOMINAL;          // (R/Ro)
-  steinhart = log(steinhart);                         // ln(R/Ro)
-  steinhart /= B_COEFFICIENT;                        // 1/B * ln(R/Ro)
-  steinhart += 1.0 / (THERMISTOR_NOMINAL + 273.15); // + (1/To)
-  steinhart = 1.0 / steinhart;                      // Invert
-  steinhart -= 273.15;                              // convert absolute temp to C
 
-  TemperatureValue = steinhart;
-  return TemperatureValue;
-}
+  float MeasuringController::calculate_oxg_sat_from_meas_avg(MeasureArray &measure_arr, OxygenMeter &oxg, uint8_t temperature)
+  {
 
-//oxygen formula 
 
-#define VREF 5000    //VREF (mv)
-#define ADC_RES 1024 //ADC Resolution
+    #define VREF 5000    //VREF (mv)
+    #define ADC_RES 1024 //ADC Resolution
 
-//Single-point calibration Mode=0
-//Two-point calibration Mode=1
-#define TWO_POINT_CALIBRATION 0
+    //Two-point calibration needs to be filled CAL2_V and CAL2_T
+    //CAL1 High temperature point, CAL2 Low temperature point
+    // for fully saturated solution
+    #define CAL1_V (1600) //mv
+    #define CAL1_T (25)   //℃
+    #define CAL2_V (1300) //mv
+    #define CAL2_T (15)   //℃
 
-#define READ_TEMP (25) //Current water temperature ℃, Or temperature sensor function
 
-//Single point calibration needs to be filled CAL1_V and CAL1_T
-#define CAL1_V (1600) //mv
-#define CAL1_T (25)   //℃
-//Two-point calibration needs to be filled CAL2_V and CAL2_T
-//CAL1 High temperature point, CAL2 Low temperature point
-#define CAL2_V (1300) //mv
-#define CAL2_T (15)   //℃
-
-const uint16_t DO_Table[41] = {
-    14460, 14220, 13820, 13440, 13090, 12740, 12420, 12110, 11810, 11530,
-    11260, 11010, 10770, 10530, 10300, 10080, 9860, 9660, 9460, 9270,
-    9080, 8900, 8730, 8570, 8410, 8250, 8110, 7960, 7820, 7690,
-    7560, 7430, 7300, 7180, 7070, 6950, 6840, 6730, 6630, 6530, 6410};
+    const uint16_t DO_Table[41] = {                         //temperature from 0 to 40 C degree
+        14460, 14220, 13820, 13440, 13090, 12740, 12420, 12110, 11810, 11530,
+        11260, 11010, 10770, 10530, 10300, 10080, 9860, 9660, 9460, 9270,
+        9080, 8900, 8730, 8570, 8410, 8250, 8110, 7960, 7820, 7690,
+        7560, 7430, 7300, 7180, 7070, 6950, 6840, 6730, 6630, 6530, 6410};
 
     // alternative
     // to get best parameter in range 15-35 celsius degree we can use linearyzation with  a=-154,6753247	 b=12216,40693 max err in range 2,1%
     // to get best parameter in range 10-40 celsius degree we can use linearyzation with a=-158,0846774	b=12415,02016 max err in range 5%
     // to get best parameter in range 0-40 celsius degree we can use linearyzation with a=-194,6550523	 b=13453,83275  max err in range 12%
 
+        
+    float voltage_mv = measure_arr.get_average()*5.0/1023;
 
-
-int16_t readDO(uint32_t voltage_mv, uint8_t temperature_c)
-{
-#if TWO_POINT_CALIBRATION == 0
-  uint16_t V_saturation = (uint32_t)CAL1_V + (uint32_t)35 * temperature_c - (uint32_t)CAL1_T * 35;
-  return (voltage_mv * DO_Table[temperature_c] / V_saturation);
-#else
-  uint16_t V_saturation = (int16_t)((int8_t)temperature_c - CAL2_T) * ((uint16_t)CAL1_V - CAL2_V) / ((uint8_t)CAL1_T - CAL2_T) + CAL2_V;
-  return (voltage_mv * DO_Table[temperature_c] / V_saturation);
-#endif
+    uint16_t V_saturation = (int16_t)((int8_t)temperature - CAL2_T) * ((uint16_t)CAL1_V - CAL2_V) / ((uint8_t)CAL1_T - CAL2_T) + CAL2_V;
+    return (voltage_mv * DO_Table[temperature] / V_saturation);
+  }
 
 
 
-*/
+
+
+
+
+
+
+
