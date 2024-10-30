@@ -70,13 +70,13 @@ void setup()
     Serial.begin(9600); 
     delay(500);
 
-    //setting eeprom variable to default state SHOULD BE COMMENT!
+    // // // setting eeprom variable to default state SHOULD BE COMMENT!
     // thermometer.set_zero_shift(term_zero_shift,0.5);
-    // thermometer.set_linear_factor(term_linear_factor,0.1);
+    // thermometer.set_linear_factor(term_linear_factor,1.02);
     // ph_meter.set_zero_shift(ph_zero_shift,0.8);
-    // ph_meter.set_linear_factor(ph_linear_factor,0.2);
+    // ph_meter.set_linear_factor(ph_linear_factor,1.02);
     // oxygen_meter.set_zero_shift(oxg_zero_shift,2.1);
-    // oxygen_meter.set_linear_factor(oxg_linear_factor,-0.1);
+    // oxygen_meter.set_linear_factor(oxg_linear_factor,1.06);
 
     // Initialize all physical components
     lcd.initialize(); //all error log will be write here so it must be initiated first
@@ -290,13 +290,6 @@ void loop()
     }
 
 
-
-
-
-
-
-
-
     //measurement run despite controller state
     if(meas_contr.get_measurement_state()==1)
     {
@@ -304,9 +297,16 @@ void loop()
         ph_measurements_array.add_measure(ph_meter.get_rav_measure());
         oxygen_measurements_array.add_measure(oxygen_meter.get_rav_measure());
         amount_of_ready_measurement +=1;
+
+        // Serial.print(F("temp rav:");
+        // Serial.println(thermometer.get_rav_measure());
+        // Serial.print(F("ph rav:");
+        // Serial.println(ph_meter.get_rav_measure());
+        // Serial.print(F("oxg rav:");
+        // Serial.println(oxygen_meter.get_rav_measure());
     }
 
-    if ((amount_of_ready_measurement%10)==9)
+    if ((amount_of_ready_measurement%3)==2)  //TODO CHANGE IT TO 10 in final version
     {
         amount_of_ready_measurement = 0;
 

@@ -65,7 +65,7 @@ class MeasuringController
 {
 private:
 uint8_t m_allow_measurement = 0;
-uint32_t m_measurement_interval = 2000; 
+uint32_t m_measurement_interval = INTERVAL_BETWEEN_MEASUREMENT; 
 uint32_t m_last_measurement = 0;
 public:
   MeasuringController();

@@ -54,6 +54,7 @@ constexpr float DESIRE_PH = 7;
 constexpr float MAX_PH_ACCEPTABLE_DEVIATION = 0.5;
 constexpr float DESIRE_TEMP = 21.37;
 constexpr float MAX_TEMP_ACCEPTABLE_DEVIATION = 4.2069;
+constexpr unsigned long INTERVAL_BETWEEN_MEASUREMENT = 333;  //[ms]
 
 //SAMPLE PUMP PARAMETER (this pump is peristaltic and work only in on/off mode)
 constexpr float PUMP_FLOW_SPEED = 60.0; //[ml/min]
@@ -68,7 +69,7 @@ constexpr unsigned long MAX_REACTION_TIME = 3000;  //max time of open the pump
 
 // thermometer parameter (it is hardware parameter)
 constexpr long int THERMISTOR_NOMINAL = 10000;        // [ohm] resistance at 25 degrees C
-constexpr uint8_t TEMPERATURE_NOMINAL = 25;          // temp. for nominal resistance (almost always 25 C)
+constexpr int TEMPERATURE_NOMINAL = 298;          // temp. for nominal resistance (almost always 25 C)
 constexpr long int B_COEFFICIENT = 3950;              // [UNIT!] The beta coefficient of the thermistor (usually 3000-4000)
 constexpr long int SERIES_RESISTOR = 10000;           // [ohm] the value of the 'other' resistor     
 

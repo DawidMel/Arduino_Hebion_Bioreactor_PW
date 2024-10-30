@@ -207,9 +207,10 @@ float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, Me
 // T = (B*T0)/B+T0(Ln(R/R0))
 // to convert in to C degree just subtract 273,15
 
-  float temperature;   
+  float temperature = 0;   
   temperature =  (B_COEFFICIENT*TEMPERATURE_NOMINAL)/
   (B_COEFFICIENT +  TEMPERATURE_NOMINAL*log(thermistor_resistance / THERMISTOR_NOMINAL))-(float(273.15));   
+
 
   return temperature;
 
