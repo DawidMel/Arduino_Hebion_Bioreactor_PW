@@ -80,8 +80,10 @@ void setup()
 
     // Initialize all physical components
     lcd.initialize(); //all error log will be write here so it must be initiated first
+    delay(3000);
     encoder1.init();
     sd_men.init(lcd);
+    delay(2000);
     sample_pump.init();
     acid_pump.init();
     alkaline_pump.init();
@@ -90,13 +92,18 @@ void setup()
     oxygen_meter.init();
 
 
-    delay(500);
+    delay(100);
     //initial array with value of first measurement
      temperature_measurements_array.init(thermometer.get_rav_measure());
      ph_measurements_array.init(ph_meter.get_rav_measure());
      oxygen_measurements_array.init(oxygen_meter.get_rav_measure());
 
-    delay(500);  //5 seconds is for time to read init screen of LCD
+    delay(100);
+    temperature =  meas_contr.calculate_temperature_from_meas_avg(temperature_measurements_array,thermometer);
+    ph = meas_contr.calculate_ph_from_meas_avg(ph_measurements_array,ph_meter);
+    oxygen_value = meas_contr.calculate_oxg_sat_from_meas_avg(oxygen_measurements_array,oxygen_meter, (uint8_t)temperature );
+
+    delay(100);
     lcd.clear();
 
     
@@ -315,6 +322,14 @@ void loop()
     meas_contr.check_is_measure_ready();
     controller.change_menu_depth(encoder1,lcd);
     controller.change_menu_state(encoder1,lcd);
+
+    controller.calculate_correction_time(ph);   
+
+    if(ph>DESIRE_PH+MAX_PH_ACCEPTABLE_DEVIATION)    //if ph to high
+    controller.start_correction(acid_pump);         // pump some acid to mixture
+    
+    if(ph<DESIRE_PH-MAX_PH_ACCEPTABLE_DEVIATION)    //if ph to low
+    controller.start_correction(alkaline_pump);     // pump some alkaline to mixture
 
     // pump stop function here to prevent not intentional execute
     controller.stop_taking_sample(sample_pump);

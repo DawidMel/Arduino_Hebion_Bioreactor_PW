@@ -42,7 +42,7 @@ void MainController::stop_taking_sample(PeristalticPump &pump)
 }
 void MainController::start_correction(SimplePeristalticPump &pump)
 {
-    if (m_correction_timer + m_correction_period < millis()) //if not taking sample
+    if (m_correction_timer + m_correction_period + TIME_BETWEEN_PH_CORRECTION < millis()) //if not taking sample
     {
         m_correction_timer = millis();
         pump.run();                                //take it
