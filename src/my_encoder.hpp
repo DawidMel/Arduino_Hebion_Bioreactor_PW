@@ -28,7 +28,7 @@ class MyRotaryEncoder
     MyRotaryEncoder(uint8_t pin_a, uint8_t pin_b, uint8_t button, long sensitivity);
     void init();
     uint8_t get_button_state();
-    uint8_t get_encoder_move();
+    int get_encoder_move();
 };
 
 #endif

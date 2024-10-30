@@ -61,43 +61,41 @@ uint8_t MainController::return_menu_depth() const
     return m_menu_depth;
 }
 
-void MainController::change_menu_depth(MyRotaryEncoder &encoder)
+void MainController::change_menu_depth(MyRotaryEncoder &encoder, MyLCD& lcd)
 {
     uint8_t button_state = encoder.get_button_state();
     if(button_state == LOW) //if button pressed
     {
-        Serial.println("button_pressed");
         m_menu_depth++;
+        lcd.clear();
+        m_menu_state = 0; //reset menu state
         if(m_menu_depth > m_max_menu_depth)
         {
             m_menu_depth = 0;
         }
-        Serial.println(m_menu_depth);
     }
 
 }
 
 void MainController::set_config_value(float initial_value, float step, MyLCD &lcd , MyRotaryEncoder &encoder)
 {
-    static int prev_menu_state = 0;
-    static int menu_state = 0;
+    static uint8_t first_print = 0;
 
-    menu_state += encoder.get_encoder_move();
-
-    if (menu_state != prev_menu_state) 
+    if(first_print == 0)
     {
-        lcd.clear();
-        lcd.send_float_value("new value:",initial_value+step*menu_state,0);
-        prev_menu_state = menu_state;
+        lcd.send_float_value("new val:",initial_value+step*m_menu_state,0);
+        first_print = 1;
     }
 
-    if(m_set_value_activator = 1)
+    if (m_menu_state != m_prev_menu_state) 
     {
-        m_temp_val = (initial_value+step*menu_state);
-        prev_menu_state = 0;
-        menu_state = 0;
-
+        lcd.send_float_value("new val:",initial_value+step*m_menu_state,0);
+        m_prev_menu_state = m_menu_state;
     }
+
+    // logic which end function and change temp value to initial_value+step*menu_state and reset static variable
+    m_temp_val = initial_value+step*m_menu_state;
+
 }
 
 float MainController::return_temp_val()
@@ -106,7 +104,43 @@ float MainController::return_temp_val()
 }
 
 
+int MainController::get_menu_state()
+{
+    return m_menu_state;
+}
 
+// void MainController::reset_menu_state()
+// {
+//     m_menu_state = 0;
+// }
+
+void MainController::chose_menu_option()
+{
+    m_chosen_menu_option = m_menu_state;
+}
+
+int MainController::get_chose_menu_option()
+{
+    return m_chosen_menu_option;
+}
+
+
+void MainController::change_menu_state(MyRotaryEncoder & encoder, MyLCD& lcd)
+{
+    static int prev_menu_state = m_menu_state;
+    m_menu_state += encoder.get_encoder_move();
+    if(prev_menu_state!=m_menu_state)
+    {
+        prev_menu_state = m_menu_state;
+        lcd.clear();
+    }
+}
+
+void MainController::reset_menu_state()
+{
+  m_menu_state = 0;
+  m_prev_menu_state = 0;
+}
 
 MeasuringController::MeasuringController()
 {
@@ -174,7 +208,7 @@ float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, Me
 
   float temperature;   
   temperature =  (B_COEFFICIENT*TEMPERATURE_NOMINAL)/
-  (B_COEFFICIENT +  TEMPERATURE_NOMINAL*log(thermistor_resistance / THERMISTOR_NOMINAL))-273,15;   
+  (B_COEFFICIENT +  TEMPERATURE_NOMINAL*log(thermistor_resistance / THERMISTOR_NOMINAL))-(float(273.15));   
 
   return temperature;
 
@@ -230,7 +264,6 @@ float MeasuringController::calculate_avg_from_meas(MeasureArray &measure_arr, Me
     return m_allow_measurement;
 
   }
-
 
 
 

@@ -97,13 +97,19 @@ float MeasuringDevice::get_value()
 
 void MeasuringDevice::set_zero_shift(EepromVariable &zero_shift,float new_value)
 {
+    if(new_value!=m_zero_shift)
+    {
     m_zero_shift = new_value;
     zero_shift.change_eeprom_config_value(new_value);
+    }
 }
 void MeasuringDevice::set_linear_factor(EepromVariable &linear_factor,float new_value)
 {
+    if(new_value!=m_linear_factor)
+    {
     m_linear_factor = new_value;
     linear_factor.change_eeprom_config_value(new_value);
+    }
 }
 
 float MeasuringDevice::get_zero_shift()

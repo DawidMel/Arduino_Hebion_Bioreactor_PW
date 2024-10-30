@@ -30,7 +30,7 @@ uint8_t MyRotaryEncoder::get_button_state()
     return button_state;
 }
 
-uint8_t MyRotaryEncoder::get_encoder_move()
+int MyRotaryEncoder::get_encoder_move()
 {
     m_clk_val = digitalRead(m_clk_pin);
 
@@ -48,5 +48,7 @@ uint8_t MyRotaryEncoder::get_encoder_move()
         }
     }
     m_clk_val_last = m_clk_val;
+
+    return 0;
 }
 
