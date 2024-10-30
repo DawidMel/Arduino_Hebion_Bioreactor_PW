@@ -317,6 +317,7 @@ void loop()
 
         // SD writer run despite controller state
         sd_men.write_data_frame_to_sd(temperature,ph,oxygen_value,my_data);
+        sd_men.save();
     }
 
     meas_contr.check_is_measure_ready();

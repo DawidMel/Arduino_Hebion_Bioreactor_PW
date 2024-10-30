@@ -14,9 +14,9 @@ def generate_plot(filepath : str, num_of_avg_sample : int ):
     df = pd.read_csv(filepath)
 
     # Obliczamy średnią kroczącą (moving average) z oknem sample_average
-    df['temp_ma'] = df['temperatura'].rolling(window=sample_average).mean()
+    df['temp_ma'] = df['temperature'].rolling(window=sample_average).mean()
     df['ph_ma'] = df['ph'].rolling(window=sample_average).mean()
-    df['stężenie_telnu_ma'] = df['stężenie_telnu'].rolling(window=sample_average).mean()
+    df['stężenie_telnu_ma'] = df['oxygen_concentration'].rolling(window=sample_average).mean()
 
 
     # Konwertujemy kolumnę 'data' na typ datetime
