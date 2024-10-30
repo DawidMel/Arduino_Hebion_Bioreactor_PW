@@ -18,10 +18,12 @@ MemoryManager memory_manager(0, 500);
 // you MUST stay with this order else you need to reconfigure calibration factor
 EepromVariable term_zero_shift(memory_manager);
 EepromVariable term_linear_factor(memory_manager);
-EepromVariable oxg_zero_shift(memory_manager);
-EepromVariable oxg_linear_factor(memory_manager);
+
 EepromVariable ph_zero_shift(memory_manager);
 EepromVariable ph_linear_factor(memory_manager);
+
+EepromVariable oxg_zero_shift(memory_manager);
+EepromVariable oxg_linear_factor(memory_manager);
 
 
 //create the sensors
@@ -65,6 +67,14 @@ void setup()
     Serial.begin(9600); 
     delay(500);
 
+    //setting eeprom variable to default state SHOULD BE COMMENT!
+    // thermometer.set_zero_shift(term_zero_shift,0.5);
+    // thermometer.set_linear_factor(term_linear_factor,0.1);
+    // ph_meter.set_zero_shift(ph_zero_shift,0.8);
+    // ph_meter.set_linear_factor(ph_linear_factor,0.2);
+    // oxygen_meter.set_zero_shift(oxg_zero_shift,2.1);
+    // oxygen_meter.set_linear_factor(oxg_linear_factor,-0.1);
+
     // Initialize all physical components
     lcd.initialize(); //all error log will be write here so it must be initiated first
     encoder1.init();
@@ -98,12 +108,12 @@ void loop()
         {
         case 0:
             lcd.send_float_value("TEMP:",temperature,0);
-            lcd.send_float_value("PH:",ph,1);
+            lcd.send_string("data:",my_data.return_data(),1);
             break;
         
         case 1:
             lcd.send_float_value("OXG:",oxygen_value,0);
-            lcd.send_string("data:",my_data.return_data(),1);
+            lcd.send_float_value("PH:",ph,1);
             break;
         
         default:
@@ -161,30 +171,37 @@ void loop()
         {
         case 0:
         controller.set_config_value(thermometer.get_zero_shift(),0.05,lcd,encoder1);
-        
             break;
         
         case 1:
+        controller.set_config_value(thermometer.get_linear_factor(),0.01,lcd,encoder1);
             break;
         
         case 2:
+        controller.set_config_value(ph_meter.get_zero_shift(),0.05,lcd,encoder1);
             break;
 
         case 3:
+        controller.set_config_value(ph_meter.get_linear_factor(),0.01,lcd,encoder1);
             break;
 
         case 4:
+        controller.set_config_value(oxygen_meter.get_zero_shift(),0.05,lcd,encoder1);
             break;
 
         case 5:
+        controller.set_config_value(oxygen_meter.get_linear_factor(),0.01,lcd,encoder1);
             break;
         
         case 6:
+        lcd.send_string(F("do you want"), "", 0);
+        lcd.send_string(F("take sample"), "", 0);
             break;
         
         default:
             break;
         }
+
     }
 
 
@@ -195,17 +212,49 @@ void loop()
 
     if(controller.return_menu_depth()==3)
     {
-        lcd.send_string("CONFIRM value","",0);
-         switch (controller.get_chose_menu_option()%7)
-         {
-         case 0:
-            lcd.send_float_value("val:",controller.return_temp_val(),1);
+        if((controller.get_chose_menu_option()%7)<6)
+        lcd.send_string("change value","",0);
+        lcd.send_float_value("val:",controller.return_temp_val(),1);
+
+        switch (controller.get_chose_menu_option()%7)
+        {
+        case 0:     
             thermometer.set_zero_shift(term_zero_shift, controller.return_temp_val());
             break;
+        case 1:
+            thermometer.set_linear_factor(term_linear_factor, controller.return_temp_val());
+            break;
+        
+        case 2:
+        ph_meter.set_zero_shift(ph_zero_shift, controller.return_temp_val());
+            break;
+
+        case 3:
+        ph_meter.set_linear_factor(ph_linear_factor, controller.return_temp_val());
+            break;
+
+        case 4:
+        oxygen_meter.set_zero_shift(oxg_zero_shift, controller.return_temp_val());
+            break;
+        
+        case 5:
+        oxygen_meter.set_linear_factor(oxg_linear_factor, controller.return_temp_val());
+            break;
+
+        case 6:
+        lcd.clear();
+        lcd.send_string("take sampl:", String(PUMP_SAMPLE_TAKING_TIME),0);
+            break;
+
         default:
         break;
-         }
+        }
         controller.reset_menu_state();
+
+
+
+        //TODO escape formula
+
     }
 
 

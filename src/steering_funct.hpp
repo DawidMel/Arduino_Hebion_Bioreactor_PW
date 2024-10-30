@@ -18,6 +18,7 @@ private:
   unsigned long m_sample_taking_period = 0; //TODO MAY JUST PUT CONST HERE
 
   uint8_t m_menu_depth = 0;
+
   int m_menu_state = 0;
   int m_prev_menu_state =0;
 

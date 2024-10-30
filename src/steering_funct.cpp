@@ -81,15 +81,10 @@ void MainController::set_config_value(float initial_value, float step, MyLCD &lc
 {
     static uint8_t first_print = 0;
 
-    if(first_print == 0)
-    {
-        lcd.send_float_value("new val:",initial_value+step*m_menu_state,0);
-        first_print = 1;
-    }
+    lcd.send_float_value("new val:",initial_value+step*m_menu_state,0);
 
     if (m_menu_state != m_prev_menu_state) 
     {
-        lcd.send_float_value("new val:",initial_value+step*m_menu_state,0);
         m_prev_menu_state = m_menu_state;
     }
 
