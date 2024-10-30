@@ -59,6 +59,9 @@ float temperature = 0;
 float ph = 0;
 float oxygen_value = 0;
 
+uint8_t is_sample_taking = 1;
+uint8_t select_menu_option = 0;
+
 #ifndef UNIT_TEST
 void setup()
 {
@@ -161,47 +164,59 @@ void loop()
             }
             
     }
-        controller.chose_menu_option();
+        select_menu_option = abs(controller.get_menu_state())%7;
     }
 
 
     if(controller.return_menu_depth()==2) //level of provoking action  
     {
-        switch (controller.get_chose_menu_option()%7)
+        switch (select_menu_option%7)
         {
         case 0:
-        controller.set_config_value(thermometer.get_zero_shift(),0.05,lcd,encoder1);
+        controller.set_config_value(thermometer.get_zero_shift(),0.05,lcd,encoder1,"temp_zs");
             break;
         
         case 1:
-        controller.set_config_value(thermometer.get_linear_factor(),0.01,lcd,encoder1);
+        controller.set_config_value(thermometer.get_linear_factor(),0.01,lcd,encoder1,"temp_lf");
             break;
         
         case 2:
-        controller.set_config_value(ph_meter.get_zero_shift(),0.05,lcd,encoder1);
+        controller.set_config_value(ph_meter.get_zero_shift(),0.05,lcd,encoder1,"ph_zs");
             break;
 
         case 3:
-        controller.set_config_value(ph_meter.get_linear_factor(),0.01,lcd,encoder1);
+        controller.set_config_value(ph_meter.get_linear_factor(),0.01,lcd,encoder1,"ph_lf");
             break;
 
         case 4:
-        controller.set_config_value(oxygen_meter.get_zero_shift(),0.05,lcd,encoder1);
+        controller.set_config_value(oxygen_meter.get_zero_shift(),0.05,lcd,encoder1,"oxg_zs");
             break;
 
         case 5:
-        controller.set_config_value(oxygen_meter.get_linear_factor(),0.01,lcd,encoder1);
+        controller.set_config_value(oxygen_meter.get_linear_factor(),0.01,lcd,encoder1,"oxg_lf");
             break;
         
         case 6:
         lcd.send_string(F("do you want"), "", 0);
-        lcd.send_string(F("take sample"), "", 0);
+        lcd.send_string(F("take sample:"), "", 1);
+        if(controller.get_menu_state()%2==0)
+        {
+            lcd.setCursor(13,1);
+            lcd.print("n");
+            is_sample_taking = 1;
+        }
+        else
+        {
+            lcd.setCursor(13,1);
+            lcd.print("y");
+            is_sample_taking = 0;
+        }
             break;
         
         default:
+        lcd.println(F("ERR"));
             break;
         }
-
     }
 
 
@@ -212,11 +227,13 @@ void loop()
 
     if(controller.return_menu_depth()==3)
     {
-        if((controller.get_chose_menu_option()%7)<6)
+        if((select_menu_option%7)<6)
+        {
         lcd.send_string(F("change value"),"",0);
         lcd.send_float_value(F("val:"),controller.return_temp_val(),1);
+        }
 
-        switch (controller.get_chose_menu_option()%7)
+        switch (select_menu_option%7)
         {
         case 0:     
             thermometer.set_zero_shift(term_zero_shift, controller.return_temp_val());
@@ -242,18 +259,26 @@ void loop()
             break;
 
         case 6:
+
+    
+        if(is_sample_taking==0)
+        {
+        controller.start_taking_sample(sample_pump);
+        is_sample_taking =1;
         lcd.clear();
-        lcd.send_string(F("take sampl:"), String(PUMP_SAMPLE_TAKING_TIME),0);
+        }
+        else
+        {   
+            controller.skip_menu_depth();
+            lcd.clear();
+        }
             break;
 
         default:
         break;
         }
+
         controller.reset_menu_state();
-
-
-
-        //TODO escape formula
 
     }
 
@@ -291,7 +316,10 @@ void loop()
     controller.change_menu_depth(encoder1,lcd);
     controller.change_menu_state(encoder1,lcd);
 
+    // pump stop function here to prevent not intentional execute
+    controller.stop_taking_sample(sample_pump);
+    controller.stop_correction(acid_pump);
+    controller.stop_correction(alkaline_pump);
     
-
 }
 #endif

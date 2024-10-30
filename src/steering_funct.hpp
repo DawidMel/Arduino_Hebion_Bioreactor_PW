@@ -15,7 +15,7 @@ private:
   uint8_t m_max_menu_depth;
 
   unsigned long m_correction_period = 0;
-  unsigned long m_sample_taking_period = 0; //TODO MAY JUST PUT CONST HERE
+  unsigned long m_sample_taking_period = PUMP_SAMPLE_TAKING_TIME;
 
   uint8_t m_menu_depth = 0;
 
@@ -46,7 +46,7 @@ void stop_correction(SimplePeristalticPump &pump);
 uint8_t return_menu_depth() const;
 void change_menu_depth(MyRotaryEncoder &encoder, MyLCD& lcd);
 
-void set_config_value(float initial_value, float step, MyLCD &lcd, MyRotaryEncoder &encoder);
+void set_config_value(float initial_value, float step, MyLCD &lcd , MyRotaryEncoder &encoder, const char* message);
 float return_temp_val();
 
 int get_menu_state();
@@ -54,6 +54,7 @@ void chose_menu_option();
 int get_chose_menu_option();
 //void reset_menu_state();
 void change_menu_state(MyRotaryEncoder & encoder, MyLCD& lcd);
+void skip_menu_depth();
 
 void reset_menu_state();
 

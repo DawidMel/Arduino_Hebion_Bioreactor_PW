@@ -56,6 +56,13 @@ void MainController::stop_correction(SimplePeristalticPump &pump)
     }
 }
 
+void MainController::skip_menu_depth()
+{
+    m_menu_depth++;
+    if(m_menu_depth>m_max_menu_depth)
+    m_menu_depth = 0;
+}
+
 uint8_t MainController::return_menu_depth() const
 {
     return m_menu_depth;
@@ -77,11 +84,10 @@ void MainController::change_menu_depth(MyRotaryEncoder &encoder, MyLCD& lcd)
 
 }
 
-void MainController::set_config_value(float initial_value, float step, MyLCD &lcd , MyRotaryEncoder &encoder)
+void MainController::set_config_value(float initial_value, float step, MyLCD &lcd , MyRotaryEncoder &encoder, const char* message)
 {
-    static uint8_t first_print = 0;
 
-    lcd.send_float_value("new val:",initial_value+step*m_menu_state,0);
+    lcd.send_float_value(String(message),initial_value+step*m_menu_state,0);
 
     if (m_menu_state != m_prev_menu_state) 
     {
