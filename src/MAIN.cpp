@@ -107,13 +107,13 @@ void loop()
         switch (abs(controller.get_menu_state())%2)
         {
         case 0:
-            lcd.send_float_value("TEMP:",temperature,0);
-            lcd.send_string("data:",my_data.return_data(),1);
+            lcd.send_float_value(F("TEMP:"),temperature,0);
+            lcd.send_string(F("data:"),my_data.return_data(),1);
             break;
         
         case 1:
-            lcd.send_float_value("OXG:",oxygen_value,0);
-            lcd.send_float_value("PH:",ph,1);
+            lcd.send_float_value(F("OXG:"),oxygen_value,0);
+            lcd.send_float_value(F("PH:"),ph,1);
             break;
         
         default:
@@ -213,8 +213,8 @@ void loop()
     if(controller.return_menu_depth()==3)
     {
         if((controller.get_chose_menu_option()%7)<6)
-        lcd.send_string("change value","",0);
-        lcd.send_float_value("val:",controller.return_temp_val(),1);
+        lcd.send_string(F("change value"),"",0);
+        lcd.send_float_value(F("val:"),controller.return_temp_val(),1);
 
         switch (controller.get_chose_menu_option()%7)
         {
@@ -243,7 +243,7 @@ void loop()
 
         case 6:
         lcd.clear();
-        lcd.send_string("take sampl:", String(PUMP_SAMPLE_TAKING_TIME),0);
+        lcd.send_string(F("take sampl:"), String(PUMP_SAMPLE_TAKING_TIME),0);
             break;
 
         default:

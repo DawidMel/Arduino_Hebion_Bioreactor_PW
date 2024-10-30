@@ -42,7 +42,7 @@ constexpr uint8_t LCD_SCL_pin = 19; //physical connected with A5 (more specific 
 
 //BUTTON INITIAL SETTING
 constexpr uint8_t BUTTON_DEFAULT_STATE = 1; //mean pin state is HIGH
-constexpr unsigned long BUTTON_STAY_ON_STATE = 2000; //[ms] time button dont change its state
+constexpr unsigned long BUTTON_STAY_ON_STATE = 500; //[ms] time button dont change its state
 constexpr unsigned long STAY_IN_MENU_TIME = 3000; //[ms] time after you can exit menu
 
 
